@@ -21,6 +21,9 @@ export class FileService {
   }
 
   public readJsonFromFile<T>(fileName: string): T {
+    if (!this.doesExist(fileName)) {
+      return null;
+    }
     return JSON.parse(this.fs.readFileSync(this.BASE_PATH + fileName, { encoding: 'utf-8' }));
   }
 

@@ -47,7 +47,8 @@ export class SymbolService {
   }
 
   private loadSymbols(): void {
-    this._symbols = this.fileService.readJsonFromFile<string[]>(this.SYMBOLS_FILE_NAME);
+    const result = this.fileService.readJsonFromFile<string[]>(this.SYMBOLS_FILE_NAME);
+    this._symbols = result !== null ? result : [];
   }
 
 }

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { config } from 'node:process';
 import { YahooChartApiConverter } from '../../api-converters/yahoo-chart-api-converter';
 import { Chart } from '../../models/chart';
 import { YahooChartApiResult } from '../../models/yahoo-chart-api-result';
