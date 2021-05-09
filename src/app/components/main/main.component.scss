@@ -1,0 +1,40 @@
+
+.options-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    margin: 1rem 2rem;
+    font-size: small;
+
+    .timespan-select-container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+        max-height: 4.5rem;
+        max-width: 30vw;
+        width: 30vw;
+    }
+
+    .chart-settings input[type=number] {
+        width: 3.5rem;
+    }
+}
+
+.actions-container {
+    margin: 1rem 2rem;
+
+    > *:not(:first-child) {
+        margin-top: 0.5rem;
+    }
+
+    input[type=number] {
+        width: 2rem;
+    }
+
+    input[type=text] {
+        width: 4rem;
+        margin-right: 0.25rem;
+    }
+}

@@ -1,0 +1,54 @@
+<div class="main-container">
+    <div class="options-container">
+        <div class="timespan-select-container">
+            <div *ngFor="let timespan of timespanService.availableTimespans">
+                <input type="checkbox" [checked]="timespanService.isActive(timespan)"
+                    (click)="timespanService.toggleActive(timespan)">
+                {{ timespan.displayText }}
+            </div>
+        </div>
+        <div class="chart-settings">
+            <div>
+                <input type="checkbox" [(ngModel)]="settingsService.showCharts">
+                Show Charts
+            </div>
+            <div>
+                <input type="number" [(ngModel)]="settingsService.chartDays">
+                Chart Days
+            </div>
+        </div>
+        <div>
+            <div>
+                <input type="checkbox" [(ngModel)]="settingsService.showDates">
+                Show Dates
+            </div>
+            <div>
+                <input type="checkbox" [(ngModel)]="settingsService.showTimespans">
+                Show Timespans
+            </div>
+            <div>
+                <input type="checkbox" [(ngModel)]="settingsService.showPositions">
+                Show Positions
+            </div>
+        </div>
+    </div>
+    <div class="actions-container">
+        <div>
+            <button (click)="fetch()">fetch</button>
+            older than
+            <input type="number" [(ngModel)]="fetchDays">
+            days
+        </div>
+        <div>
+            <input type="text" [(ngModel)]="symbolInput">
+            <button (click)="addSymbol()">add</button>
+            symbol
+        </div>
+    </div>
+    <div class="header-container" [class.with-chart]="settingsService.showCharts" [class.with-position]="settingsService.showPositions">
+        <div *ngFor="let header of headers">
+            <strong>{{ header }}</strong>
+        </div>
+    </div>
+    <app-symbol *ngFor="let symbol of symbols" [symbol]="symbol"></app-symbol>
+</div>

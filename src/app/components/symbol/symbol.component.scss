@@ -1,0 +1,49 @@
+.symbol-container {
+
+    .symbol-cell {
+        display: flex;
+        flex-direction: row;
+
+        > *:first-child {
+            flex: 1;
+        }
+
+        > * {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .symbol {
+            margin-right: 0.1rem;
+        }
+
+        input.position {
+            font-size: xx-small;
+            max-width: 2rem;
+            height: 0.5rem;
+            margin-right: 0.25rem;
+        }
+
+        .data-date {
+            font-size: x-small;
+            color: gray;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+            text-align: right;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: row;
+            
+            * {
+                font-size: xx-small;
+            }
+        }
+
+        button {
+            height: 1.5rem;
+        }
+    }
+
+}
