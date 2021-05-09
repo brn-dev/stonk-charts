@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CacheService } from '../../services/cache.service';
-import { SettingsService } from '../../services/options.service';
+import { SettingsService } from '../../services/settings.service';
 import { SymbolService } from '../../services/symbol.service';
 import { TimespanService } from '../../services/timespan.service';
 

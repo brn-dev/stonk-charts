@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Timespan } from '../../models/timespan';
-import { SettingsService } from '../../services/options.service';
+import { SettingsService } from '../../services/settings.service';
 import { DateUtils } from '../../utils/date-utils';
 
 @Component({

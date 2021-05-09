@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Chart } from '../../models/chart';
-import { ChartHelper } from '../../models/chart-helper';
 import { Timespan, TimespanUnit } from '../../models/timespan';
 import { CacheService } from '../../services/cache.service';
 import { SymbolService } from '../../services/symbol.service';
 import { TimespanService } from '../../services/timespan.service';
 import { DateUtils } from '../../utils/date-utils';
 import * as Highcharts from 'highcharts'
-import { SettingsService } from '../../services/options.service';
+import { SettingsService } from '../../services/settings.service';
+import { ChartHelperService } from '../../services/chart-helper.service';
 
 @Component({
   selector: 'app-symbol',
@@ -29,7 +29,8 @@ export class SymbolComponent implements OnInit {
     private cacheService: CacheService,
     private timespanService: TimespanService,
     private symbolService: SymbolService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private chartHelperService: ChartHelperService
   ) {
   }
 
@@ -45,7 +46,7 @@ export class SymbolComponent implements OnInit {
     if (!this.chart) {
       return '';
     }
-    const timestamp = ChartHelper.latestChartEntry(this.chart).timestamp;
+    const timestamp = this.chartHelperService.latestChartEntry(this.chart).timestamp;
     return DateUtils.toIsoString(timestamp);
   }
 
@@ -81,7 +82,7 @@ export class SymbolComponent implements OnInit {
     if (!this.chart) {
       return 0;
     }
-    return ChartHelper.getDelta(this.chart, timespan);
+    return this.chartHelperService.getDelta(this.chart, timespan);
   }
 
   public getTimestamp(timespan: Timespan): number {
@@ -89,7 +90,7 @@ export class SymbolComponent implements OnInit {
       return null;
     }
     
-    const entry = ChartHelper.getDayInPast(this.chart, timespan);
+    const entry = this.chartHelperService.getDayInPast(this.chart, timespan);
 
     if (entry === null) {
       return null;

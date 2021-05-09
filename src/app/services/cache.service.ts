@@ -4,7 +4,6 @@ import { ApiService } from './api/api.service';
 import { FileService } from './file.service';
 import { SymbolService } from './symbol.service';
 import * as moment from 'moment';
-import { ChartHelper } from '../models/chart-helper';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -74,7 +73,7 @@ export class CacheService {
       }
 
       const chart = this.symbolChartCache.get(symbol);
-      const latestEntry = ChartHelper.latestChartEntry(chart);
+      const latestEntry = chart.entries[chart.entries.length - 1];
       const mom = moment(latestEntry.timestamp * 1000);
 
       if (mom.isSameOrBefore(past, 'd')) {
