@@ -20,6 +20,8 @@ export class SettingsService {
 
   public showCharts = true;
 
+  public showTags = true;
+
   public $chartDaysUpdated = new Subject<number>();
 
   get chartDays() {

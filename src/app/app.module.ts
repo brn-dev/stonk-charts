@@ -12,9 +12,10 @@ import { ApiService } from './services/api/api.service';
 import { SymbolComponent } from './components/symbol/symbol.component';
 import { DeltaComponent } from './components/delta/delta.component';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { TagComponent } from './components/tag/tag.component';
 
 @NgModule({
-  declarations: [AppComponent, MainComponent, SymbolComponent, DeltaComponent],
+  declarations: [AppComponent, MainComponent, SymbolComponent, DeltaComponent, TagComponent],
   imports: [
     BrowserModule,
     FormsModule,

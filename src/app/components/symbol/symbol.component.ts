@@ -8,6 +8,7 @@ import { DateUtils } from '../../utils/date-utils';
 import * as Highcharts from 'highcharts'
 import { SettingsService } from '../../services/settings.service';
 import { ChartHelperService } from '../../services/chart-helper.service';
+import { AssetSymbol } from '../../models/asset-symbol';
 
 @Component({
   selector: 'app-symbol',
@@ -17,7 +18,7 @@ import { ChartHelperService } from '../../services/chart-helper.service';
 export class SymbolComponent implements OnInit {
 
   @Input()
-  public symbol: string;
+  public symbol: AssetSymbol;
 
   public highcharts: typeof Highcharts = Highcharts;
 
@@ -137,7 +138,7 @@ export class SymbolComponent implements OnInit {
 
     this.chartOptions = {
       title: {
-        text: this.symbol
+        text: this.symbol.symbol
       },
       yAxis: {
         title: {
@@ -150,7 +151,7 @@ export class SymbolComponent implements OnInit {
         max: this.chart.entries[this.chart.entries.length - 1].timestamp * 1000
       },
       series: [{
-        name: this.symbol,
+        name: this.symbol.symbol,
         data,
         type: 'line'
       }]

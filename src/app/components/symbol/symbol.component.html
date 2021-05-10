@@ -1,15 +1,20 @@
 <div class="symbol-container" [class.with-chart]="settingsService.showCharts" [class.with-position]="settingsService.showPositions">
-    <div class="symbol-cell">
-        <div>
-            <input *ngIf="settingsService.showPositions" [(ngModel)]="positionIndex" (keyup.enter)="changePosition()" class="position" type="number" min="0" >
-            <span class="symbol">{{ symbol }}</span> 
-        </div>
-        <div>
-            <span class="data-date">{{ dataDate }} <br> ({{ dataDays }}d) </span>
-            <div class="actions">
-                <button (click)="fetch()">🔄</button>
-                <button (click)="remove()">❌</button>
+    <div>
+        <div class="symbol-cell">
+            <div>
+                <input *ngIf="settingsService.showPositions" [(ngModel)]="positionIndex" (keyup.enter)="changePosition()" class="position" type="number" min="0" >
+                <span class="symbol">{{ symbol.symbol }}</span> 
             </div>
+            <div>
+                <span class="data-date">{{ dataDate }} <br> ({{ dataDays }}d) </span>
+                <div class="actions">
+                    <button (click)="fetch()">🔄</button>
+                    <button (click)="remove()">❌</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="settingsService.showTags" class="symbol-tags">
+            <app-tag *ngFor="let tag of symbol.tags" [tag]="tag"></app-tag>
         </div>
     </div>
 

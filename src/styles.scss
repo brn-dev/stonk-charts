@@ -9,7 +9,6 @@ html, body {
 
 .symbol-container, .header-container {
   padding: 1rem 0.5rem;
-  margin: 0 1.5rem;
 
   display: flex;
   flex-direction: row;
@@ -41,3 +40,4 @@ html, body {
 app-symbol:nth-of-type(odd) > * {
   background-color: #F0F0F0;
 }
+

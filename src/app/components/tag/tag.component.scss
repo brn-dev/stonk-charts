@@ -1,0 +1,16 @@
+
+.symbol-tag {
+    font-size: xx-small;
+    padding: 0.25rem;
+    margin: 0.5rem 0.1rem;
+    background-color: darkblue;
+    color: white;
+
+    &.disabled {
+        background-color: gray;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AssetSymbol } from '../../models/asset-symbol';
 import { CacheService } from '../../services/cache.service';
+import { FilterService } from '../../services/filter.service';
 import { SettingsService } from '../../services/settings.service';
 import { SymbolService } from '../../services/symbol.service';
 import { TimespanService } from '../../services/timespan.service';
@@ -18,14 +20,15 @@ export class MainComponent implements OnInit {
     public symbolService: SymbolService,
     public timespanService: TimespanService,
     public settingsService: SettingsService,
-    public cacheService: CacheService
+    public cacheService: CacheService,
+    public filterService: FilterService
   ) { }
 
   ngOnInit(): void {
   }
   
-  get symbols(): string[] {
-    return this.symbolService.symbols;
+  get symbols(): AssetSymbol[] {
+    return this.filterService.filteredSymbols;
   }
 
   get headers(): string[] {
@@ -44,9 +47,9 @@ export class MainComponent implements OnInit {
   }
 
   public addSymbol() {
-    this.symbolService.addSymbol(this.symbolInput);
+    const newSymbol = this.symbolService.addSymbol(this.symbolInput);
     if (this.settingsService.fetchOnAdd) {
-      this.cacheService.fetchSymbol(this.symbolInput);
+      this.cacheService.fetchSymbol(newSymbol);
     }
     this.symbolInput = '';
   }
