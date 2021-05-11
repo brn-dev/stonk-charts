@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { YahooChartApiConverter } from '../../api-converters/yahoo-chart-api-converter';
-import { AssetSymbol } from '../../models/asset-symbol';
+import { Asset } from '../../models/asset';
 import { Chart } from '../../models/chart';
 import { YahooChartApiResult } from '../../models/yahoo-chart-api-result';
 import { FileService } from '../file.service';
@@ -30,9 +30,9 @@ export class YahooApiService implements ApiService {
     this.config = fileService.readJsonFromFile<YahooApiConfig>(this.configFileName)
   }
 
-  public async fetchChartFor(symbol: AssetSymbol): Promise<Chart> {
+  public async fetchChartFor(asset: Asset): Promise<Chart> {
     const result = await this.http.get<YahooChartApiResult>(
-      this.getUrlForSymbol(symbol.symbol), 
+      this.getUrlForSymbol(asset.symbol), 
       { 
         headers: { 
           "x-rapidapi-key": this.config.rapidapiKey,

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Chart } from '../models/chart';
 import { ApiService } from './api/api.service';
 import { FileService } from './file.service';
-import { SymbolService } from './symbol.service';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
-import { AssetSymbol } from '../models/asset-symbol';
 import { FilterService } from './filter.service';
+import { Asset } from '../models/asset';
+import { AssetService } from './asset.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,101 +15,101 @@ export class CacheService {
 
   private readonly STAGGER_MILLIS = 500;
 
-  private symbolChartCache = new Map<AssetSymbol, Chart>();
+  private assetChartCache = new Map<Asset, Chart>();
 
-  public $symbolUpdated = new Subject<AssetSymbol>();
+  public $assetUpdated = new Subject<Asset>();
 
   constructor(
     private fileService: FileService, 
-    private symbolService: SymbolService,
+    private assetService: AssetService,
     private apiService: ApiService,
     private filterService: FilterService
   ) {
-    this.loadForAllSymbols();
+    this.loadForAllAssets();
   }
 
-  public setForSymbol(symbol: AssetSymbol, chart: Chart) {
-    this.symbolChartCache.set(symbol, chart);
-    this.saveForSymbol(symbol, chart);
-    this.$symbolUpdated.next(symbol);
+  public setForAsset(asset: Asset, chart: Chart): void {
+    this.assetChartCache.set(asset, chart);
+    this.saveForAsset(asset, chart);
+    this.$assetUpdated.next(asset);
   }
 
-  public getForSymbol(symbol: AssetSymbol) {
-    return this.symbolChartCache.get(symbol);
+  public getForAsset(asset: Asset): Chart {
+    return this.assetChartCache.get(asset);
   }
 
-  public async fetchSymbol(symbol: AssetSymbol) {
-    await this.fetchSymbols([symbol]);
+  public async fetchSymbol(asset: Asset) {
+    await this.fetchSymbols([asset]);
   }
 
-  public async fetchSymbols(symbols: AssetSymbol[]) {
-    const symbolsToFetchCount = symbols.length;
+  public async fetchSymbols(assets: Asset[]): Promise<void> {
+    const assetsToFetchCount = assets.length;
     let finishedFetchingCounter = 0;
 
-    for (let i = 0; i < symbols.length; i++) {
-      const symbol = symbols[i];
+    for (let i = 0; i < assets.length; i++) {
+      const asset = assets[i];
       setTimeout(async () => {
-        console.log(`fetching ${symbol.symbol}`);
+        console.log(`fetching ${asset.symbol}`);
 
-        const chart = await this.apiService.fetchChartFor(symbol);
-        this.setForSymbol(symbol, chart);
+        const chart = await this.apiService.fetchChartFor(asset);
+        this.setForAsset(asset, chart);
 
-        console.log(`finished fetching ${symbol.symbol}`);
+        console.log(`finished fetching ${asset.symbol}`);
 
         finishedFetchingCounter++
-        if (finishedFetchingCounter === symbolsToFetchCount) {
+        if (finishedFetchingCounter === assetsToFetchCount) {
           console.log('fetch finished');
         }
       }, this.STAGGER_MILLIS * i);
     }
   }
 
-  public fetchSymbolsOlderThanDays(days: number) {
-    const symbolsToFetch: AssetSymbol[] = [];
+  public fetchAssetsOlderThanDays(days: number) {
+    const assetsToFetch: Asset[] = [];
     const past = moment().subtract(days, 'd');
 
-    for (const symbol of this.filterService.filteredSymbols) {
-      if (!this.symbolChartCache.has(symbol) || this.symbolChartCache.get(symbol) === null) {
-        symbolsToFetch.push(symbol);
+    for (const asset of this.filterService.filteredAssets) {
+      if (!this.assetChartCache.has(asset) || this.assetChartCache.get(asset) === null) {
+        assetsToFetch.push(asset);
         continue;
       }
 
-      const chart = this.symbolChartCache.get(symbol);
+      const chart = this.assetChartCache.get(asset);
       const latestEntry = chart.entries[chart.entries.length - 1];
       const mom = moment(latestEntry.timestamp * 1000);
 
       if (mom.isSameOrBefore(past, 'd')) {
-        symbolsToFetch.push(symbol);
+        assetsToFetch.push(asset);
       }
     }    
 
-    this.fetchSymbols(symbolsToFetch);
+    this.fetchSymbols(assetsToFetch);
   }
 
-  private saveForSymbol(symbol: AssetSymbol, chart: Chart) {
-    const fileName = this.getFileNameForSymbol(symbol);
+  private saveForAsset(asset: Asset, chart: Chart) {
+    const fileName = this.getFileNameForAsset(asset);
     this.fileService.writeJsonToFile(fileName, chart);
   }
 
-  private loadForSymbol(symbol: AssetSymbol) {
-    const fileName = this.getFileNameForSymbol(symbol);
+  private loadForAsset(asset: Asset) {
+    const fileName = this.getFileNameForAsset(asset);
     if (this.fileService.doesExist(fileName)) {
-      this.symbolChartCache.set(
-        symbol,
+      this.assetChartCache.set(
+        asset,
         this.fileService.readJsonFromFile<Chart>(fileName)
       );
     } else {
-      this.symbolChartCache.set(symbol, null);
+      this.assetChartCache.set(asset, null);
     }
   }
 
-  private loadForAllSymbols() {
-    for (const symbol of this.symbolService.symbols) {
-      this.loadForSymbol(symbol);
+  private loadForAllAssets() {
+    for (const asset of this.assetService.assets) {
+      this.loadForAsset(asset);
     }
   }
 
-  private getFileNameForSymbol(symbol: AssetSymbol) {
-    return `${symbol.symbol}.json`;
+  private getFileNameForAsset(asset: Asset) {
+    return `${asset.symbol}.json`;
   }
 }

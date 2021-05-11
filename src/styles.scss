@@ -7,7 +7,7 @@ html, body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.symbol-container, .header-container {
+.asset-container, .header-container {
   padding: 1rem 0.5rem;
 
   display: flex;
@@ -37,7 +37,7 @@ html, body {
   width: 16rem;
 }
 
-app-symbol:nth-of-type(odd) > * {
+app-asset:nth-of-type(odd) > * {
   background-color: #F0F0F0;
 }
 

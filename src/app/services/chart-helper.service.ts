@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Asset } from '../models/asset';
 import { Chart } from '../models/chart';
 import { ChartEntry } from '../models/chart-entry';
 import { Timespan, TimespanUnit } from '../models/timespan';
 import { SettingsService } from './settings.service';
-import { AssetSymbol } from '../models/asset-symbol';
 
 @Injectable({
   providedIn: 'root'
@@ -50,10 +50,10 @@ export class ChartHelperService {
   }
 
   
-  public getEstimation1Year(symbol: AssetSymbol, chart: Chart): number {
-    if (!symbol.estimation1Year) {
+  public getOneYearEstimation(asset: Asset, chart: Chart): number {
+    if (!asset.oneYearEstimation) {
       return null;
     }
-    return symbol.estimation1Year / this.latestChartEntry(chart).close - 1;
+    return asset.oneYearEstimation / this.latestChartEntry(chart).close - 1;
   }
 }

@@ -46,18 +46,18 @@
         <div>
             <input type="text" [(ngModel)]="symbolInput">
             <button (click)="addSymbol()">add</button>
-            symbol
+            asset
         </div>
     </div>
     <div class="tags-container">
         <button (click)="filterService.enableAll()">All</button>
         <button (click)="filterService.enableNone()">None</button>
-        <app-tag *ngFor="let tag of symbolService.getAllUniqueTags()" [tag]="tag"></app-tag>
+        <app-tag *ngFor="let tag of assetService.getAllUniqueTags()" [tag]="tag"></app-tag>
     </div>
     <div class="header-container" [class.with-chart]="settingsService.showCharts" [class.with-position]="settingsService.showPositions">
         <div *ngFor="let header of headers">
             <strong>{{ header }}</strong>
         </div>
     </div>
-    <app-symbol *ngFor="let symbol of symbols" [symbol]="symbol"></app-symbol>
+    <app-asset *ngFor="let asset of assets" [asset]="asset"></app-asset>
 </div>

@@ -1,9 +1,9 @@
-<div class="symbol-container" [class.with-chart]="settingsService.showCharts" [class.with-position]="settingsService.showPositions">
+<div class="asset-container" [class.with-chart]="settingsService.showCharts" [class.with-position]="settingsService.showPositions">
     <div>
         <div class="symbol-cell">
             <div>
                 <input *ngIf="settingsService.showPositions" [(ngModel)]="positionIndex" (keyup.enter)="changePosition()" class="position" type="number" min="0" >
-                <span class="symbol">{{ symbol.symbol }}</span> 
+                <span class="symbol">{{ asset.symbol }}</span> 
             </div>
             <div>
                 <span class="data-date">{{ dataDate }} <br> ({{ dataDays }}d) </span>
@@ -13,8 +13,8 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="settingsService.showTags" class="symbol-tags">
-            <app-tag *ngFor="let tag of symbol.tags" [tag]="tag"></app-tag>
+        <div *ngIf="settingsService.showTags" class="asset-tags">
+            <app-tag *ngFor="let tag of asset.tags" [tag]="tag"></app-tag>
         </div>
     </div>
 
@@ -24,8 +24,8 @@
                       style="height: 100%; display: block;"
     ></highcharts-chart>
 
-    <div *ngIf="settingsService.showEstimate1Year">
-        <app-delta [delta]="estimation1Year"></app-delta>
+    <div *ngIf="settingsService.showOneYearEstimation">
+        <app-delta [delta]="oneYearEstimationDelta"></app-delta>
     </div>
 
     <div *ngFor="let deltaTimespan of deltaTimespans" >

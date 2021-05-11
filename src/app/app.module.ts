@@ -9,13 +9,19 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import { YahooApiService } from './services/api/yahoo-api.service';
 import { ApiService } from './services/api/api.service';
-import { SymbolComponent } from './components/symbol/symbol.component';
+import { AssetComponent } from './components/asset/asset.component';
 import { DeltaComponent } from './components/delta/delta.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { TagComponent } from './components/tag/tag.component';
 
 @NgModule({
-  declarations: [AppComponent, MainComponent, SymbolComponent, DeltaComponent, TagComponent],
+  declarations: [
+    AppComponent, 
+    MainComponent, 
+    AssetComponent, 
+    DeltaComponent, 
+    TagComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,

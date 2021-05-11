@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AssetSymbol } from '../models/asset-symbol';
-import { SymbolService } from './symbol.service';
+import { Asset } from '../models/asset';
+import { AssetService } from './asset.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,25 +9,25 @@ export class FilterService {
 
   private enabledTags = new Set<string>();
 
-  constructor(private symbolService: SymbolService) {
+  constructor(private assetService: AssetService) {
     this.enableAll();
   }
 
-  get filteredSymbols(): AssetSymbol[] {
-    if (this.enabledTags.size === this.symbolService.getAllUniqueTags().length) {
-      return this.symbolService.symbols;
+  get filteredAssets(): Asset[] {
+    if (this.enabledTags.size === this.assetService.getAllUniqueTags().length) {
+      return this.assetService.assets;
     }
     if (this.enabledTags.size === 0) {
       return [];
     }
 
-    const symbols: AssetSymbol[] = [];
-    for (const symbol of this.symbolService.symbols) {
-      if (symbol.tags.some(tag => this.enabledTags.has(tag))) {
-        symbols.push(symbol);
+    const assets: Asset[] = [];
+    for (const asset of this.assetService.assets) {
+      if (asset.tags.some(tag => this.enabledTags.has(tag))) {
+        assets.push(asset);
       }
     }
-    return symbols;
+    return assets;
   }
 
   public toggle(tag: string): boolean {
@@ -45,7 +45,7 @@ export class FilterService {
   }
 
   public enableAll() {
-    for (const tag of this.symbolService.getAllUniqueTags()) {
+    for (const tag of this.assetService.getAllUniqueTags()) {
       this.enabledTags.add(tag);
     }
   }

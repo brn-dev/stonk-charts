@@ -2,23 +2,23 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Chart } from '../../models/chart';
 import { Timespan, TimespanUnit } from '../../models/timespan';
 import { CacheService } from '../../services/cache.service';
-import { SymbolService } from '../../services/symbol.service';
 import { TimespanService } from '../../services/timespan.service';
 import { DateUtils } from '../../utils/date-utils';
 import * as Highcharts from 'highcharts'
 import { SettingsService } from '../../services/settings.service';
 import { ChartHelperService } from '../../services/chart-helper.service';
-import { AssetSymbol } from '../../models/asset-symbol';
+import { Asset } from '../../models/asset';
+import { AssetService } from '../../services/asset.service';
 
 @Component({
-  selector: 'app-symbol',
-  templateUrl: './symbol.component.html',
-  styleUrls: ['./symbol.component.scss']
+  selector: 'app-asset',
+  templateUrl: './asset.component.html',
+  styleUrls: ['./asset.component.scss']
 })
-export class SymbolComponent implements OnInit {
+export class AssetComponent implements OnInit {
 
   @Input()
-  public symbol: AssetSymbol;
+  public asset: Asset;
 
   public highcharts: typeof Highcharts = Highcharts;
 
@@ -29,14 +29,14 @@ export class SymbolComponent implements OnInit {
   constructor(
     private cacheService: CacheService,
     private timespanService: TimespanService,
-    private symbolService: SymbolService,
+    private assetService: AssetService,
     private settingsService: SettingsService,
     private chartHelperService: ChartHelperService
   ) {
   }
 
   get chart(): Chart {
-    return this.cacheService.getForSymbol(this.symbol);
+    return this.cacheService.getForAsset(this.asset);
   }
 
   get deltaTimespans(): Timespan[] {
@@ -62,11 +62,11 @@ export class SymbolComponent implements OnInit {
     if (this._positionIndex) {
       return this._positionIndex;
     }
-    return this.symbolService.getPositionIndex(this.symbol);
+    return this.assetService.getPositionIndex(this.asset);
   }
 
-  get estimation1Year(): number {
-    return this.chartHelperService.getEstimation1Year(this.symbol, this.chart);
+  get oneYearEstimationDelta(): number {
+    return this.chartHelperService.getOneYearEstimation(this.asset, this.chart);
   }
 
   set positionIndex(index: number) {
@@ -76,8 +76,8 @@ export class SymbolComponent implements OnInit {
   ngOnInit(): void {
     this.updateChartOptions();
     this.settingsService.$chartDaysUpdated.subscribe(() => this.updateChartOptions());
-    this.cacheService.$symbolUpdated.subscribe(symbol => {
-      if (this.symbol === symbol) {
+    this.cacheService.$assetUpdated.subscribe(asset => {
+      if (this.asset === asset) {
         this.updateChartOptions();
       }
     });
@@ -105,18 +105,18 @@ export class SymbolComponent implements OnInit {
   }
 
   public async fetch() {
-    this.cacheService.fetchSymbol(this.symbol);
+    this.cacheService.fetchSymbol(this.asset);
   }
 
   public remove() {
-    this.symbolService.removeSymbol(this.symbol);
+    this.assetService.removeSymbol(this.asset);
   }
 
   public changePosition() {
     if (this._positionIndex === null) {
       return;
     }
-    this.symbolService.changePosition(this.symbol, this._positionIndex);
+    this.assetService.changePosition(this.asset, this._positionIndex);
     this._positionIndex = null;
   }
 
@@ -142,7 +142,7 @@ export class SymbolComponent implements OnInit {
 
     this.chartOptions = {
       title: {
-        text: this.symbol.symbol
+        text: this.asset.symbol
       },
       yAxis: {
         title: {
@@ -155,7 +155,7 @@ export class SymbolComponent implements OnInit {
         max: this.chart.entries[this.chart.entries.length - 1].timestamp * 1000
       },
       series: [{
-        name: this.symbol.symbol,
+        name: this.asset.symbol,
         data,
         type: 'line'
       }]

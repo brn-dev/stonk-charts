@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AssetSymbol } from '../../models/asset-symbol';
+import { Asset } from '../../models/asset';
+import { AssetService } from '../../services/asset.service';
 import { CacheService } from '../../services/cache.service';
 import { FilterService } from '../../services/filter.service';
 import { SettingsService } from '../../services/settings.service';
-import { SymbolService } from '../../services/symbol.service';
 import { TimespanService } from '../../services/timespan.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class MainComponent implements OnInit {
   public symbolInput = '';
 
   constructor(
-    public symbolService: SymbolService,
+    public assetService: AssetService,
     public timespanService: TimespanService,
     public settingsService: SettingsService,
     public cacheService: CacheService,
@@ -27,8 +27,8 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  get symbols(): AssetSymbol[] {
-    return this.filterService.filteredSymbols;
+  get assets(): Asset[] {
+    return this.filterService.filteredAssets;
   }
 
   get headers(): string[] {
@@ -47,13 +47,13 @@ export class MainComponent implements OnInit {
   }
 
   public fetch() {
-    this.cacheService.fetchSymbolsOlderThanDays(this.fetchDays);
+    this.cacheService.fetchAssetsOlderThanDays(this.fetchDays);
   }
 
-  public addSymbol() {
-    const newSymbol = this.symbolService.addSymbol(this.symbolInput);
+  public addAsset() {
+    const newAssetSymbol = this.assetService.addAsset(this.symbolInput);
     if (this.settingsService.fetchOnAdd) {
-      this.cacheService.fetchSymbol(newSymbol);
+      this.cacheService.fetchSymbol(newAssetSymbol);
     }
     this.symbolInput = '';
   }

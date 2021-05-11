@@ -1,24 +1,12 @@
 {
-  "name": "angular-electron",
-  "version": "9.0.7",
-  "description": "Angular 11 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "stonk-charts",
+  "version": "0.0.1",
+  "description": "Asset comparing tool",
+  "homepage": "https://github.com/brn-dev/stonk-charts",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Dominik Baron"
   },
   "keywords": [
-    "angular",
-    "angular 11",
-    "electron",
-    "nodejs",
-    "typescript",
-    "spectron",
-    "eslint",
-    "sass",
-    "windows",
-    "mac",
-    "linux"
   ],
   "main": "main.js",
   "private": true,
