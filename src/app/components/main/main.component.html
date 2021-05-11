@@ -34,6 +34,10 @@
                 <input type="checkbox" [(ngModel)]="settingsService.showTags">
                 Show Tags
             </div>
+            <div>
+                <input type="checkbox" [(ngModel)]="settingsService.showOneYearEstimation">
+                Show 1Y Estimation
+            </div>
         </div>
     </div>
     <div class="actions-container">
@@ -44,9 +48,10 @@
             days
         </div>
         <div>
-            <input type="text" [(ngModel)]="symbolInput">
-            <button (click)="addSymbol()">add</button>
-            asset
+            <button (click)="editAssets()">edit</button>
+            /
+            <button (click)="refreshAssets()">refresh</button>
+            assets
         </div>
     </div>
     <div class="tags-container">

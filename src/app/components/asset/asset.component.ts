@@ -105,11 +105,11 @@ export class AssetComponent implements OnInit {
   }
 
   public async fetch() {
-    this.cacheService.fetchSymbol(this.asset);
+    this.cacheService.fetchAsset(this.asset);
   }
 
   public remove() {
-    this.assetService.removeSymbol(this.asset);
+    this.assetService.removeAsset(this.asset);
   }
 
   public changePosition() {

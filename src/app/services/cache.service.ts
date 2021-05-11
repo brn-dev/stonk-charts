@@ -15,7 +15,7 @@ export class CacheService {
 
   private readonly STAGGER_MILLIS = 500;
 
-  private assetChartCache = new Map<Asset, Chart>();
+  private assetChartCache = new Map<string, Chart>();
 
   public $assetUpdated = new Subject<Asset>();
 
@@ -29,20 +29,20 @@ export class CacheService {
   }
 
   public setForAsset(asset: Asset, chart: Chart): void {
-    this.assetChartCache.set(asset, chart);
+    this.assetChartCache.set(asset.symbol, chart);
     this.saveForAsset(asset, chart);
     this.$assetUpdated.next(asset);
   }
 
   public getForAsset(asset: Asset): Chart {
-    return this.assetChartCache.get(asset);
+    return this.assetChartCache.get(asset.symbol);
   }
 
-  public async fetchSymbol(asset: Asset) {
-    await this.fetchSymbols([asset]);
+  public async fetchAsset(asset: Asset) {
+    await this.fetchAssets([asset]);
   }
 
-  public async fetchSymbols(assets: Asset[]): Promise<void> {
+  public async fetchAssets(assets: Asset[]): Promise<void> {
     const assetsToFetchCount = assets.length;
     let finishedFetchingCounter = 0;
 
@@ -69,12 +69,12 @@ export class CacheService {
     const past = moment().subtract(days, 'd');
 
     for (const asset of this.filterService.filteredAssets) {
-      if (!this.assetChartCache.has(asset) || this.assetChartCache.get(asset) === null) {
+      if (!this.assetChartCache.has(asset.symbol) || this.assetChartCache.get(asset.symbol) === null) {
         assetsToFetch.push(asset);
         continue;
       }
 
-      const chart = this.assetChartCache.get(asset);
+      const chart = this.assetChartCache.get(asset.symbol);
       const latestEntry = chart.entries[chart.entries.length - 1];
       const mom = moment(latestEntry.timestamp * 1000);
 
@@ -83,7 +83,7 @@ export class CacheService {
       }
     }    
 
-    this.fetchSymbols(assetsToFetch);
+    this.fetchAssets(assetsToFetch);
   }
 
   private saveForAsset(asset: Asset, chart: Chart) {
@@ -95,11 +95,11 @@ export class CacheService {
     const fileName = this.getFileNameForAsset(asset);
     if (this.fileService.doesExist(fileName)) {
       this.assetChartCache.set(
-        asset,
+        asset.symbol,
         this.fileService.readJsonFromFile<Chart>(fileName)
       );
     } else {
-      this.assetChartCache.set(asset, null);
+      this.assetChartCache.set(asset.symbol, null);
     }
   }
 

@@ -8,7 +8,7 @@ export class TimespanService {
 
   public readonly availableTimespans: Timespan[] = [
     // graph
-    new Timespan(0, TimespanUnit.Graph),
+    new Timespan(0, TimespanUnit.Chart),
     // day
     new Timespan(1, TimespanUnit.DAY),
     new Timespan(3, TimespanUnit.DAY),

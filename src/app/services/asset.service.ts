@@ -7,7 +7,7 @@ import { FileService } from './file.service';
 })
 export class AssetService {
 
-  private readonly SYMBOLS_FILE_NAME = '_assets.json';
+  public readonly ASSET_FILE_NAME = '_assets.json';
 
   private _assets: Asset[] = [];
 
@@ -36,7 +36,7 @@ export class AssetService {
     return newAsset;
   }
 
-  public removeSymbol(asset: Asset) {
+  public removeAsset(asset: Asset) {
     const idx = this.getPositionIndex(asset);
     if (idx >= 0) {
       this._assets.splice(idx, 1);
@@ -82,14 +82,14 @@ export class AssetService {
 
     return arr.map(elem => elem[0]);
   }
+
+  public loadAssets(): void {
+    const result = this.fileService.readJsonFromFile<Asset[]>(this.ASSET_FILE_NAME);
+    this._assets = result !== null ? result : [];
+  }
   
   private saveAssets(): void {
-    this.fileService.writeJsonToFile(this.SYMBOLS_FILE_NAME, this._assets);
-  }
-
-  private loadAssets(): void {
-    const result = this.fileService.readJsonFromFile<Asset[]>(this.SYMBOLS_FILE_NAME);
-    this._assets = result !== null ? result : [];
+    this.fileService.writeJsonToFile(this.ASSET_FILE_NAME, this._assets);
   }
 
   private isAsset(obj: any): obj is Asset {

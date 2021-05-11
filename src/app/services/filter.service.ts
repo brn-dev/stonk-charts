@@ -53,4 +53,13 @@ export class FilterService {
   public enableNone() {
     this.enabledTags.clear();
   }
+
+  public enableNoneExcept(tag: string) {
+    if (this.enabledTags.size === 1 && this.enabledTags.has(tag)) {
+      this.enableAll();
+      return;
+    }
+    this.enableNone();
+    this.toggle(tag);
+  }
 }

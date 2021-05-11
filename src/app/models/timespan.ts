@@ -5,7 +5,7 @@ export class TimespanUnit {
     public static readonly Week = new TimespanUnit('W', 'Week');
     public static readonly Month = new TimespanUnit('M', 'Month');
     public static readonly Year = new TimespanUnit('Y', 'Year');
-    public static readonly Graph = new TimespanUnit('Graph', 'Graph', true);
+    public static readonly Chart = new TimespanUnit('Chart', 'Chart', true);
     public static readonly Max = new TimespanUnit('Max', 'Max', true);
 
     public readonly shortName: string;

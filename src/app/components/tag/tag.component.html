@@ -1,5 +1,6 @@
 <span [class.disabled]="!filterService.isEnabled(tag)"
       (click)="filterService.toggle(tag)"
+      (contextmenu)="filterService.enableNoneExcept(tag)"
       class="asset-tag"
 >
     {{ tag }}

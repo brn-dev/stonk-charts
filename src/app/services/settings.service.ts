@@ -22,7 +22,7 @@ export class SettingsService {
 
   public showTags = true;
 
-  public showEstimate1Year = true;
+  public showOneYearEstimation = true;
 
   public $chartDaysUpdated = new Subject<number>();
 

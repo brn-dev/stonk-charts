@@ -17,7 +17,7 @@ export class ChartHelperService {
       return chart.entries[0];
     }
 
-    if (timespan.unit === TimespanUnit.Graph) {
+    if (timespan.unit === TimespanUnit.Chart) {
       let idx = chart.entries.length - 1 - this.settingsService.chartDays;
 
       if (idx < 0) {
@@ -51,7 +51,7 @@ export class ChartHelperService {
 
   
   public getOneYearEstimation(asset: Asset, chart: Chart): number {
-    if (!asset.oneYearEstimation) {
+    if (!asset.oneYearEstimation || !chart?.entries) {
       return null;
     }
     return asset.oneYearEstimation / this.latestChartEntry(chart).close - 1;

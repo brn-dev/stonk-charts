@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Asset } from '../../models/asset';
 import { AssetService } from '../../services/asset.service';
 import { CacheService } from '../../services/cache.service';
+import { FileService } from '../../services/file.service';
 import { FilterService } from '../../services/filter.service';
 import { SettingsService } from '../../services/settings.service';
 import { TimespanService } from '../../services/timespan.service';
+
+const { exec } = window.require("child_process");
 
 @Component({
   selector: 'app-main',
@@ -14,14 +17,14 @@ import { TimespanService } from '../../services/timespan.service';
 export class MainComponent implements OnInit {
 
   public fetchDays: number = 3;
-  public symbolInput = '';
 
   constructor(
     public assetService: AssetService,
     public timespanService: TimespanService,
     public settingsService: SettingsService,
     public cacheService: CacheService,
-    public filterService: FilterService
+    public filterService: FilterService,
+    public fileService: FileService
   ) { }
 
   ngOnInit(): void {
@@ -38,7 +41,7 @@ export class MainComponent implements OnInit {
       headers.push('Chart')
     }
 
-    if (this.settingsService.showEstimate1Year) {
+    if (this.settingsService.showOneYearEstimation) {
       headers.push("1Y Est");
     }
 
@@ -50,12 +53,12 @@ export class MainComponent implements OnInit {
     this.cacheService.fetchAssetsOlderThanDays(this.fetchDays);
   }
 
-  public addAsset() {
-    const newAssetSymbol = this.assetService.addAsset(this.symbolInput);
-    if (this.settingsService.fetchOnAdd) {
-      this.cacheService.fetchSymbol(newAssetSymbol);
-    }
-    this.symbolInput = '';
+  public editAssets() {
+    exec(this.fileService.BASE_PATH + this.assetService.ASSET_FILE_NAME);
+  }
+
+  public refreshAssets() {
+    this.assetService.loadAssets();
   }
 
 }
