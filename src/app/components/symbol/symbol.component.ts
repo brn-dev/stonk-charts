@@ -65,6 +65,10 @@ export class SymbolComponent implements OnInit {
     return this.symbolService.getPositionIndex(this.symbol);
   }
 
+  get estimation1Year(): number {
+    return this.chartHelperService.getEstimation1Year(this.symbol, this.chart);
+  }
+
   set positionIndex(index: number) {
     this._positionIndex = index;
   }

@@ -38,6 +38,10 @@ export class MainComponent implements OnInit {
       headers.push('Chart')
     }
 
+    if (this.settingsService.showEstimate1Year) {
+      headers.push("1Y Est");
+    }
+
     headers.push(...this.timespanService.activeTimespans.map(t => t.displayText));
     return headers;
   }

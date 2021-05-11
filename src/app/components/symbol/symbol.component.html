@@ -24,6 +24,10 @@
                       style="height: 100%; display: block;"
     ></highcharts-chart>
 
+    <div *ngIf="settingsService.showEstimate1Year">
+        <app-delta [delta]="estimation1Year"></app-delta>
+    </div>
+
     <div *ngFor="let deltaTimespan of deltaTimespans" >
         <app-delta [delta]="getDelta(deltaTimespan)" [timestamp]="getTimestamp(deltaTimespan)" [timespan]="deltaTimespan"></app-delta>
     </div>
