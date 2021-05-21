@@ -16,6 +16,9 @@
         <div *ngIf="settingsService.showTags" class="asset-tags">
             <app-tag *ngFor="let tag of asset.tags" [tag]="tag"></app-tag>
         </div>
+        <div *ngIf="settingsService.showDescriptions && asset.description" class="asset-description">
+            {{ asset.description }}
+        </div>
     </div>
 
     <highcharts-chart *ngIf="settingsService.showCharts && chartOptions"

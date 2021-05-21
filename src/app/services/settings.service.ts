@@ -24,6 +24,8 @@ export class SettingsService {
 
   public showOneYearEstimation = true;
 
+  public showDescriptions = true;
+
   public $chartDaysUpdated = new Subject<number>();
 
   get chartDays() {
