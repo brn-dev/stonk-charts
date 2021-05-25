@@ -10,7 +10,7 @@ export class FilterService {
     private enabledTags = new Set<string>();
 
     constructor(private assetService: AssetService) {
-        this.enableAll();
+        this.enableAllTags();
     }
 
     get filteredAssets(): Asset[] {
@@ -30,7 +30,7 @@ export class FilterService {
         return assets;
     }
 
-    public toggle(tag: string): boolean {
+    public toggleTags(tag: string): boolean {
         if (this.enabledTags.has(tag)) {
             this.enabledTags.delete(tag);
             return false;
@@ -40,26 +40,26 @@ export class FilterService {
         }
     }
 
-    public isEnabled(tag: string) {
+    public isTagEnabled(tag: string) {
         return this.enabledTags.has(tag);
     }
 
-    public enableAll() {
+    public enableAllTags() {
         for (const tag of this.assetService.getAllUniqueTags()) {
             this.enabledTags.add(tag);
         }
     }
 
-    public enableNone() {
+    public disableAllTags() {
         this.enabledTags.clear();
     }
 
-    public enableNoneExcept(tag: string) {
+    public disableAllTagsExcept(tag: string) {
         if (this.enabledTags.size === 1 && this.enabledTags.has(tag)) {
-            this.enableAll();
+            this.enableAllTags();
             return;
         }
-        this.enableNone();
-        this.toggle(tag);
+        this.disableAllTags();
+        this.toggleTags(tag);
     }
 }

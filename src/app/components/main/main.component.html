@@ -59,8 +59,8 @@
         </div>
     </div>
     <div class="tags-container">
-        <button (click)="filterService.enableAll()">All</button>
-        <button (click)="filterService.enableNone()">None</button>
+        <button (click)="filterService.enableAllTags()">All</button>
+        <button (click)="filterService.disableAllTags()">None</button>
         <app-tag *ngFor="let tag of assetService.getAllUniqueTags()" [tag]="tag"></app-tag>
     </div>
     <div class="header-container" [class.with-chart]="settingsService.showCharts" [class.with-position]="settingsService.showPositions">
