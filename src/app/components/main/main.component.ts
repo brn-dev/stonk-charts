@@ -10,55 +10,55 @@ import { TimespanService } from '../../services/timespan.service';
 const { exec } = window.require("child_process");
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+    selector: 'app-main',
+    templateUrl: './main.component.html',
+    styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
 
-  public fetchDays: number = 3;
+    public fetchDays: number = 3;
 
-  constructor(
-    public assetService: AssetService,
-    public timespanService: TimespanService,
-    public settingsService: SettingsService,
-    public cacheService: CacheService,
-    public filterService: FilterService,
-    public fileService: FileService
-  ) { }
+    constructor(
+        public assetService: AssetService,
+        public timespanService: TimespanService,
+        public settingsService: SettingsService,
+        public cacheService: CacheService,
+        public filterService: FilterService,
+        public fileService: FileService
+    ) { }
 
-  ngOnInit(): void {
-  }
-  
-  get assets(): Asset[] {
-    return this.filterService.filteredAssets;
-  }
-
-  get headers(): string[] {
-    const headers = ['Symbol'];
-
-    if (this.settingsService.showCharts) {
-      headers.push('Chart')
+    ngOnInit(): void {
     }
 
-    if (this.settingsService.showOneYearEstimation) {
-      headers.push("1Y Est");
+    get assets(): Asset[] {
+        return this.filterService.filteredAssets;
     }
 
-    headers.push(...this.timespanService.activeTimespans.map(t => t.displayText));
-    return headers;
-  }
+    get headers(): string[] {
+        const headers = ['Symbol'];
 
-  public fetch() {
-    this.cacheService.fetchAssetsOlderThanDays(this.fetchDays);
-  }
+        if (this.settingsService.showCharts) {
+            headers.push('Chart')
+        }
 
-  public editAssets() {
-    exec(this.fileService.BASE_PATH + this.assetService.ASSET_FILE_NAME);
-  }
+        if (this.settingsService.showOneYearEstimation) {
+            headers.push("1Y Est");
+        }
 
-  public refreshAssets() {
-    this.assetService.loadAssets();
-  }
+        headers.push(...this.timespanService.activeTimespans.map(t => t.displayText));
+        return headers;
+    }
+
+    public fetch() {
+        this.cacheService.fetchAssetsOlderThanDays(this.fetchDays);
+    }
+
+    public editAssets() {
+        exec(this.fileService.BASE_PATH + this.assetService.ASSET_FILE_NAME);
+    }
+
+    public refreshAssets() {
+        this.assetService.loadAssets();
+    }
 
 }

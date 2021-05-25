@@ -7,9 +7,9 @@ export class YahooChartApiConverter {
         const meta = apiResult.chart.result[0].meta;
         const timestamps = apiResult.chart.result[0].timestamp;
         const quotes = apiResult.chart.result[0].indicators.quote[0];
-        
+
         const length = timestamps.length;
-        
+
         const chart: Chart = {
             symbol: meta.symbol,
             entries: []

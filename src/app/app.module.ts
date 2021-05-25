@@ -15,23 +15,23 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { TagComponent } from './components/tag/tag.component';
 
 @NgModule({
-  declarations: [
-    AppComponent, 
-    MainComponent, 
-    AssetComponent, 
-    DeltaComponent, 
-    TagComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    HighchartsChartModule
-  ],
-  providers: [
-    { provide: ApiService, useClass: YahooApiService }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        MainComponent,
+        AssetComponent,
+        DeltaComponent,
+        TagComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        HighchartsChartModule
+    ],
+    providers: [
+        { provide: ApiService, useClass: YahooApiService }
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

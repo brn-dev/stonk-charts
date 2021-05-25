@@ -2,40 +2,40 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SettingsService {
 
-  private _chartDays = 40;
+    private _chartDays = 40;
 
-  // readonly
-  public readonly fetchOnAdd = true;
+    // readonly
+    public readonly fetchOnAdd = true;
 
-  // editable on UI
-  public showDates = false;
+    // editable on UI
+    public showDates = false;
 
-  public showTimespans = false;
-  
-  public showPositions = false;
+    public showTimespans = false;
 
-  public showCharts = true;
+    public showPositions = false;
 
-  public showTags = true;
+    public showCharts = true;
 
-  public showOneYearEstimation = true;
+    public showTags = true;
 
-  public showDescriptions = true;
+    public showOneYearEstimation = true;
 
-  public $chartDaysUpdated = new Subject<number>();
+    public showDescriptions = true;
 
-  get chartDays() {
-    return this._chartDays;
-  }
+    public $chartDaysUpdated = new Subject<number>();
 
-  set chartDays(days: number) {
-    this._chartDays = days;
-    this.$chartDaysUpdated.next(days);
-  }
+    get chartDays() {
+        return this._chartDays;
+    }
 
-  constructor() { }
+    set chartDays(days: number) {
+        this._chartDays = days;
+        this.$chartDaysUpdated.next(days);
+    }
+
+    constructor() { }
 }

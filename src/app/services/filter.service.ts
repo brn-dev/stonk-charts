@@ -3,63 +3,63 @@ import { Asset } from '../models/asset';
 import { AssetService } from './asset.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FilterService {
 
-  private enabledTags = new Set<string>();
+    private enabledTags = new Set<string>();
 
-  constructor(private assetService: AssetService) {
-    this.enableAll();
-  }
-
-  get filteredAssets(): Asset[] {
-    if (this.enabledTags.size === this.assetService.getAllUniqueTags().length) {
-      return this.assetService.assets;
-    }
-    if (this.enabledTags.size === 0) {
-      return [];
+    constructor(private assetService: AssetService) {
+        this.enableAll();
     }
 
-    const assets: Asset[] = [];
-    for (const asset of this.assetService.assets) {
-      if (asset.tags.some(tag => this.enabledTags.has(tag))) {
-        assets.push(asset);
-      }
+    get filteredAssets(): Asset[] {
+        if (this.enabledTags.size === this.assetService.getAllUniqueTags().length) {
+            return this.assetService.assets;
+        }
+        if (this.enabledTags.size === 0) {
+            return [];
+        }
+
+        const assets: Asset[] = [];
+        for (const asset of this.assetService.assets) {
+            if (asset.tags.some(tag => this.enabledTags.has(tag))) {
+                assets.push(asset);
+            }
+        }
+        return assets;
     }
-    return assets;
-  }
 
-  public toggle(tag: string): boolean {
-    if (this.enabledTags.has(tag)) {
-      this.enabledTags.delete(tag);
-      return false;
-    } else {
-      this.enabledTags.add(tag);
-      return true;
+    public toggle(tag: string): boolean {
+        if (this.enabledTags.has(tag)) {
+            this.enabledTags.delete(tag);
+            return false;
+        } else {
+            this.enabledTags.add(tag);
+            return true;
+        }
     }
-  }
 
-  public isEnabled(tag: string) {
-    return this.enabledTags.has(tag);
-  }
-
-  public enableAll() {
-    for (const tag of this.assetService.getAllUniqueTags()) {
-      this.enabledTags.add(tag);
+    public isEnabled(tag: string) {
+        return this.enabledTags.has(tag);
     }
-  }
 
-  public enableNone() {
-    this.enabledTags.clear();
-  }
-
-  public enableNoneExcept(tag: string) {
-    if (this.enabledTags.size === 1 && this.enabledTags.has(tag)) {
-      this.enableAll();
-      return;
+    public enableAll() {
+        for (const tag of this.assetService.getAllUniqueTags()) {
+            this.enabledTags.add(tag);
+        }
     }
-    this.enableNone();
-    this.toggle(tag);
-  }
+
+    public enableNone() {
+        this.enabledTags.clear();
+    }
+
+    public enableNoneExcept(tag: string) {
+        if (this.enabledTags.size === 1 && this.enabledTags.has(tag)) {
+            this.enableAll();
+            return;
+        }
+        this.enableNone();
+        this.toggle(tag);
+    }
 }

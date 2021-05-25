@@ -23,7 +23,7 @@ export class TimespanUnit {
 export class Timespan {
 
     public static readonly WEEK_TO_DAYS = 5;
-    public static readonly MONTH_TO_DAYS = 21; 
+    public static readonly MONTH_TO_DAYS = 21;
     public static readonly YEAR_TO_DAYS = Timespan.MONTH_TO_DAYS * 12;
 
     public readonly amount: number;
@@ -56,5 +56,5 @@ export class Timespan {
         }
         throw new Error('Unkown TimespanUnit');
     }
-    
+
 }
