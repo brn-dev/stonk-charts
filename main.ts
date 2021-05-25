@@ -26,7 +26,8 @@ function createWindow(): BrowserWindow {
       contextIsolation: false,  // false if you want to run 2e2 test with Spectron
       enableRemoteModule : true, // true if you want to run 2e2 test  with Spectron or use remote module in renderer context (ie. Angular)
     },
-    autoHideMenuBar: true
+    autoHideMenuBar: true,
+    icon: __dirname + '/icon.ico'
   });
 
   if (serve) {
