@@ -9,28 +9,36 @@ export class FilterService {
 
     private enabledTags = new Set<string>();
 
+    public searchTerm = '';
+
     constructor(private assetService: AssetService) {
         this.enableAllTags();
     }
 
     get filteredAssets(): Asset[] {
-        if (this.enabledTags.size === this.assetService.getAllUniqueTags().length) {
+        if (this.enabledTags.size === this.assetService.getAllUniqueTags().length &&
+            this.searchTerm.length < 2
+        ) {
             return this.assetService.assets;
         }
         if (this.enabledTags.size === 0) {
             return [];
         }
-
+        
+        const searchTerm = this.searchTerm.toLowerCase();
         const assets: Asset[] = [];
         for (const asset of this.assetService.assets) {
-            if (asset.tags.some(tag => this.enabledTags.has(tag))) {
+            if (asset.tags.some(tag => this.enabledTags.has(tag)) &&
+                (this.searchTerm.length < 2 || asset.symbol.toLowerCase().includes(searchTerm))
+            ) {
                 assets.push(asset);
             }
         }
+        
         return assets;
     }
 
-    public toggleTags(tag: string): boolean {
+    public toggleTag(tag: string): boolean {
         if (this.enabledTags.has(tag)) {
             this.enabledTags.delete(tag);
             return false;
@@ -60,6 +68,6 @@ export class FilterService {
             return;
         }
         this.disableAllTags();
-        this.toggleTags(tag);
+        this.toggleTag(tag);
     }
 }

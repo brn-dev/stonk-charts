@@ -22,7 +22,7 @@ export class SettingsService {
 
     public showTags = true;
 
-    public showOneYearEstimation = true;
+    public showOneYearEstimation = false;
 
     public showDescriptions = true;
 

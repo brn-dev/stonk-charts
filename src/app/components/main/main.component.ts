@@ -61,4 +61,8 @@ export class MainComponent implements OnInit {
         this.assetService.loadAssets();
     }
 
+    public clearSearchTerm() {
+        this.filterService.searchTerm = '';
+    }
+
 }

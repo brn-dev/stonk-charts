@@ -48,10 +48,65 @@
     }
 
     .tags-container {
+        display: flex;
+        flex-direction: row;
         margin-top: 1rem;
         
         > button:nth-child(2) {
             margin: 0 0.5rem;
+        }
+    }
+
+    .search-box {
+        margin-top: 1rem;
+
+        .search-clear {
+            font-size: small;
+            color: gray;
+            margin-left: 0.25rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .checkbox-with-label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 0.2rem;
+    }
+
+    button {
+        all: unset;
+        background-color: #DDD;
+        padding: 0.2rem 0.4rem;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:active {
+            background-color: #F3F3F3;
+        }
+    }
+
+    input[type=checkbox] {
+        position: relative;
+        appearance: none;
+        background-color: #EEE;
+        border: 1px #666 solid;
+        padding: 5px;
+
+        &:checked::before {
+            position: absolute;
+            content: '';
+            background-color: #555;
+            top: calc(50% - 3px);
+            left: calc(50% - 3px);
+            width: 6px;
+            height: 6px;
         }
     }
 }

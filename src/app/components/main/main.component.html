@@ -1,14 +1,14 @@
 <div class="main-container">
     <div class="options-container">
         <div class="timespan-select-container">
-            <div *ngFor="let timespan of timespanService.availableTimespans">
+            <div *ngFor="let timespan of timespanService.availableTimespans" class="checkbox-with-label">
                 <input type="checkbox" [checked]="timespanService.isActive(timespan)"
                     (click)="timespanService.toggleActive(timespan)">
                 {{ timespan.displayText }}
             </div>
         </div>
         <div class="chart-settings">
-            <div>
+            <div class="checkbox-with-label">
                 <input type="checkbox" [(ngModel)]="settingsService.showCharts">
                 Show Charts
             </div>
@@ -18,27 +18,27 @@
             </div>
         </div>
         <div>
-            <div>
+            <div class="checkbox-with-label">
                 <input type="checkbox" [(ngModel)]="settingsService.showDates">
                 Show Dates
             </div>
-            <div>
+            <div class="checkbox-with-label">
                 <input type="checkbox" [(ngModel)]="settingsService.showTimespans">
                 Show Timespans
             </div>
-            <div>
+            <div class="checkbox-with-label">
                 <input type="checkbox" [(ngModel)]="settingsService.showPositions">
                 Show Positions
             </div>
-            <div>
+            <div class="checkbox-with-label">
                 <input type="checkbox" [(ngModel)]="settingsService.showTags">
                 Show Tags
             </div>
-            <div>
+            <div class="checkbox-with-label">
                 <input type="checkbox" [(ngModel)]="settingsService.showOneYearEstimation">
                 Show 1Y Estimation
             </div>
-            <div>
+            <div class="checkbox-with-label">
                 <input type="checkbox" [(ngModel)]="settingsService.showDescriptions">
                 Show Descriptions
             </div>
@@ -62,6 +62,9 @@
         <button (click)="filterService.enableAllTags()">All</button>
         <button (click)="filterService.disableAllTags()">None</button>
         <app-tag *ngFor="let tag of assetService.getAllUniqueTags()" [tag]="tag"></app-tag>
+    </div>
+    <div class="search-box">
+        <input [(ngModel)]="filterService.searchTerm"> <span class="search-clear" (click)="clearSearchTerm()" >&#10005;</span>
     </div>
     <div class="header-container" [class.with-chart]="settingsService.showCharts" [class.with-position]="settingsService.showPositions">
         <div *ngFor="let header of headers">
