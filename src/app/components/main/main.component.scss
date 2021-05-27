@@ -8,6 +8,10 @@
 
         font-size: small;
 
+        .clear-button {
+            margin-bottom: 0.5rem;
+        }
+
         .timespan-select-container {
             display: flex;
             flex-direction: column;
@@ -20,6 +24,23 @@
 
         .chart-settings input[type="number"] {
             width: 3.5rem;
+        }
+
+        .indicator-section {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            width: 30vw;
+            margin-top: 0.5rem;
+
+            &:last-child {
+                margin-bottom: 1rem;
+            }
+
+            .indicator-toggle {
+                width: 6rem;
+            }
         }
     }
 
@@ -50,6 +71,7 @@
     .tags-container {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         margin-top: 1rem;
         
         > button:nth-child(2) {

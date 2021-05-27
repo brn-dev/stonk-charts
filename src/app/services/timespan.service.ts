@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Timespan, TimespanUnit } from '../models/timespan';
+import { ToggleActiveSet } from '../models/toggle-active-set';
 
 @Injectable({
     providedIn: 'root'
@@ -30,33 +31,33 @@ export class TimespanService {
         new Timespan(0, TimespanUnit.Max),
     ]
 
-    private readonly _activeTimespans = new Set<Timespan>();
+    private readonly _activeTimespansSet = new ToggleActiveSet<Timespan>();
 
     constructor() {
         // default active
-        this._activeTimespans.add(this.availableTimespans[1]);
-        this._activeTimespans.add(this.availableTimespans[3]);
-        this._activeTimespans.add(this.availableTimespans[4]);
-        this._activeTimespans.add(this.availableTimespans[6]);
-        this._activeTimespans.add(this.availableTimespans[7]);
-        this._activeTimespans.add(this.availableTimespans[8]);
-        this._activeTimespans.add(this.availableTimespans[10]);
+        this._activeTimespansSet.setActive(this.availableTimespans[1], true);
+        this._activeTimespansSet.setActive(this.availableTimespans[3], true);
+        this._activeTimespansSet.setActive(this.availableTimespans[4], true);
+        this._activeTimespansSet.setActive(this.availableTimespans[6], true);
+        this._activeTimespansSet.setActive(this.availableTimespans[7], true);
+        this._activeTimespansSet.setActive(this.availableTimespans[8], true);
+        this._activeTimespansSet.setActive(this.availableTimespans[10], true);
     }
 
     get activeTimespans(): Timespan[] {
         return this.availableTimespans.filter(t => this.isActive(t));
     }
 
-    public toggleActive(timespan: Timespan) {
-        if (this._activeTimespans.has(timespan)) {
-            this._activeTimespans.delete(timespan);
-        } else {
-            this._activeTimespans.add(timespan);
-        }
+    public toggleActive(timespan: Timespan): void {
+        this._activeTimespansSet.toggleActive(timespan);
     }
 
-    public isActive(timespan: Timespan) {
-        return this._activeTimespans.has(timespan);
+    public isActive(timespan: Timespan): boolean {
+        return this._activeTimespansSet.isActive(timespan);
+    }
+
+    public clearActiveTimespans(): void {
+        this._activeTimespansSet.clear();
     }
 
 }

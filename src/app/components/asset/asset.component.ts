@@ -9,6 +9,8 @@ import { SettingsService } from '../../services/settings.service';
 import { ChartHelperService } from '../../services/chart-helper.service';
 import { Asset } from '../../models/asset';
 import { AssetService } from '../../services/asset.service';
+import { IndicatorService } from '../../services/indicator.service';
+import { Indicator } from '../../models/indicators/indicator';
 
 @Component({
     selector: 'app-asset',
@@ -31,7 +33,8 @@ export class AssetComponent implements OnInit {
         private timespanService: TimespanService,
         private assetService: AssetService,
         private settingsService: SettingsService,
-        private chartHelperService: ChartHelperService
+        private chartHelperService: ChartHelperService,
+        private indicatorService: IndicatorService,
     ) {
     }
 
@@ -41,6 +44,10 @@ export class AssetComponent implements OnInit {
 
     get deltaTimespans(): Timespan[] {
         return this.timespanService.activeTimespans;
+    }
+
+    get indicators(): Indicator[] {
+        return this.indicatorService.activeIndicators;
     }
 
     get dataDate(): string {
@@ -102,6 +109,15 @@ export class AssetComponent implements OnInit {
         }
 
         return entry.timestamp;
+    }
+
+    public getIndicatorValue(indicator: Indicator): number {
+        return indicator.compute(this.chart);
+    }
+
+    public getIndicatorValueOrNA(indicator: Indicator): string {
+        const value = this.getIndicatorValue(indicator);
+        return value ? value.toString() : 'n/a';
     }
 
     public async fetch() {

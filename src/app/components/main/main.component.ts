@@ -4,6 +4,7 @@ import { AssetService } from '../../services/asset.service';
 import { CacheService } from '../../services/cache.service';
 import { FileService } from '../../services/file.service';
 import { FilterService } from '../../services/filter.service';
+import { IndicatorService } from '../../services/indicator.service';
 import { SettingsService } from '../../services/settings.service';
 import { TimespanService } from '../../services/timespan.service';
 
@@ -24,7 +25,8 @@ export class MainComponent implements OnInit {
         public settingsService: SettingsService,
         public cacheService: CacheService,
         public filterService: FilterService,
-        public fileService: FileService
+        public fileService: FileService,
+        public indicatorService: IndicatorService,
     ) { }
 
     ngOnInit(): void {
@@ -45,6 +47,7 @@ export class MainComponent implements OnInit {
             headers.push("1Y Est");
         }
 
+        headers.push(...this.indicatorService.activeIndicators.map(t => t.displayText))
         headers.push(...this.timespanService.activeTimespans.map(t => t.displayText));
         return headers;
     }
@@ -63,6 +66,11 @@ export class MainComponent implements OnInit {
 
     public clearSearchTerm() {
         this.filterService.searchTerm = '';
+    }
+
+    public clearTimespansAndIndicators() {
+        this.timespanService.clearActiveTimespans();
+        this.indicatorService.clearActiveIndicators();
     }
 
 }

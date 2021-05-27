@@ -31,6 +31,13 @@
         <app-delta [delta]="oneYearEstimationDelta"></app-delta>
     </div>
 
+    <div *ngFor="let indicator of indicators">
+        <app-delta *ngIf="indicator.isDelta; else nonDelta" [delta]="getIndicatorValue(indicator)"></app-delta>
+        <ng-template #nonDelta>
+            {{ getIndicatorValueOrNA(indicator) }}
+        </ng-template>
+    </div>
+
     <div *ngFor="let deltaTimespan of deltaTimespans" >
         <app-delta [delta]="getDelta(deltaTimespan)" [timestamp]="getTimestamp(deltaTimespan)" [timespan]="deltaTimespan"></app-delta>
     </div>
