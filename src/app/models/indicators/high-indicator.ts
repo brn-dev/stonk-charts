@@ -15,7 +15,7 @@ export class HighIndicator implements Indicator {
 
     public compute(chart: Chart): number {       
         const days = this.timespan.toDays().amount;
-        const entriesLength = chart.entries.length;
+        const entriesLength = chart?.entries.length ?? 0;
 
         if (entriesLength === 0) {
             return null;

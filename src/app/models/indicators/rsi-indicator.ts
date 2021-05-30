@@ -13,8 +13,8 @@ export class RsiIndicator implements Indicator {
     }
 
     public compute(chart: Chart): number {
-        const entries = chart.entries;
-        const entriesLength = entries.length;
+        const entries = chart?.entries;
+        const entriesLength = entries?.length ?? 0;
         const rsiPeriod = this.timespan.toDays().amount;
         const days = rsiPeriod + 1;
 
