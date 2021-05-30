@@ -46,6 +46,13 @@
         }
     }
 
+    .asset-tags {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        row-gap: 0.25rem;
+    }
+
     .asset-description {
         color: gray;
         font-size: small;

@@ -29,7 +29,10 @@ export class HighIndicator implements Indicator {
                 high = h;
             }
         }
-        return 1 - (high / chart.entries[entriesLength - 1].close) ;
+
+        const diff = high - chart.entries[entriesLength - 1].close;
+
+        return -(diff / high) ;
     }
 
 }

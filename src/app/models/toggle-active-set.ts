@@ -3,6 +3,10 @@ export class ToggleActiveSet<T> {
 
     private readonly _activeItems = new Set<T>();
 
+    get size(): number {
+        return this._activeItems.size;
+    }
+
     public setActive(item: T, active: boolean): void  {
         if (this.isActive(item) !== active) {
             this.toggleActive(item);

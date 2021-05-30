@@ -1,7 +1,13 @@
 <span [class.disabled]="!filterService.isTagEnabled(tag)"
-      (click)="filterService.toggleTag(tag)"
+      [class.excluded]="filterService.isTagExcluded(tag)"
+      (click)="filterService.toggleEnableTag(tag)"
       (contextmenu)="filterService.disableAllTagsExcept(tag)"
       class="asset-tag"
 >
-    {{ tag }}
+    <span>
+        {{ tag }}
+    </span>
+    <span class="exclude-toggle" (click)="excludeTag($event)">
+        &#10005;
+    </span>
 </span>

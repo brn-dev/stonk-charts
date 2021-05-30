@@ -13,4 +13,9 @@ export class TagComponent {
 
     constructor(public filterService: FilterService) { }
 
+    public excludeTag(event: Event): void {
+        event.stopPropagation();
+        this.filterService.toggleExcludeTag(this.tag)
+    }
+
 }

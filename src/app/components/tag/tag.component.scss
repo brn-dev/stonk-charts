@@ -5,9 +5,20 @@
     margin: 0.5rem 0.1rem;
     background-color: darkblue;
     color: white;
+    white-space: nowrap;
+
+    .exclude-toggle {
+        padding: 0 0.05rem;
+        margin: 0 0.05rem;
+    }
 
     &.disabled {
         background-color: gray;
+    }
+
+    &.excluded .exclude-toggle {
+        background-color: red;
+        color: white;
     }
 
     &:hover {

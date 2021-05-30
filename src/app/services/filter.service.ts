@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Asset } from '../models/asset';
+import { ToggleActiveSet } from '../models/toggle-active-set';
 import { AssetService } from './asset.service';
 
 @Injectable({
@@ -7,7 +8,9 @@ import { AssetService } from './asset.service';
 })
 export class FilterService {
 
-    private enabledTags = new Set<string>();
+    private _enabledTags = new ToggleActiveSet<string>();
+
+    private _excludedTags = new ToggleActiveSet<string>();
 
     public searchTerm = '';
 
@@ -16,19 +19,21 @@ export class FilterService {
     }
 
     get filteredAssets(): Asset[] {
-        if (this.enabledTags.size === this.assetService.getAllUniqueTags().length &&
+        if (this._enabledTags.size === this.assetService.getAllUniqueTags().length &&
+            this._enabledTags.size === 0 &&
             this.searchTerm.length < 2
         ) {
             return this.assetService.assets;
         }
-        if (this.enabledTags.size === 0) {
+        if (this._enabledTags.size === 0) {
             return [];
         }
         
         const searchTerm = this.searchTerm.toLowerCase();
         const assets: Asset[] = [];
         for (const asset of this.assetService.assets) {
-            if (asset.tags.some(tag => this.enabledTags.has(tag)) &&
+            if (asset.tags.some(tag => this._enabledTags.isActive(tag)) &&
+                !asset.tags.some(tag => this._excludedTags.isActive(tag)) &&
                 (this.searchTerm.length < 2 || asset.symbol.toLowerCase().includes(searchTerm))
             ) {
                 assets.push(asset);
@@ -38,36 +43,38 @@ export class FilterService {
         return assets;
     }
 
-    public toggleTag(tag: string): boolean {
-        if (this.enabledTags.has(tag)) {
-            this.enabledTags.delete(tag);
-            return false;
-        } else {
-            this.enabledTags.add(tag);
-            return true;
-        }
+    public toggleEnableTag(tag: string): void {
+        this._enabledTags.toggleActive(tag);
     }
 
     public isTagEnabled(tag: string) {
-        return this.enabledTags.has(tag);
+        return this._enabledTags.isActive(tag);
     }
 
     public enableAllTags() {
         for (const tag of this.assetService.getAllUniqueTags()) {
-            this.enabledTags.add(tag);
+            this._enabledTags.setActive(tag, true);
         }
     }
 
     public disableAllTags() {
-        this.enabledTags.clear();
+        this._enabledTags.clear();
     }
 
     public disableAllTagsExcept(tag: string) {
-        if (this.enabledTags.size === 1 && this.enabledTags.has(tag)) {
+        if (this._enabledTags.size === 1 && this._enabledTags.isActive(tag)) {
             this.enableAllTags();
             return;
         }
         this.disableAllTags();
-        this.toggleTag(tag);
+        this.toggleEnableTag(tag);
+    }
+
+    public toggleExcludeTag(tag: string): void {
+        this._excludedTags.toggleActive(tag);
+    }
+
+    public isTagExcluded(tag: string): boolean {
+        return this._excludedTags.isActive(tag);
     }
 }
