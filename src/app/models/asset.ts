@@ -3,4 +3,5 @@ export interface Asset {
     tags: string[];
     oneYearEstimation?: number;
     description?: string;
+    unavailable?: boolean;
 }

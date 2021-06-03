@@ -48,6 +48,12 @@ export class CacheService {
 
         for (let i = 0; i < assets.length; i++) {
             const asset = assets[i];
+
+            if (asset.unavailable) {
+                console.log(`skipping fetching ${asset.symbol} - unavailable`);
+                continue;
+            }
+
             setTimeout(async () => {
                 console.log(`fetching ${asset.symbol}`);
 
