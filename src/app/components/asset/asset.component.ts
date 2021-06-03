@@ -137,7 +137,7 @@ export class AssetComponent implements OnInit {
     }
 
     public updateChartOptions(): void {
-        if (!this.chart) {
+        if (!this.chart || !this.settingsService.chartDays) {
             return null;
         }
 
