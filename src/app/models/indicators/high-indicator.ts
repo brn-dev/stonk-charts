@@ -1,16 +1,13 @@
 import { Chart } from "../chart";
 import { Timespan } from "../timespan";
-import { Indicator } from "./indicator";
+import { DeltaIndicator, Indicator } from "./indicator";
 
-export class HighIndicator implements Indicator {
+export class HighIndicator extends DeltaIndicator {
 
     public isDelta = true;
 
     constructor(private timespan: Timespan) {
-    }
-
-    get displayText(): string {
-        return this.timespan.displayText + ' High';
+        super(timespan.displayText + ' High');
     }
 
     public compute(chart: Chart): number {       

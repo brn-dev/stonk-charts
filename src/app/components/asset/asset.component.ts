@@ -11,6 +11,7 @@ import { Asset } from '../../models/asset';
 import { AssetService } from '../../services/asset.service';
 import { IndicatorService } from '../../services/indicator.service';
 import { Indicator } from '../../models/indicators/indicator';
+import { CalculationCacheService } from '../../services/calculation-cache.service';
 
 @Component({
     selector: 'app-asset',
@@ -35,6 +36,7 @@ export class AssetComponent implements OnInit {
         private settingsService: SettingsService,
         private chartHelperService: ChartHelperService,
         private indicatorService: IndicatorService,
+        private calculationCacheService: CalculationCacheService,
     ) {
     }
 
@@ -46,7 +48,7 @@ export class AssetComponent implements OnInit {
         return this.timespanService.activeTimespans;
     }
 
-    get indicators(): Indicator[] {
+    get indicators(): Indicator<any>[] {
         return this.indicatorService.activeIndicators;
     }
 
@@ -92,9 +94,9 @@ export class AssetComponent implements OnInit {
 
     public getDelta(timespan: Timespan): number {
         if (!this.chart) {
-            return 0;
+            return null;
         }
-        return this.chartHelperService.getDelta(this.chart, timespan);
+        return this.calculationCacheService.calculateDeltaForTimespan(this.chart, timespan);
     }
 
     public getTimestamp(timespan: Timespan): number {
@@ -111,11 +113,15 @@ export class AssetComponent implements OnInit {
         return entry.timestamp;
     }
 
-    public getIndicatorValue(indicator: Indicator): number {
-        return indicator.compute(this.chart);
+    public getIndicatorValue(indicator: Indicator<any>): any {
+        if (!this.chart) {
+            return null;
+        }
+
+        return this.calculationCacheService.calculateResultForIndicator(this.chart, indicator);
     }
 
-    public getIndicatorValueOrNA(indicator: Indicator): string {
+    public getIndicatorValueOrNA(indicator: Indicator<any>): any {
         const value = this.getIndicatorValue(indicator);
         return value ? value.toString() : 'n/a';
     }

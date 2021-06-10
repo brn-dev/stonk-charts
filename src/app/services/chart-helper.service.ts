@@ -35,6 +35,7 @@ export class ChartHelperService {
     }
 
     public getDelta(chart: Chart, timespan: Timespan): number | null {
+        
         const now = this.latestChartEntry(chart);
         const past = this.getDayInPast(chart, timespan);
 

@@ -1,11 +1,24 @@
 import { Chart } from "../chart";
 
-export interface Indicator {
+export abstract class Indicator<T> {
 
-    displayText: string;
+    constructor(
+        public readonly displayText: string, 
+        public readonly isDelta: boolean
+    ) { }
 
-    isDelta: boolean;
+    public abstract compute(chart: Chart): T;
 
-    compute(chart: Chart): number;
+}
+
+export abstract class NumberIndicator extends Indicator<number> {
+    
+}
+
+export abstract class DeltaIndicator extends NumberIndicator {
+
+    constructor(public displayText: string) {
+        super(displayText, true);
+    }
 
 }

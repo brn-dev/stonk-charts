@@ -11,7 +11,7 @@ import { RsiIndicator } from '../models/indicators/rsi-indicator';
 })
 export class IndicatorService {
 
-    public availableIndicators: Indicator[][] = [
+    public availableIndicators: Indicator<any>[][] = [
         [
             new LowIndicator(new Timespan(1, TimespanUnit.Week)),
             new LowIndicator(new Timespan(1, TimespanUnit.Month)),
@@ -31,12 +31,12 @@ export class IndicatorService {
         ]
     ];
 
-    private readonly _activeIndicatorsSet = new ToggleActiveSet<Indicator>();
+    private readonly _activeIndicatorsSet = new ToggleActiveSet<Indicator<any>>();
 
     constructor() { }
 
-    get activeIndicators(): Indicator[] {
-        const indicators: Indicator[] = [];
+    get activeIndicators(): Indicator<any>[] {
+        const indicators: Indicator<any>[] = [];
 
         for (const indicatorSection of this.availableIndicators) {
             for (const indicator of indicatorSection) {
@@ -49,11 +49,11 @@ export class IndicatorService {
         return indicators;
     }
 
-    public toggleActive(indicator: Indicator): void {
+    public toggleActive(indicator: Indicator<any>): void {
         this._activeIndicatorsSet.toggleActive(indicator);
     }
 
-    public isActive(indicator: Indicator): boolean {
+    public isActive(indicator: Indicator<any>): boolean {
         return this._activeIndicatorsSet.isActive(indicator);
     }
 

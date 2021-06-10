@@ -1,15 +1,12 @@
 import { Chart } from "../chart";
 import { Timespan } from "../timespan";
-import { Indicator } from "./indicator";
+import { Indicator, NumberIndicator } from "./indicator";
 
-export class RsiIndicator implements Indicator {
+export class RsiIndicator extends NumberIndicator {
     public isDelta = false;
 
     constructor(private timespan: Timespan) {
-    }
-
-    get displayText(): string {
-        return 'RSI ' + this.timespan.displayText;
+        super('RSI ' + timespan.displayText, false);
     }
 
     public compute(chart: Chart): number {
