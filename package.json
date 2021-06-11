@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@electron/remote": "1.0.4",
+    "color-interpolate": "1.0.5",
     "fs": "*",
     "highcharts": "9.1.0",
     "highcharts-angular": "2.10.0",

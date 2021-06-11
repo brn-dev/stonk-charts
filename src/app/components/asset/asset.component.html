@@ -32,13 +32,22 @@
     </div>
 
     <div *ngFor="let indicator of indicators">
-        <app-delta *ngIf="indicator.isDelta; else nonDelta" [delta]="getIndicatorValue(indicator)"></app-delta>
+        <app-delta *ngIf="indicator.isDelta; else nonDelta" 
+                   [delta]="getIndicatorValue(indicator)"
+                   [min]="getMinForIndicator(indicator)"
+                   [max]="getMaxForIndicator(indicator)"
+        ></app-delta>
         <ng-template #nonDelta>
             {{ getIndicatorValueOrNA(indicator) }}
         </ng-template>
     </div>
 
     <div *ngFor="let timespanIndicator of timespanIndicators" >
-        <app-delta [delta]="getIndicatorValue(timespanIndicator)" [timestamp]="getTimestamp(timespanIndicator.timespan)" [timespan]="timespanIndicator.timespan"></app-delta>
+        <app-delta [delta]="getIndicatorValue(timespanIndicator)" 
+                   [min]="getMinForIndicator(timespanIndicator)"
+                   [max]="getMaxForIndicator(timespanIndicator)"
+                   [timestamp]="getTimestamp(timespanIndicator.timespan)" 
+                   [timespan]="timespanIndicator.timespan"
+        ></app-delta>
     </div>
 </div>

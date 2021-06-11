@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Chart } from '../models/chart';
 import { Indicator } from '../models/indicators/indicator';
 import { ChartHelper } from '../utils/chart-helper';
+import { CacheService } from './cache.service';
+import { FilterService } from './filter.service';
 
 type IndicatorResults = Map<Indicator<any>, any>;
 
@@ -12,16 +14,12 @@ export class IndicatorResultCacheService {
 
     private chartIndicatorResults = new Map<Chart, IndicatorResults>();
 
-    constructor() { }
-
-    public calculateDelta<T>(chart: Chart, indicator: Indicator<T>): T {
+    public calculateResult<T>(chart: Chart, indicator: Indicator<T>): T {
         if (this.chartIndicatorResults.has(chart) && 
                 this.chartIndicatorResults.get(chart).has(indicator)
         ) {
             return this.chartIndicatorResults.get(chart).get(indicator);
         }
-
-        
         const calculationResult = indicator.compute(chart);
         
         const indicatorResults = this.getOrCreateForChart(chart);

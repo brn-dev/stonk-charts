@@ -31,7 +31,9 @@ export class TimespanService {
         new Timespan(5, TimespanUnit.Year),
         // max
         new Timespan(0, TimespanUnit.Max),
-    ]
+    ];
+
+    public readonly availableTimespanIndicators: TimespanIndicator[];
 
     private readonly _activeTimespansSet = new ToggleActiveSet<Timespan>();
 
@@ -46,6 +48,10 @@ export class TimespanService {
         this._activeTimespansSet.setActive(this.availableTimespans[7], true);
         this._activeTimespansSet.setActive(this.availableTimespans[8], true);
         this._activeTimespansSet.setActive(this.availableTimespans[10], true);
+
+        this.availableTimespanIndicators = this.availableTimespans.map(
+            t => new TimespanIndicator(t, settingsService)
+        );
     }
 
     get activeTimespans(): Timespan[] {
@@ -53,7 +59,7 @@ export class TimespanService {
     }
 
     get activeTimespanIndicators(): TimespanIndicator[] {
-        return this.activeTimespans.map(t => new TimespanIndicator(t, this.settingsService));
+        return this.availableTimespanIndicators.filter(ti => this.isActive(ti.timespan));
     }
 
     public toggleActive(timespan: Timespan): void {

@@ -1,5 +1,5 @@
 <div class="delta-container">
-    <div *ngIf="deltaPercent !== null; else naPercent" [class.negative]="deltaPercent < 0" [class.positive]="deltaPercent > 0">
+    <div *ngIf="deltaPercent !== null; else naPercent" [style.color]="color">  <!-- [class.negative]="deltaPercent < 0" [class.positive]="deltaPercent > 0"> -->
         {{ deltaPercent }} %
     </div>
     <ng-template #naPercent>

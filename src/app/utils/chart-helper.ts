@@ -26,6 +26,9 @@ export class ChartHelper {
 
 
     public static getDayInPast(chart: Chart, days: number): ChartEntry | null {
+        if (!chart?.entries) {
+            return null;
+        }
         let idx = chart.entries.length - 1 - days;
         if (idx < 0) {
             return null

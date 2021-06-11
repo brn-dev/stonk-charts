@@ -10,9 +10,10 @@ import { ChartHelper } from '../../utils/chart-helper';
 import { Asset } from '../../models/asset';
 import { AssetService } from '../../services/asset.service';
 import { IndicatorService } from '../../services/indicator.service';
-import { Indicator } from '../../models/indicators/indicator';
+import { Indicator, NumberIndicator } from '../../models/indicators/indicator';
 import { IndicatorResultCacheService } from '../../services/indicator-result-cache.service';
 import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
+import { IndicatorMinMaxService } from '../../services/indicator-min-max.service';
 
 @Component({
     selector: 'app-asset',
@@ -37,6 +38,7 @@ export class AssetComponent implements OnInit {
         private settingsService: SettingsService,
         private indicatorService: IndicatorService,
         private indicatorResultCacheService: IndicatorResultCacheService,
+        private indicatorMinMaxService: IndicatorMinMaxService,
     ) {
     }
 
@@ -111,7 +113,7 @@ export class AssetComponent implements OnInit {
             return null;
         }
 
-        return this.indicatorResultCacheService.calculateDelta(this.chart, indicator);
+        return this.indicatorResultCacheService.calculateResult(this.chart, indicator);
     }
 
     public getIndicatorValueOrNA(indicator: Indicator<any>): any {
@@ -119,15 +121,23 @@ export class AssetComponent implements OnInit {
         return value ? value.toString() : 'n/a';
     }
 
-    public async fetch() {
+    public getMinForIndicator(indicator: NumberIndicator): number {
+        return this.indicatorMinMaxService.getMinForVisibleCharts(indicator);
+    }
+
+    public getMaxForIndicator(indicator: NumberIndicator): number {
+        return this.indicatorMinMaxService.getMaxForVisibleCharts(indicator);
+    }
+
+    public async fetch(): Promise<void> {
         this.cacheService.fetchAsset(this.asset);
     }
 
-    public remove() {
+    public remove(): void {
         this.assetService.removeAsset(this.asset);
     }
 
-    public changePosition() {
+    public changePosition(): void {
         if (this._positionIndex === null) {
             return;
         }

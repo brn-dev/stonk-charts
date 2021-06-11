@@ -11,8 +11,6 @@ export class FileService {
     public readonly BASE_PATH = this.homedir + "/stonk-charts/";
 
     constructor() {
-        console.log(this.homedir);
-
         this.makeSureBasePathExists();
     }
 
@@ -32,8 +30,6 @@ export class FileService {
     }
 
     private makeSureBasePathExists() {
-        console.log(this.fs);
-
         if (!this.fs.existsSync(this.BASE_PATH)) {
             this.fs.mkdirSync(this.BASE_PATH);
         }

@@ -18,17 +18,11 @@ export class TimespanIndicator extends DeltaIndicator {
         const now = ChartHelper.lastDay(chart);
         const past = ChartHelper.getDayInPastFromTimespan(chart, this.timespan, this.settingsService);
 
-        if (past === null) {
+        if (!now?.close || !past?.close) {
             return null;
         }
-
-        console.log(this.timespan.displayText);
         
-        console.log(DateUtils.toDate(now.timestamp));
-        console.log(DateUtils.toDate(past.timestamp));
         
-
-
         return ChartHelper.calculateDelta(now.close, past.close);
     }
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Asset } from '../models/asset';
 import { ToggleActiveSet } from '../models/toggle-active-set';
 import { AssetService } from './asset.service';
@@ -12,10 +13,21 @@ export class FilterService {
 
     private _excludedTags = new ToggleActiveSet<string>();
 
-    public searchTerm = '';
+    private _searchTerm = '';
+
+    public $filterUpdated = new Subject<void>();
 
     constructor(private assetService: AssetService) {
         this.enableAllTags();
+    }
+
+    get searchTerm(): string {
+        return this._searchTerm;
+    }
+
+    set searchTerm(term: string) {
+        this.searchTerm = term;
+        this.$filterUpdated.next();
     }
 
     get filteredAssets(): Asset[] {
@@ -45,6 +57,7 @@ export class FilterService {
 
     public toggleEnableTag(tag: string): void {
         this._enabledTags.toggleActive(tag);
+        this.$filterUpdated.next();
     }
 
     public isTagEnabled(tag: string) {
@@ -55,10 +68,12 @@ export class FilterService {
         for (const tag of this.assetService.getAllUniqueTags()) {
             this._enabledTags.setActive(tag, true);
         }
+        this.$filterUpdated.next();
     }
 
     public disableAllTags() {
         this._enabledTags.clear();
+        this.$filterUpdated.next();
     }
 
     public disableAllTagsExcept(tag: string) {
@@ -72,6 +87,7 @@ export class FilterService {
 
     public toggleExcludeTag(tag: string): void {
         this._excludedTags.toggleActive(tag);
+        this.$filterUpdated.next();
     }
 
     public isTagExcluded(tag: string): boolean {
