@@ -1,6 +1,6 @@
 import { Chart } from "../chart";
 import { Timespan } from "../timespan";
-import { Indicator, NumberIndicator } from "./indicator";
+import { NumberIndicator } from "./indicator";
 
 export class RsiIndicator extends NumberIndicator {
     public isDelta = false;
@@ -23,7 +23,12 @@ export class RsiIndicator extends NumberIndicator {
         const downs: number[] = [];
 
         for (let i = entriesLength - (days + 1); i < entriesLength - 1; i++) {
-            const change = entries[i + 1].close - entries[i].close;
+            const currentDayClose = entries[i].close;
+            const nextDayClose = entries[i + 1].close
+            if (!currentDayClose || !nextDayClose) {
+                continue;
+            }
+            const change = nextDayClose - currentDayClose;
             ups.push(change > 0 ? change : 0);
             downs.push(change < 0 ? -change : 0);
         }

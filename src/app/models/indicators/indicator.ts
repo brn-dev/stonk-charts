@@ -11,6 +11,10 @@ export abstract class Indicator<T> {
 }
 
 export abstract class NumberIndicator extends Indicator<number> {
+
+    protected isValidNumber(num: number) {
+        return !isNaN(num) && (!num || num === 0) && isFinite(num);
+    }
     
 }
 

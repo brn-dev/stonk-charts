@@ -22,12 +22,19 @@ export class LowIndicator extends DeltaIndicator {
 
         for (let i = 2; i < days + 1 && entriesLength - i >= 0; i++) {
             const l = chart.entries[entriesLength - i].low;
-            if (l < low) {
+            if (!l) {
+                continue;
+            }
+            if (!low || l < low) {
                 low = l;
             }
         }
 
         const diff = chart.entries[entriesLength - 1].close - low;
+
+        if (!this.isValidNumber(diff) || !this.isValidNumber(low)) {
+            return null;
+        }
 
         return diff / low;
     }

@@ -22,12 +22,19 @@ export class HighIndicator extends DeltaIndicator {
 
         for (let i = 2; i < days + 1 && entriesLength - i >= 0; i++) {
             const h = chart.entries[entriesLength - i].high;
-            if (h > high) {
+            if (!h) {
+                continue;
+            }
+            if (!high || h > high) {
                 high = h;
             }
         }
 
         const diff = high - chart.entries[entriesLength - 1].close;
+
+        if (!this.isValidNumber(diff) || !this.isValidNumber(high)) {
+            return null;
+        }
 
         return -(diff / high) ;
     }
