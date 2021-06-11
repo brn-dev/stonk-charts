@@ -8,7 +8,6 @@ export abstract class Indicator<T> {
     ) { }
 
     public abstract compute(chart: Chart): T;
-
 }
 
 export abstract class NumberIndicator extends Indicator<number> {

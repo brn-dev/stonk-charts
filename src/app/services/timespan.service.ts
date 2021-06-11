@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { TimespanIndicator } from '../models/indicators/timespan-indicator';
 import { Timespan, TimespanUnit } from '../models/timespan';
 import { ToggleActiveSet } from '../models/toggle-active-set';
+import { SettingsService } from './settings.service';
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +35,9 @@ export class TimespanService {
 
     private readonly _activeTimespansSet = new ToggleActiveSet<Timespan>();
 
-    constructor() {
+    constructor(
+        private settingsService: SettingsService
+    ) {
         // default active
         this._activeTimespansSet.setActive(this.availableTimespans[1], true);
         this._activeTimespansSet.setActive(this.availableTimespans[3], true);
@@ -46,6 +50,10 @@ export class TimespanService {
 
     get activeTimespans(): Timespan[] {
         return this.availableTimespans.filter(t => this.isActive(t));
+    }
+
+    get activeTimespanIndicators(): TimespanIndicator[] {
+        return this.activeTimespans.map(t => new TimespanIndicator(t, this.settingsService));
     }
 
     public toggleActive(timespan: Timespan): void {

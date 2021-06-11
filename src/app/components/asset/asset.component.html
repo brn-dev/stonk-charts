@@ -38,7 +38,7 @@
         </ng-template>
     </div>
 
-    <div *ngFor="let deltaTimespan of deltaTimespans" >
-        <app-delta [delta]="getDelta(deltaTimespan)" [timestamp]="getTimestamp(deltaTimespan)" [timespan]="deltaTimespan"></app-delta>
+    <div *ngFor="let timespanIndicator of timespanIndicators" >
+        <app-delta [delta]="getIndicatorValue(timespanIndicator)" [timestamp]="getTimestamp(timespanIndicator.timespan)" [timespan]="timespanIndicator.timespan"></app-delta>
     </div>
 </div>

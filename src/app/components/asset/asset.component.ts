@@ -6,12 +6,13 @@ import { TimespanService } from '../../services/timespan.service';
 import { DateUtils } from '../../utils/date-utils';
 import * as Highcharts from 'highcharts'
 import { SettingsService } from '../../services/settings.service';
-import { ChartHelperService } from '../../services/chart-helper.service';
+import { ChartHelper } from '../../utils/chart-helper';
 import { Asset } from '../../models/asset';
 import { AssetService } from '../../services/asset.service';
 import { IndicatorService } from '../../services/indicator.service';
 import { Indicator } from '../../models/indicators/indicator';
-import { CalculationCacheService } from '../../services/calculation-cache.service';
+import { IndicatorResultCacheService } from '../../services/indicator-result-cache.service';
+import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
 
 @Component({
     selector: 'app-asset',
@@ -34,9 +35,8 @@ export class AssetComponent implements OnInit {
         private timespanService: TimespanService,
         private assetService: AssetService,
         private settingsService: SettingsService,
-        private chartHelperService: ChartHelperService,
         private indicatorService: IndicatorService,
-        private calculationCacheService: CalculationCacheService,
+        private indicatorResultCacheService: IndicatorResultCacheService,
     ) {
     }
 
@@ -44,8 +44,8 @@ export class AssetComponent implements OnInit {
         return this.cacheService.getForAsset(this.asset);
     }
 
-    get deltaTimespans(): Timespan[] {
-        return this.timespanService.activeTimespans;
+    get timespanIndicators(): TimespanIndicator[] {
+        return this.timespanService.activeTimespanIndicators;
     }
 
     get indicators(): Indicator<any>[] {
@@ -56,7 +56,7 @@ export class AssetComponent implements OnInit {
         if (!this.chart) {
             return '';
         }
-        const timestamp = this.chartHelperService.latestChartEntry(this.chart).timestamp;
+        const timestamp = ChartHelper.lastDay(this.chart).timestamp;
         return DateUtils.toIsoString(timestamp);
     }
 
@@ -75,7 +75,7 @@ export class AssetComponent implements OnInit {
     }
 
     get oneYearEstimationDelta(): number {
-        return this.chartHelperService.getOneYearEstimation(this.asset, this.chart);
+        return ChartHelper.getOneYearEstimation(this.asset, this.chart);
     }
 
     set positionIndex(index: number) {
@@ -92,19 +92,12 @@ export class AssetComponent implements OnInit {
         });
     }
 
-    public getDelta(timespan: Timespan): number {
-        if (!this.chart) {
-            return null;
-        }
-        return this.calculationCacheService.calculateDeltaForTimespan(this.chart, timespan);
-    }
-
     public getTimestamp(timespan: Timespan): number {
         if (!this.chart) {
             return null;
         }
 
-        const entry = this.chartHelperService.getDayInPast(this.chart, timespan);
+        const entry = ChartHelper.getDayInPastFromTimespan(this.chart, timespan, this.settingsService);
 
         if (entry === null) {
             return null;
@@ -118,7 +111,7 @@ export class AssetComponent implements OnInit {
             return null;
         }
 
-        return this.calculationCacheService.calculateResultForIndicator(this.chart, indicator);
+        return this.indicatorResultCacheService.calculateDelta(this.chart, indicator);
     }
 
     public getIndicatorValueOrNA(indicator: Indicator<any>): any {
