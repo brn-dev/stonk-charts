@@ -8,11 +8,16 @@ import { SettingsService } from '../services/settings.service';
 export class ChartHelper {
 
     public static getDayInPastFromTimespan(chart: Chart, timespan: Timespan, settingsService: SettingsService): ChartEntry | null {
+        if (chart === null || timespan == null) {
+            return null;
+        }
+
         if (timespan.unit === TimespanUnit.Max) {
             return this.firstDay(chart);
         }
 
         if (timespan.unit === TimespanUnit.Chart) {
+            
             const entry = this.getDayInPast(chart, settingsService.chartDays);
 
             if (entry === null) {
