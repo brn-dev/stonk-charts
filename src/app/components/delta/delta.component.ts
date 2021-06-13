@@ -40,7 +40,14 @@ export class DeltaComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    get color(): string {          
+    get color(): string {
+        if (!this.delta || 
+            (this.delta < 0 && !this.min) || 
+            (this.delta > 0 && !this.max)
+        ) {
+            return 'black';
+        }
+
         if (this.delta > 0) {
             return DeltaComponent.positiveColorMap(this.root(this.delta / this.max));
         } else if (this.delta < 0) {

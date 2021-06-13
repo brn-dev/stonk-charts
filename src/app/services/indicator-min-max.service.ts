@@ -43,26 +43,28 @@ export class IndicatorMinMaxService {
         let min = 0;
         let max = 0;
 
-        for (const asset of this.filterService.filteredAssets) {
-            const chart = this.cacheService.getForAsset(asset);
-            const result = this.indiciatorResultCacheService.calculateResult(chart, indicator);
-            
+        if (this.filterService.filteredAssets && this.filterService.filteredAssets.length > 1) {
+            for (const asset of this.filterService.filteredAssets) {
+                const chart = this.cacheService.getForAsset(asset);
+                const result = this.indiciatorResultCacheService.calculateResult(chart, indicator);
+                
 
-            if (result === null || !isFinite(result)) {
-                continue;
-            }
+                if (result === null || !isFinite(result)) {
+                    continue;
+                }
 
-            if (result < min) {
-                min = result;
-            } else if (result > max) {
-                max = result;
+                if (result < min) {
+                    min = result;
+                } else if (result > max) {
+                    max = result;
+                }
             }
         }
 
         this.indicatorMins.set(indicator, min);
         this.indicatorMaxs.set(indicator, max);
     }
-
+    
     private reset(): void {
         this.resetMins();
         this.resetMaxs();

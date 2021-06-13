@@ -26,7 +26,7 @@ export class FilterService {
     }
 
     set searchTerm(term: string) {
-        this.searchTerm = term;
+        this._searchTerm = term;
         this.$filterUpdated.next();
     }
 

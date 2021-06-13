@@ -53,6 +53,6 @@ export class ChartHelper {
         if (!asset.oneYearEstimation || !chart?.entries) {
             return null;
         }
-        return ChartHelper.calculateDelta(ChartHelper.lastDay(chart).close, asset.oneYearEstimation);
+        return ChartHelper.calculateDelta(asset.oneYearEstimation, ChartHelper.lastDay(chart).close);
     }
 }
