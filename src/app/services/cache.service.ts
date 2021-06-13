@@ -50,6 +50,7 @@ export class CacheService {
             const asset = assets[i];
 
             if (asset.unavailable) {
+                finishedFetchingCounter++;
                 console.log(`skipping fetching ${asset.symbol} - unavailable`);
                 continue;
             }
