@@ -41,16 +41,19 @@ export class DeltaComponent implements OnInit {
     }
 
     get color(): string {
-        if (!this.delta || 
-            (this.delta < 0 && !this.min) || 
-            (this.delta > 0 && !this.max)
-        ) {
+        if (!this.delta) {
             return 'black';
         }
 
         if (this.delta > 0) {
+            if (!this.max) {
+                return DeltaComponent.positiveColorMap(0.6);
+            }
             return DeltaComponent.positiveColorMap(this.root(this.delta / this.max));
         } else if (this.delta < 0) {
+            if (!this.min) {
+                return DeltaComponent.negativeColorMap(0.6);
+            }
             return DeltaComponent.negativeColorMap(this.root(this.delta / this.min))
         }
         return 'black';
