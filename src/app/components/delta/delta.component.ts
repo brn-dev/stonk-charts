@@ -13,9 +13,7 @@ const interpolate: (colors: string[]) => ((interpolationFraction: number) => str
 export class DeltaComponent implements OnInit {
 
     private static readonly ROOT_EXPONENT = 0.3;
-
-    // private static readonly positiveColorMap = interpolate(['#032100', '#007d08', '#02ba83']);
-    // private static readonly negativeColorMap = interpolate(['#290000', '#8a0000', '#c40000']);
+    
     private static readonly positiveColorMap = interpolate(['#3b453b', '#378243', '#00e335']);
     private static readonly negativeColorMap = interpolate(['#261919', '#ad2323', '#f90000']);
 
