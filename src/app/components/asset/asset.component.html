@@ -28,7 +28,10 @@
     ></highcharts-chart>
 
     <div *ngIf="settingsService.showOneYearEstimation">
-        <app-delta [delta]="oneYearEstimationDelta"></app-delta>
+        <app-delta [delta]="getIndicatorValue(oneYearEstimationIndicator)" 
+                   [min]="getMinForIndicator(oneYearEstimationIndicator)"
+                   [max]="getMaxForIndicator(oneYearEstimationIndicator)"
+        ></app-delta>
     </div>
 
     <div *ngFor="let indicator of indicators">

@@ -46,7 +46,7 @@ export class IndicatorMinMaxService {
         if (this.filterService.filteredAssets && this.filterService.filteredAssets.length > 1) {
             for (const asset of this.filterService.filteredAssets) {
                 const chart = this.cacheService.getForAsset(asset);
-                const result = this.indiciatorResultCacheService.calculateResult(chart, indicator);
+                const result = this.indiciatorResultCacheService.calculateResult(asset, chart, indicator);
                 
 
                 if (result === null || !isFinite(result)) {

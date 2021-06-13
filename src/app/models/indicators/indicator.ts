@@ -1,3 +1,4 @@
+import { Asset } from "../asset";
 import { Chart } from "../chart";
 
 export abstract class Indicator<T> {
@@ -7,7 +8,7 @@ export abstract class Indicator<T> {
         public readonly isDelta: boolean
     ) { }
 
-    public abstract compute(chart: Chart): T;
+    public abstract compute(chart: Chart, asset: Asset): T;
 }
 
 export abstract class NumberIndicator extends Indicator<number> {

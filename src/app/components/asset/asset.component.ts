@@ -10,10 +10,11 @@ import { ChartHelper } from '../../utils/chart-helper';
 import { Asset } from '../../models/asset';
 import { AssetService } from '../../services/asset.service';
 import { IndicatorService } from '../../services/indicator.service';
-import { Indicator, NumberIndicator } from '../../models/indicators/indicator';
+import { DeltaIndicator, Indicator, NumberIndicator } from '../../models/indicators/indicator';
 import { IndicatorResultCacheService } from '../../services/indicator-result-cache.service';
 import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
 import { IndicatorMinMaxService } from '../../services/indicator-min-max.service';
+import { OneYearEstimationIndicator } from '../../models/indicators/one-year-estimation-indicator';
 
 @Component({
     selector: 'app-asset',
@@ -21,6 +22,8 @@ import { IndicatorMinMaxService } from '../../services/indicator-min-max.service
     styleUrls: ['./asset.component.scss']
 })
 export class AssetComponent implements OnInit {
+
+    public static readonly ONE_YEAR_ESTIMATION_INDICATOR = new OneYearEstimationIndicator();
 
     @Input()
     public asset: Asset;
@@ -76,8 +79,8 @@ export class AssetComponent implements OnInit {
         return this.assetService.getPositionIndex(this.asset);
     }
 
-    get oneYearEstimationDelta(): number {
-        return ChartHelper.getOneYearEstimation(this.asset, this.chart);
+    get oneYearEstimationIndicator(): OneYearEstimationIndicator {
+        return AssetComponent.ONE_YEAR_ESTIMATION_INDICATOR;
     }
 
     set positionIndex(index: number) {
@@ -113,7 +116,7 @@ export class AssetComponent implements OnInit {
             return null;
         }
 
-        return this.indicatorResultCacheService.calculateResult(this.chart, indicator);
+        return this.indicatorResultCacheService.calculateResult(this.asset, this.chart, indicator);
     }
 
     public getIndicatorValueOrNA(indicator: Indicator<any>): any {

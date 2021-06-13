@@ -47,12 +47,4 @@ export class ChartHelper {
     public static calculateDelta(now: number, past: number): number | null {
         return now / past - 1;
     }
-
-
-    public static getOneYearEstimation(asset: Asset, chart: Chart): number {
-        if (!asset.oneYearEstimation || !chart?.entries) {
-            return null;
-        }
-        return ChartHelper.calculateDelta(asset.oneYearEstimation, ChartHelper.lastDay(chart).close);
-    }
 }

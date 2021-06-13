@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Asset } from '../models/asset';
 import { Chart } from '../models/chart';
 import { Indicator } from '../models/indicators/indicator';
-import { ChartHelper } from '../utils/chart-helper';
-import { CacheService } from './cache.service';
-import { FilterService } from './filter.service';
 
 type IndicatorResults = Map<Indicator<any>, any>;
 
@@ -12,15 +10,17 @@ type IndicatorResults = Map<Indicator<any>, any>;
 })
 export class IndicatorResultCacheService {
 
+    // Using Chart as key since if a new version of a chart arrives, it gets recalculated
+    // TODO: maybe clean up old versions of charts
     private chartIndicatorResults = new Map<Chart, IndicatorResults>();
 
-    public calculateResult<T>(chart: Chart, indicator: Indicator<T>): T {
+    public calculateResult<T>(asset: Asset, chart: Chart, indicator: Indicator<T>): T {
         if (this.chartIndicatorResults.has(chart) && 
                 this.chartIndicatorResults.get(chart).has(indicator)
         ) {
             return this.chartIndicatorResults.get(chart).get(indicator);
         }
-        const calculationResult = indicator.compute(chart);
+        const calculationResult = indicator.compute(chart, asset);
         
         const indicatorResults = this.getOrCreateForChart(chart);
         indicatorResults.set(indicator, calculationResult);
