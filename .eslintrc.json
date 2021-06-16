@@ -37,7 +37,7 @@
       "rules": {
         "@typescript-eslint/indent": [
           "error",
-          2,
+          4,
           {
             "SwitchCase": 1,
             "CallExpression": {
@@ -74,7 +74,8 @@
       ],
       "rules": {
         "@angular-eslint/template/banana-in-box": "error",
-        "@angular-eslint/template/no-negated-async": "error"
+        "@angular-eslint/template/no-negated-async": "error",
+        "quotes": [2, "single", { "avoidEscape":  true }]
       }
     }
   ]

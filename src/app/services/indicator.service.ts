@@ -13,21 +13,21 @@ export class IndicatorService {
 
     public availableIndicators: Indicator<any>[][] = [
         [
-            new LowIndicator(new Timespan(1, TimespanUnit.Week)),
-            new LowIndicator(new Timespan(1, TimespanUnit.Month)),
-            new LowIndicator(new Timespan(3, TimespanUnit.Month)),
-            new LowIndicator(new Timespan(6, TimespanUnit.Month)),
-            new LowIndicator(new Timespan(1, TimespanUnit.Year)),
+            LowIndicator.get(Timespan.get(TimespanUnit.Week, 1)),
+            LowIndicator.get(Timespan.get(TimespanUnit.Month, 1)),
+            LowIndicator.get(Timespan.get(TimespanUnit.Month, 3)),
+            LowIndicator.get(Timespan.get(TimespanUnit.Month, 6)),
+            LowIndicator.get(Timespan.get(TimespanUnit.Year, 1)),
         ],
         [
-            new HighIndicator(new Timespan(1, TimespanUnit.Week)),
-            new HighIndicator(new Timespan(1, TimespanUnit.Month)),
-            new HighIndicator(new Timespan(3, TimespanUnit.Month)),
-            new HighIndicator(new Timespan(6, TimespanUnit.Month)),
-            new HighIndicator(new Timespan(1, TimespanUnit.Year)),
+            HighIndicator.get(Timespan.get(TimespanUnit.Week, 1)),
+            HighIndicator.get(Timespan.get(TimespanUnit.Month, 1)),
+            HighIndicator.get(Timespan.get(TimespanUnit.Month, 3)),
+            HighIndicator.get(Timespan.get(TimespanUnit.Month, 6)),
+            HighIndicator.get(Timespan.get(TimespanUnit.Year, 1)),
         ],
         [
-            new RsiIndicator(new Timespan(14, TimespanUnit.DAY)),
+            RsiIndicator.get(Timespan.get(TimespanUnit.DAY, 14)),
         ]
     ];
 

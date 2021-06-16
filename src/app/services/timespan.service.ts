@@ -11,26 +11,26 @@ export class TimespanService {
 
     public readonly availableTimespans: Timespan[] = [
         // graph
-        new Timespan(0, TimespanUnit.Chart),
+        Timespan.get(TimespanUnit.Chart),
         // day
-        new Timespan(1, TimespanUnit.DAY),
-        new Timespan(3, TimespanUnit.DAY),
+        Timespan.get(TimespanUnit.DAY, 1),
+        Timespan.get(TimespanUnit.DAY, 3),
         // week
-        new Timespan(1, TimespanUnit.Week),
-        new Timespan(2, TimespanUnit.Week),
-        new Timespan(3, TimespanUnit.Week),
+        Timespan.get(TimespanUnit.Week, 1),
+        Timespan.get(TimespanUnit.Week, 2),
+        Timespan.get(TimespanUnit.Week, 3),
         //month
-        new Timespan(1, TimespanUnit.Month),
-        new Timespan(3, TimespanUnit.Month),
-        new Timespan(6, TimespanUnit.Month),
-        new Timespan(9, TimespanUnit.Month),
+        Timespan.get(TimespanUnit.Month, 1),
+        Timespan.get(TimespanUnit.Month, 3),
+        Timespan.get(TimespanUnit.Month, 6),
+        Timespan.get(TimespanUnit.Month, 9),
         // year
-        new Timespan(1, TimespanUnit.Year),
-        new Timespan(2, TimespanUnit.Year),
-        new Timespan(3, TimespanUnit.Year),
-        new Timespan(5, TimespanUnit.Year),
+        Timespan.get(TimespanUnit.Year, 1),
+        Timespan.get(TimespanUnit.Year, 2),
+        Timespan.get(TimespanUnit.Year, 3),
+        Timespan.get(TimespanUnit.Year, 5),
         // max
-        new Timespan(0, TimespanUnit.Max),
+        Timespan.get(TimespanUnit.Max),
     ];
 
     public readonly availableTimespanIndicators: TimespanIndicator[];
@@ -50,7 +50,7 @@ export class TimespanService {
         this._activeTimespansSet.setActive(this.availableTimespans[10], true);
 
         this.availableTimespanIndicators = this.availableTimespans.map(
-            t => new TimespanIndicator(t, settingsService)
+            t => TimespanIndicator.get(t, settingsService)
         );
     }
 

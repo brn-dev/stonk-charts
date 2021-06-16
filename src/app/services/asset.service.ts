@@ -7,7 +7,7 @@ import { FileService } from './file.service';
 })
 export class AssetService {
 
-    public readonly ASSET_FILE_NAME = '_assets.json';
+    public readonly ASSETS_FILE_NAME = '_assets.json';
 
     private _assets: Asset[] = [];
 
@@ -84,12 +84,12 @@ export class AssetService {
     }
 
     public loadAssets(): void {
-        const result = this.fileService.readJsonFromFile<Asset[]>(this.ASSET_FILE_NAME);
+        const result = this.fileService.readJsonFromFile<Asset[]>(this.ASSETS_FILE_NAME);
         this._assets = result !== null ? result : [];
     }
 
     private saveAssets(): void {
-        this.fileService.writeJsonToFile(this.ASSET_FILE_NAME, this._assets);
+        this.fileService.writeJsonToFile(this.ASSETS_FILE_NAME, this._assets);
     }
 
     private isAsset(obj: any): obj is Asset {

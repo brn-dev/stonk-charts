@@ -1,20 +1,24 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Chart } from '../../models/chart';
-import { Timespan, TimespanUnit } from '../../models/timespan';
+import { Timespan } from '../../models/timespan';
 import { CacheService } from '../../services/cache.service';
 import { TimespanService } from '../../services/timespan.service';
 import { DateUtils } from '../../utils/date-utils';
-import * as Highcharts from 'highcharts'
+import * as Highcharts from 'highcharts';
 import { SettingsService } from '../../services/settings.service';
 import { ChartHelper } from '../../utils/chart-helper';
 import { Asset } from '../../models/asset';
 import { AssetService } from '../../services/asset.service';
 import { IndicatorService } from '../../services/indicator.service';
-import { DeltaIndicator, Indicator, NumberIndicator } from '../../models/indicators/indicator';
+import { Indicator, NumberIndicator } from '../../models/indicators/indicator';
 import { IndicatorResultCacheService } from '../../services/indicator-result-cache.service';
 import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
 import { IndicatorMinMaxService } from '../../services/indicator-min-max.service';
 import { OneYearEstimationIndicator } from '../../models/indicators/one-year-estimation-indicator';
+import { PortfolioAsset } from '../../models/portfolio';
+import { PortfolioService } from '../../services/portfolio.service';
+import { ProfitLossIndicator } from '../../models/indicators/profit-loss-indicator';
+import { AllocationPercentIndicator } from '../../models/indicators/allocation-percent-indicator';
 
 @Component({
     selector: 'app-asset',
@@ -22,8 +26,6 @@ import { OneYearEstimationIndicator } from '../../models/indicators/one-year-est
     styleUrls: ['./asset.component.scss']
 })
 export class AssetComponent implements OnInit {
-
-    public static readonly ONE_YEAR_ESTIMATION_INDICATOR = new OneYearEstimationIndicator();
 
     @Input()
     public asset: Asset;
@@ -42,11 +44,16 @@ export class AssetComponent implements OnInit {
         private indicatorService: IndicatorService,
         private indicatorResultCacheService: IndicatorResultCacheService,
         private indicatorMinMaxService: IndicatorMinMaxService,
+        private portfolioService: PortfolioService,
     ) {
     }
 
     get chart(): Chart {
         return this.cacheService.getForAsset(this.asset);
+    }
+
+    get portfolioAsset(): PortfolioAsset {
+        return this.portfolioService.getPortolioInfoFor(this.asset);
     }
 
     get timespanIndicators(): TimespanIndicator[] {
@@ -72,15 +79,23 @@ export class AssetComponent implements OnInit {
         return this.chart.entries.length;
     }
 
+    get oneYearEstimationIndicator(): OneYearEstimationIndicator {
+        return OneYearEstimationIndicator.singleton;
+    }
+
+    get profitLossIndicator(): ProfitLossIndicator {
+        return ProfitLossIndicator.singleton;
+    }
+
+    get allocationPercentIndicator(): AllocationPercentIndicator {
+        return AllocationPercentIndicator.singleton;
+    }
+
     get positionIndex(): number {
         if (this._positionIndex) {
             return this._positionIndex;
         }
         return this.assetService.getPositionIndex(this.asset);
-    }
-
-    get oneYearEstimationIndicator(): OneYearEstimationIndicator {
-        return AssetComponent.ONE_YEAR_ESTIMATION_INDICATOR;
     }
 
     set positionIndex(index: number) {
@@ -111,12 +126,12 @@ export class AssetComponent implements OnInit {
         return entry.timestamp;
     }
 
-    public getIndicatorValue(indicator: Indicator<any>): any {
+    public getIndicatorValue<T>(indicator: Indicator<T>): T {
         if (!this.chart) {
             return null;
         }
 
-        return this.indicatorResultCacheService.calculateResult(this.asset, this.chart, indicator);
+        return this.indicatorResultCacheService.calculateResult(this.chart, this.asset, this.portfolioAsset, indicator);
     }
 
     public getIndicatorValueOrNA(indicator: Indicator<any>): any {
@@ -133,7 +148,7 @@ export class AssetComponent implements OnInit {
     }
 
     public async fetch(): Promise<void> {
-        this.cacheService.fetchAsset(this.asset);
+        return this.cacheService.fetchAsset(this.asset);
     }
 
     public remove(): void {

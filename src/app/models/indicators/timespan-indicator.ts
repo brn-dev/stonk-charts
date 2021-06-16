@@ -1,13 +1,24 @@
 import { SettingsService } from "../../services/settings.service";
 import { ChartHelper } from "../../utils/chart-helper";
-import { DateUtils } from "../../utils/date-utils";
 import { Chart } from "../chart";
 import { Timespan } from "../timespan";
-import { DeltaIndicator, Indicator } from "./indicator";
+import { DeltaIndicator } from "./indicator";
 
 export class TimespanIndicator extends DeltaIndicator {
 
-    constructor(
+    private static _timespanTimespanIndicatorMap = new Map<Timespan, TimespanIndicator>();
+
+    public static get(timespan: Timespan, settingsService: SettingsService): TimespanIndicator {
+        if (this._timespanTimespanIndicatorMap.has(timespan)) {
+            return this._timespanTimespanIndicatorMap.get(timespan);
+        }
+
+        const indicator = new TimespanIndicator(timespan, settingsService);
+        this._timespanTimespanIndicatorMap.set(timespan, indicator);
+        return indicator;
+    }
+
+    private constructor(
         public timespan: Timespan, 
         private settingsService: SettingsService
     ) {

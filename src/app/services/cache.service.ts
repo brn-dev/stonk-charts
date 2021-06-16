@@ -13,6 +13,8 @@ import { AssetService } from './asset.service';
 })
 export class CacheService {
 
+    private readonly BASE_PATH = 'assets/';
+
     private readonly STAGGER_MILLIS = 500;
 
     private assetChartCache = new Map<string, Chart>();
@@ -38,11 +40,11 @@ export class CacheService {
         return this.assetChartCache.get(asset.symbol);
     }
 
-    public async fetchAsset(asset: Asset) {
-        await this.fetchAssets([asset]);
+    public fetchAsset(asset: Asset): void {
+        this.fetchAssets([asset]);
     }
 
-    public async fetchAssets(assets: Asset[]): Promise<void> {
+    public fetchAssets(assets: Asset[]): void {
         const assetsToFetchCount = assets.length;
         let finishedFetchingCounter = 0;
 
@@ -63,7 +65,7 @@ export class CacheService {
 
                 console.log(`finished fetching ${asset.symbol}`);
 
-                finishedFetchingCounter++
+                finishedFetchingCounter++;
                 if (finishedFetchingCounter === assetsToFetchCount) {
                     console.log('fetch finished');
                 }
@@ -71,7 +73,7 @@ export class CacheService {
         }
     }
 
-    public fetchAssetsOlderThanDays(days: number) {
+    public fetchAssetsOlderThanDays(days: number): void {
         const assetsToFetch: Asset[] = [];
         const past = moment().subtract(days, 'd');
 
@@ -117,6 +119,6 @@ export class CacheService {
     }
 
     private getFileNameForAsset(asset: Asset) {
-        return `${asset.symbol}.json`;
+        return `${this.BASE_PATH}${asset.symbol}.json`;
     }
 }

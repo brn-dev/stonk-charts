@@ -5,7 +5,13 @@ import { DeltaIndicator } from "./indicator";
 
 export class OneYearEstimationIndicator extends DeltaIndicator {
 
-    constructor() {
+    private static SINGLETON_INSTANCE = new OneYearEstimationIndicator();
+
+    public static get singleton(): OneYearEstimationIndicator {
+        return this.SINGLETON_INSTANCE;
+    }
+
+    private constructor() {
         super('1Y Est');
     }
 

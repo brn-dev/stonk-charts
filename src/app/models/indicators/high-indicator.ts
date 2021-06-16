@@ -4,9 +4,21 @@ import { DeltaIndicator, Indicator } from "./indicator";
 
 export class HighIndicator extends DeltaIndicator {
 
+    private static _timespanHighIndicatorMap = new Map<Timespan, HighIndicator>();
+
+    public static get(timespan: Timespan): HighIndicator {
+        if (this._timespanHighIndicatorMap.has(timespan)) {
+            return this._timespanHighIndicatorMap.get(timespan);
+        }
+
+        const indicator = new HighIndicator(timespan);
+        this._timespanHighIndicatorMap.set(timespan, indicator);
+        return indicator;
+    }
+
     public isDelta = true;
 
-    constructor(private timespan: Timespan) {
+    private constructor(private timespan: Timespan) {
         super(timespan.displayText + ' High');
     }
 

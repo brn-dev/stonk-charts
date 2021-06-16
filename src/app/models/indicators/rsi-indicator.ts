@@ -3,9 +3,22 @@ import { Timespan } from "../timespan";
 import { NumberIndicator } from "./indicator";
 
 export class RsiIndicator extends NumberIndicator {
+
+    private static _timespanRsiIndicatorMap = new Map<Timespan, RsiIndicator>();
+
+    public static get(timespan: Timespan): RsiIndicator {
+        if (this._timespanRsiIndicatorMap.has(timespan)) {
+            return this._timespanRsiIndicatorMap.get(timespan);
+        }
+
+        const indicator = new RsiIndicator(timespan);
+        this._timespanRsiIndicatorMap.set(timespan, indicator);
+        return indicator;
+    }
+    
     public isDelta = false;
 
-    constructor(private timespan: Timespan) {
+    private constructor(private timespan: Timespan) {
         super('RSI ' + timespan.displayText, false);
     }
 
@@ -24,7 +37,7 @@ export class RsiIndicator extends NumberIndicator {
 
         for (let i = entriesLength - (days + 1); i < entriesLength - 1; i++) {
             const currentDayClose = entries[i].close;
-            const nextDayClose = entries[i + 1].close
+            const nextDayClose = entries[i + 1].close;
             if (!currentDayClose || !nextDayClose) {
                 continue;
             }

@@ -40,7 +40,7 @@ export class MainComponent implements OnInit {
         const headers = ['Symbol'];
 
         if (this.settingsService.showCharts) {
-            headers.push('Chart')
+            headers.push('Chart');
         }
 
         if (this.settingsService.showOneYearEstimation) {
@@ -52,23 +52,23 @@ export class MainComponent implements OnInit {
         return headers;
     }
 
-    public fetch() {
+    public fetch(): void {
         this.cacheService.fetchAssetsOlderThanDays(this.fetchDays);
     }
 
-    public editAssets() {
-        exec(this.fileService.BASE_PATH + this.assetService.ASSET_FILE_NAME);
+    public editAssets(): void {
+        exec(this.fileService.BASE_PATH + this.assetService.ASSETS_FILE_NAME);
     }
 
-    public refreshAssets() {
+    public refreshAssets(): void {
         this.assetService.loadAssets();
     }
 
-    public clearSearchTerm() {
+    public clearSearchTerm(): void {
         this.filterService.searchTerm = '';
     }
 
-    public clearTimespansAndIndicators() {
+    public clearTimespansAndIndicators(): void {
         this.timespanService.clearActiveTimespans();
         this.indicatorService.clearActiveIndicators();
     }
