@@ -19,7 +19,7 @@ interface YahooApiConfig {
 })
 export class YahooApiService implements ApiService {
 
-    private readonly configFileName = "_yahoo-api-config.json";
+    private readonly configFileName = "yahoo-api-config.json";
 
     private readonly config: YahooApiConfig;
 

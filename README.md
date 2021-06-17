@@ -9,7 +9,7 @@ Clone the repo
 Install npm packages
 `npm i`
 
-Create a folder `~/stonk-charts/` and create the file `_yahoo-api-config.json` in it with the following content:
+Create a folder `~/stonk-charts/` and create the file `yahoo-api-config.json` in it with the following content:
 ```JSON
 {
     "rapidapiKey": "YourKeyHere",

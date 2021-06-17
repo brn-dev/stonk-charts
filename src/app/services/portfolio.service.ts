@@ -8,7 +8,7 @@ import { Asset } from '../models/asset';
 })
 export class PortfolioService {
 
-    public readonly PORTFOLIO_FILE_NAME = '_portfolio.json';
+    public readonly PORTFOLIO_FILE_NAME = 'portfolio.json';
 
     private _portfolio: Portfolio;
     private _portfolioAssets = new Map<string, PortfolioAsset>();

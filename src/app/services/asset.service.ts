@@ -7,7 +7,7 @@ import { FileService } from './file.service';
 })
 export class AssetService {
 
-    public readonly ASSETS_FILE_NAME = '_assets.json';
+    public readonly ASSETS_FILE_NAME = 'assets.json';
 
     private _assets: Asset[] = [];
 
