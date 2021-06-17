@@ -10,6 +10,7 @@ import { AllocationPercentIndicator } from '../models/indicators/portfolio/alloc
 import { AllocationAmountIndicator } from '../models/indicators/portfolio/allocation-amount-indicator';
 import { ProfitLossIndicator } from '../models/indicators/portfolio/profit-loss-indicator';
 import { AverageLeverageIndicator } from '../models/indicators/portfolio/average-leverage-indicator';
+import { OneYearEstimationIndicator } from '../models/indicators/one-year-estimation-indicator';
 
 export interface IndicatorGroup {
     title?: string;
@@ -22,6 +23,12 @@ export interface IndicatorGroup {
 export class IndicatorService {
 
     public availableIndicators: IndicatorGroup[] = [
+        {
+            title: 'Misc',
+            indicators: [
+                OneYearEstimationIndicator.singleton
+            ]
+        },
         {
             title: 'Portfolio',
             indicators: [

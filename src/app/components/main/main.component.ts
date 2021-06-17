@@ -41,10 +41,6 @@ export class MainComponent implements OnInit {
             headers.push('Chart');
         }
 
-        if (this.settingsService.showOneYearEstimation) {
-            headers.push("1Y Est");
-        }
-
         headers.push(...this.indicatorService.activeIndicators.map(t => t.shortDescription));
         return headers;
     }

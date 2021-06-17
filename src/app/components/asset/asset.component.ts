@@ -11,13 +11,10 @@ import { AssetService } from '../../services/asset.service';
 import { IndicatorService } from '../../services/indicator.service';
 import { Indicator, NumberIndicator } from '../../models/indicators/indicator';
 import { IndicatorResultCacheService } from '../../services/indicator-result-cache.service';
-import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
 import { IndicatorMinMaxService } from '../../services/indicator-min-max.service';
-import { OneYearEstimationIndicator } from '../../models/indicators/one-year-estimation-indicator';
 import { PortfolioService } from '../../services/portfolio.service';
-import { ProfitLossIndicator } from '../../models/indicators/portfolio/profit-loss-indicator';
-import { AllocationPercentIndicator } from '../../models/indicators/portfolio/allocation-percent-indicator';
 import { PortfolioAssetInvestmentInfo } from '../../models/portfolio-asset-investment-info';
+import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
 
 @Component({
     selector: 'app-asset',
@@ -36,9 +33,9 @@ export class AssetComponent implements OnInit {
     private _positionIndex: number = null;
 
     constructor(
+        public settingsService: SettingsService,
         private cacheService: CacheService,
         private assetService: AssetService,
-        private settingsService: SettingsService,
         private indicatorService: IndicatorService,
         private indicatorResultCacheService: IndicatorResultCacheService,
         private indicatorMinMaxService: IndicatorMinMaxService,
@@ -73,18 +70,6 @@ export class AssetComponent implements OnInit {
         return this.chart.entries.length;
     }
 
-    get oneYearEstimationIndicator(): OneYearEstimationIndicator {
-        return OneYearEstimationIndicator.singleton;
-    }
-
-    get profitLossIndicator(): ProfitLossIndicator {
-        return ProfitLossIndicator.singleton;
-    }
-
-    get allocationPercentIndicator(): AllocationPercentIndicator {
-        return AllocationPercentIndicator.singleton;
-    }
-
     get positionIndex(): number {
         if (this._positionIndex) {
             return this._positionIndex;
@@ -106,20 +91,6 @@ export class AssetComponent implements OnInit {
         });
     }
 
-    public getTimestamp(timespan: Timespan): number {
-        if (!this.chart) {
-            return null;
-        }
-
-        const entry = ChartHelper.getDayInPastFromTimespan(this.chart, timespan);
-
-        if (entry === null) {
-            return null;
-        }
-
-        return entry.timestamp;
-    }
-
     public getIndicatorValue<T>(indicator: Indicator<T>): T {
         if (!this.chart) {
             return null;
@@ -139,6 +110,28 @@ export class AssetComponent implements OnInit {
 
     public getMaxForIndicator(indicator: NumberIndicator): number {
         return this.indicatorMinMaxService.getMaxForVisibleCharts(indicator);
+    }
+
+    public getTimespan(indicator: Indicator<any>): Timespan {
+        if (!(indicator instanceof TimespanIndicator)) {
+            return null;
+        }
+
+        return indicator.timespan;
+    }
+
+    public getTimestamp(indicator: Indicator<any>): number {
+        if (!this.chart || !(indicator instanceof TimespanIndicator)) {
+            return null;
+        }
+
+        const entry = ChartHelper.getDayInPastFromTimespan(this.chart, indicator.timespan);
+
+        if (entry === null) {
+            return null;
+        }
+
+        return entry.timestamp;
     }
 
     public fetch(): void {

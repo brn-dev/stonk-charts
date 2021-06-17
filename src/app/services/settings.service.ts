@@ -22,13 +22,11 @@ export class SettingsService {
 
     public showTags = true;
 
-    public showOneYearEstimation = false;
-
     public showDescriptions = true;
 
     public $chartDaysUpdated = new Subject<number>();
 
-    get chartDays() {
+    get chartDays(): number {
         return this._chartDays;
     }
 

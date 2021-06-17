@@ -26,18 +26,13 @@
                       style="height: 100%; display: block;"
     ></highcharts-chart>
 
-    <div *ngIf="settingsService.showOneYearEstimation">
-        <app-delta [delta]="getIndicatorValue(oneYearEstimationIndicator)" 
-                   [min]="getMinForIndicator(oneYearEstimationIndicator)"
-                   [max]="getMaxForIndicator(oneYearEstimationIndicator)"
-        ></app-delta>
-    </div>
-
     <div *ngFor="let indicator of indicators">
         <app-delta *ngIf="indicator.isDelta; else nonDelta" 
                    [delta]="getIndicatorValue(indicator)"
                    [min]="getMinForIndicator(indicator)"
                    [max]="getMaxForIndicator(indicator)"
+                   [timespan]="getTimespan(indicator)"
+                   [timestamp]="getTimestamp(indicator)"
         ></app-delta>
         <ng-template #nonDelta>
             {{ getIndicatorValueOrNA(indicator) }}

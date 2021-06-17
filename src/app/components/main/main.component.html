@@ -20,38 +20,34 @@
         </div>
         <div class="chart-settings">
             <div class="checkbox-with-label">
-                <input type="checkbox" [(ngModel)]="settingsService.showCharts">
-                Show Charts
+                <input type="checkbox" [(ngModel)]="settingsService.showCharts" id="show-charts-toggle">
+                <label for="show-charts-toggle">Show Charts</label>
             </div>
             <div>
-                <input type="number" [(ngModel)]="settingsService.chartDays">
-                Chart Days
+                <input type="number" [(ngModel)]="settingsService.chartDays" id="chart-days-input">
+                <label for="chart-days-input">Chart Days</label>
             </div>
         </div>
         <div>
             <div class="checkbox-with-label">
-                <input type="checkbox" [(ngModel)]="settingsService.showDates">
-                Show Dates
+                <input type="checkbox" [(ngModel)]="settingsService.showDates" id="show-dates-toggle">
+                <label for="show-dates-toggle">Show Dates</label>
             </div>
             <div class="checkbox-with-label">
-                <input type="checkbox" [(ngModel)]="settingsService.showTimespans">
-                Show Timespans
+                <input type="checkbox" [(ngModel)]="settingsService.showTimespans" id="show-timespans-toggle">
+                <label for="show-timespans-toggle">Show Timespans</label>
             </div>
 <!--            <div class="checkbox-with-label">-->
 <!--                <input type="checkbox" [(ngModel)]="settingsService.showPositions">-->
 <!--                Show Positions-->
 <!--            </div>-->
             <div class="checkbox-with-label">
-                <input type="checkbox" [(ngModel)]="settingsService.showTags">
-                Show Tags
+                <input type="checkbox" [(ngModel)]="settingsService.showTags" id="show-tags-toggle">
+                <label for="show-tags-toggle">Show Tags</label>
             </div>
             <div class="checkbox-with-label">
-                <input type="checkbox" [(ngModel)]="settingsService.showOneYearEstimation">
-                Show 1Y Estimation
-            </div>
-            <div class="checkbox-with-label">
-                <input type="checkbox" [(ngModel)]="settingsService.showDescriptions">
-                Show Descriptions
+                <input type="checkbox" [(ngModel)]="settingsService.showDescriptions" id="show-descriptions-toggle">
+                <label for="show-descriptions-toggle">Show Descriptions</label>
             </div>
         </div>
     </div>
