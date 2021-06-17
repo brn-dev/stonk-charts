@@ -1,10 +1,14 @@
-export interface PortfolioAsset {
+export interface PortfolioPosition {
     symbol: string;
-    allocationPercent: number;
-    averageOpen?: number;
+    isBuy: boolean;
+    invested: number;
+    open: number;
+    leverage: number;
+    fees: number;
 }
 
 export interface Portfolio {
     amountInvested?: number;
-    assets: PortfolioAsset[];  
+    // symbolMap: { [symbol: string]: string };
+    positions: PortfolioPosition[];
 }

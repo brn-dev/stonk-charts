@@ -15,10 +15,10 @@ import { IndicatorResultCacheService } from '../../services/indicator-result-cac
 import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
 import { IndicatorMinMaxService } from '../../services/indicator-min-max.service';
 import { OneYearEstimationIndicator } from '../../models/indicators/one-year-estimation-indicator';
-import { PortfolioAsset } from '../../models/portfolio';
 import { PortfolioService } from '../../services/portfolio.service';
 import { ProfitLossIndicator } from '../../models/indicators/profit-loss-indicator';
 import { AllocationPercentIndicator } from '../../models/indicators/allocation-percent-indicator';
+import { PortfolioAssetInvestmentInfo } from '../../models/portfolio-asset-investment-info';
 
 @Component({
     selector: 'app-asset',
@@ -52,8 +52,8 @@ export class AssetComponent implements OnInit {
         return this.cacheService.getForAsset(this.asset);
     }
 
-    get portfolioAsset(): PortfolioAsset {
-        return this.portfolioService.getPortolioInfoFor(this.asset);
+    get investmentInfo(): PortfolioAssetInvestmentInfo {
+        return this.portfolioService.getInvestmentInfoForAsset(this.asset);
     }
 
     get timespanIndicators(): TimespanIndicator[] {
@@ -131,7 +131,7 @@ export class AssetComponent implements OnInit {
             return null;
         }
 
-        return this.indicatorResultCacheService.calculateResult(this.chart, this.asset, this.portfolioAsset, indicator);
+        return this.indicatorResultCacheService.calculateResult(this.chart, this.asset, this.investmentInfo, indicator);
     }
 
     public getIndicatorValueOrNA(indicator: Indicator<any>): any {
@@ -147,8 +147,8 @@ export class AssetComponent implements OnInit {
         return this.indicatorMinMaxService.getMaxForVisibleCharts(indicator);
     }
 
-    public async fetch(): Promise<void> {
-        return this.cacheService.fetchAsset(this.asset);
+    public fetch(): void {
+        this.cacheService.fetchAsset(this.asset);
     }
 
     public remove(): void {

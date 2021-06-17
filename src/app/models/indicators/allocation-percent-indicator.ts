@@ -1,7 +1,7 @@
 import { NumberIndicator } from './indicator';
-import { PortfolioAsset } from '../portfolio';
 import { Asset } from '../asset';
 import { Chart } from '../chart';
+import { PortfolioAssetInvestmentInfo } from '../portfolio-asset-investment-info';
 
 export class AllocationPercentIndicator extends NumberIndicator {
 
@@ -16,8 +16,8 @@ export class AllocationPercentIndicator extends NumberIndicator {
 
     }
 
-    compute(chart: Chart, asset: Asset, portfolioAsset: PortfolioAsset): number {
-        return portfolioAsset.allocationPercent;
+    compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
+        return assetInvestmentInfo.allocationPercent;
     }
 
 }

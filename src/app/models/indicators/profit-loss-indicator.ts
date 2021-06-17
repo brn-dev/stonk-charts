@@ -1,8 +1,8 @@
 import { DeltaIndicator } from './indicator';
-import { PortfolioAsset } from '../portfolio';
 import { Asset } from '../asset';
 import { Chart } from '../chart';
 import { ChartHelper } from '../../utils/chart-helper';
+import { PortfolioAssetInvestmentInfo } from '../portfolio-asset-investment-info';
 
 export class ProfitLossIndicator extends DeltaIndicator {
 
@@ -16,11 +16,11 @@ export class ProfitLossIndicator extends DeltaIndicator {
         super('P/L');
     }
 
-    compute(chart: Chart, asset: Asset, portfolioAsset: PortfolioAsset): number {
-        if (!chart?.entries || !portfolioAsset?.averageOpen) {
+    compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
+        if (!chart?.entries || !assetInvestmentInfo?.averageOpen) {
             return null;
         }
-        return ChartHelper.calculateDelta(ChartHelper.lastDay(chart).close, portfolioAsset.averageOpen);
+        return ChartHelper.calculateDelta(ChartHelper.lastDay(chart).close, assetInvestmentInfo.averageOpen);
     }
 
 }
