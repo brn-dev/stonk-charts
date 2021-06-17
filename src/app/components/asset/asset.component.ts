@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Chart } from '../../models/chart';
 import { Timespan } from '../../models/timespan';
 import { CacheService } from '../../services/cache.service';
-import { TimespanService } from '../../services/timespan.service';
 import { DateUtils } from '../../utils/date-utils';
 import * as Highcharts from 'highcharts';
 import { SettingsService } from '../../services/settings.service';
@@ -38,7 +37,6 @@ export class AssetComponent implements OnInit {
 
     constructor(
         private cacheService: CacheService,
-        private timespanService: TimespanService,
         private assetService: AssetService,
         private settingsService: SettingsService,
         private indicatorService: IndicatorService,
@@ -54,10 +52,6 @@ export class AssetComponent implements OnInit {
 
     get investmentInfo(): PortfolioAssetInvestmentInfo {
         return this.portfolioService.getInvestmentInfoForAsset(this.asset);
-    }
-
-    get timespanIndicators(): TimespanIndicator[] {
-        return this.timespanService.activeTimespanIndicators;
     }
 
     get indicators(): Indicator<any>[] {
@@ -117,7 +111,7 @@ export class AssetComponent implements OnInit {
             return null;
         }
 
-        const entry = ChartHelper.getDayInPastFromTimespan(this.chart, timespan, this.settingsService);
+        const entry = ChartHelper.getDayInPastFromTimespan(this.chart, timespan);
 
         if (entry === null) {
             return null;
@@ -149,10 +143,6 @@ export class AssetComponent implements OnInit {
 
     public fetch(): void {
         this.cacheService.fetchAsset(this.asset);
-    }
-
-    public remove(): void {
-        this.assetService.removeAsset(this.asset);
     }
 
     public changePosition(): void {

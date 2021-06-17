@@ -2,6 +2,7 @@ import { NumberIndicator } from './indicator';
 import { Asset } from '../asset';
 import { Chart } from '../chart';
 import { PortfolioAssetInvestmentInfo } from '../portfolio-asset-investment-info';
+import { NumberFormatUtils } from '../../utils/number-format-utils';
 
 export class AllocationPercentIndicator extends NumberIndicator {
 
@@ -12,12 +13,12 @@ export class AllocationPercentIndicator extends NumberIndicator {
     }
 
     private constructor() {
-        super('Alloc', false);
+        super('Alloc %', false);
 
     }
 
     compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
-        return assetInvestmentInfo.allocationPercent;
+        return NumberFormatUtils.toPercent(assetInvestmentInfo?.allocationPercent);
     }
 
 }

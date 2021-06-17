@@ -6,7 +6,6 @@ import { FileService } from '../../services/file.service';
 import { FilterService } from '../../services/filter.service';
 import { IndicatorService } from '../../services/indicator.service';
 import { SettingsService } from '../../services/settings.service';
-import { TimespanService } from '../../services/timespan.service';
 
 const { exec } = window.require("child_process");
 
@@ -17,11 +16,10 @@ const { exec } = window.require("child_process");
 })
 export class MainComponent implements OnInit {
 
-    public fetchDays: number = 3;
+    public fetchDays = 3;
 
     constructor(
         public assetService: AssetService,
-        public timespanService: TimespanService,
         public settingsService: SettingsService,
         public cacheService: CacheService,
         public filterService: FilterService,
@@ -47,8 +45,7 @@ export class MainComponent implements OnInit {
             headers.push("1Y Est");
         }
 
-        headers.push(...this.indicatorService.activeIndicators.map(t => t.displayText))
-        headers.push(...this.timespanService.activeTimespans.map(t => t.displayText));
+        headers.push(...this.indicatorService.activeIndicators.map(t => t.displayText));
         return headers;
     }
 
@@ -68,8 +65,7 @@ export class MainComponent implements OnInit {
         this.filterService.searchTerm = '';
     }
 
-    public clearTimespansAndIndicators(): void {
-        this.timespanService.clearActiveTimespans();
+    public clearIndicators(): void {
         this.indicatorService.clearActiveIndicators();
     }
 

@@ -9,7 +9,6 @@
                 <span class="data-date">{{ dataDate }} <br> ({{ dataDays }}d) </span>
                 <div class="actions">
                     <button (click)="fetch()">🔄</button>
-                    <button (click)="remove()">❌</button>
                 </div>
             </div>
         </div>
@@ -43,14 +42,5 @@
         <ng-template #nonDelta>
             {{ getIndicatorValueOrNA(indicator) }}
         </ng-template>
-    </div>
-
-    <div *ngFor="let timespanIndicator of timespanIndicators" >
-        <app-delta [delta]="getIndicatorValue(timespanIndicator)" 
-                   [min]="getMinForIndicator(timespanIndicator)"
-                   [max]="getMaxForIndicator(timespanIndicator)"
-                   [timestamp]="getTimestamp(timespanIndicator.timespan)" 
-                   [timespan]="timespanIndicator.timespan"
-        ></app-delta>
     </div>
 </div>

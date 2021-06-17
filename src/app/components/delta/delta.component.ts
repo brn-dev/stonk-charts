@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Timespan } from '../../models/timespan';
 import { SettingsService } from '../../services/settings.service';
 import { DateUtils } from '../../utils/date-utils';
+import { NumberFormatUtils } from '../../utils/number-format-utils';
 
 const interpolate: (colors: string[]) => ((interpolationFraction: number) => string) = window.require('color-interpolate');
 
@@ -52,7 +53,7 @@ export class DeltaComponent implements OnInit {
             if (!this.min) {
                 return DeltaComponent.negativeColorMap(0.6);
             }
-            return DeltaComponent.negativeColorMap(this.root(this.delta / this.min))
+            return DeltaComponent.negativeColorMap(this.root(this.delta / this.min));
         }
         return 'black';
     }
@@ -65,11 +66,11 @@ export class DeltaComponent implements OnInit {
         return DateUtils.toIsoString(this.timestamp);
     }
 
-    get deltaPercent(): string {
+    get deltaPercent(): number {
         if (this.delta === null || this.delta === undefined) {
             return null;
         }
-        return (Math.round(this.delta * 10000) / 100).toFixed(2);
+        return NumberFormatUtils.toPercent(this.delta);
     }
 
     private root(fraction: number) {

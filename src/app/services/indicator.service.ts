@@ -5,41 +5,95 @@ import { LowIndicator } from '../models/indicators/low-indicator';
 import { Timespan, TimespanUnit } from '../models/timespan';
 import { ToggleActiveSet } from '../models/toggle-active-set';
 import { RsiIndicator } from '../models/indicators/rsi-indicator';
+import { TimespanIndicator } from '../models/indicators/timespan-indicator';
+import { AllocationPercentIndicator } from '../models/indicators/allocation-percent-indicator';
+
+export interface IndicatorGroup {
+    title?: string;
+    indicators: Indicator<any>[];
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class IndicatorService {
 
-    public availableIndicators: Indicator<any>[][] = [
-        [
-            LowIndicator.get(Timespan.get(TimespanUnit.Week, 1)),
-            LowIndicator.get(Timespan.get(TimespanUnit.Month, 1)),
-            LowIndicator.get(Timespan.get(TimespanUnit.Month, 3)),
-            LowIndicator.get(Timespan.get(TimespanUnit.Month, 6)),
-            LowIndicator.get(Timespan.get(TimespanUnit.Year, 1)),
-        ],
-        [
-            HighIndicator.get(Timespan.get(TimespanUnit.Week, 1)),
-            HighIndicator.get(Timespan.get(TimespanUnit.Month, 1)),
-            HighIndicator.get(Timespan.get(TimespanUnit.Month, 3)),
-            HighIndicator.get(Timespan.get(TimespanUnit.Month, 6)),
-            HighIndicator.get(Timespan.get(TimespanUnit.Year, 1)),
-        ],
-        [
-            RsiIndicator.get(Timespan.get(TimespanUnit.DAY, 14)),
-        ]
+    public availableIndicators: IndicatorGroup[] = [
+        {
+            title: 'Portfolio',
+            indicators: [
+                AllocationPercentIndicator.singleton
+            ]
+        },
+        {
+            title: 'Timespan Delta',
+            indicators: [
+                // day
+                TimespanIndicator.get(Timespan.get(TimespanUnit.DAY, 1)),
+                TimespanIndicator.get(Timespan.get(TimespanUnit.DAY, 3)),
+                // week
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Week, 1)),
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Week, 2)),
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Week, 3)),
+                //month
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 1)),
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 3)),
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 6)),
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 9)),
+                // year
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Year, 1)),
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Year, 2)),
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Year, 3)),
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Year, 5)),
+                // max
+                TimespanIndicator.get(Timespan.get(TimespanUnit.Max)),
+            ]
+        },
+        {
+            title: 'Low',
+            indicators: [
+                LowIndicator.get(Timespan.get(TimespanUnit.Week, 1)),
+                LowIndicator.get(Timespan.get(TimespanUnit.Month, 1)),
+                LowIndicator.get(Timespan.get(TimespanUnit.Month, 3)),
+                LowIndicator.get(Timespan.get(TimespanUnit.Month, 6)),
+                LowIndicator.get(Timespan.get(TimespanUnit.Year, 1)),
+            ]
+        },
+        {
+            title: 'High',
+            indicators: [
+                HighIndicator.get(Timespan.get(TimespanUnit.Week, 1)),
+                HighIndicator.get(Timespan.get(TimespanUnit.Month, 1)),
+                HighIndicator.get(Timespan.get(TimespanUnit.Month, 3)),
+                HighIndicator.get(Timespan.get(TimespanUnit.Month, 6)),
+                HighIndicator.get(Timespan.get(TimespanUnit.Year, 1)),
+            ]
+        },
+        {
+            title: 'RSI',
+            indicators: [
+                RsiIndicator.get(Timespan.get(TimespanUnit.DAY, 14)),
+            ]
+        },
     ];
 
     private readonly _activeIndicatorsSet = new ToggleActiveSet<Indicator<any>>();
 
-    constructor() { }
+    constructor() {
+        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.DAY, 1)));
+        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Week, 1)));
+        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Week, 2)));
+        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 1)));
+        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 3)));
+        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 6)));
+        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Year, 1)));
+    }
 
     get activeIndicators(): Indicator<any>[] {
         const indicators: Indicator<any>[] = [];
 
-        for (const indicatorSection of this.availableIndicators) {
-            for (const indicator of indicatorSection) {
+        for (const indicatorGroup of this.availableIndicators) {
+            for (const indicator of indicatorGroup.indicators) {
                 if (this._activeIndicatorsSet.isActive(indicator)) {
                     indicators.push(indicator);
                 }

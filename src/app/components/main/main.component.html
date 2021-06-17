@@ -1,26 +1,19 @@
 <div class="main-container">
     <div class="options-container">
-        <div>
-            <button (click)="clearTimespansAndIndicators()" class="clear-button">Clear</button>
-            <div class="timespan-select-container">
-                <div *ngFor="let timespan of timespanService.availableTimespans; let timespanIndex = index" class="checkbox-with-label">
-                    <input type="checkbox" 
-                           [id]="'timespan-' + timespanIndex"
-                           [checked]="timespanService.isActive(timespan)"
-                           (click)="timespanService.toggleActive(timespan)"
-                    >
-                    <label [for]="'timespan-' + timespanIndex">{{ timespan.displayText }}</label> 
-                </div>
-            </div>
+        <div class="indicators-container">
+            <button (click)="clearIndicators()" class="clear-button">Clear</button>
             <div>
-                <div *ngFor="let indicatorSection of this.indicatorService.availableIndicators; let indicatorSectionIndex = index" class="indicator-section">
-                    <div *ngFor="let indicator of indicatorSection; let indicatorIndex = index" class="checkbox-with-label indicator-toggle" >
-                        <input type="checkbox" 
-                               [id]="'indicator-checkbox-' + indicatorSectionIndex + '-' + indicatorIndex"
-                               [checked]="indicatorService.isActive(indicator)"
-                               (click)="indicatorService.toggleActive(indicator)"  
-                        >
-                        <label [for]="'indicator-checkbox-' + indicatorSectionIndex + '-' + indicatorIndex">{{ indicator.displayText }}</label> 
+                <div *ngFor="let indicatorGroup of this.indicatorService.availableIndicators; let indicatorSectionIndex = index">
+                    <strong>{{ indicatorGroup.title }}</strong>
+                    <div class="indicator-group-list">
+                        <div *ngFor="let indicator of indicatorGroup.indicators; let indicatorIndex = index" class="checkbox-with-label indicator-toggle" >
+                            <input type="checkbox"
+                                   [id]="'indicator-checkbox-' + indicatorSectionIndex + '-' + indicatorIndex"
+                                   [checked]="indicatorService.isActive(indicator)"
+                                   (click)="indicatorService.toggleActive(indicator)"
+                            >
+                            <label [for]="'indicator-checkbox-' + indicatorSectionIndex + '-' + indicatorIndex">{{ indicator.displayText }}</label>
+                        </div>
                     </div>
                 </div>
             </div>
