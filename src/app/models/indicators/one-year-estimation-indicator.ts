@@ -12,7 +12,7 @@ export class OneYearEstimationIndicator extends DeltaIndicator {
     }
 
     private constructor() {
-        super('1Y Est');
+        super('1Y Est', '1Y Estimation');
     }
 
     public compute(chart: Chart, asset: Asset): number {

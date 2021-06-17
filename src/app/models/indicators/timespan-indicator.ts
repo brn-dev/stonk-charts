@@ -20,7 +20,7 @@ export class TimespanIndicator extends DeltaIndicator {
     private constructor(
         public timespan: Timespan
     ) {
-        super(timespan.displayText);
+        super(timespan.displayText, timespan.displayText);
     }
 
     public compute(chart: Chart): number {

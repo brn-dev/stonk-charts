@@ -19,7 +19,7 @@ export class RsiIndicator extends NumberIndicator {
     public isDelta = false;
 
     private constructor(private timespan: Timespan) {
-        super('RSI ' + timespan.displayText, false);
+        super('RSI ' + timespan.displayText, 'RSI ' + timespan.displayText, false);
     }
 
     public compute(chart: Chart): number {

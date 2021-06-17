@@ -12,7 +12,7 @@
                                    [checked]="indicatorService.isActive(indicator)"
                                    (click)="indicatorService.toggleActive(indicator)"
                             >
-                            <label [for]="'indicator-checkbox-' + indicatorSectionIndex + '-' + indicatorIndex">{{ indicator.displayText }}</label>
+                            <label [for]="'indicator-checkbox-' + indicatorSectionIndex + '-' + indicatorIndex">{{ indicator.longDescription }}</label>
                         </div>
                     </div>
                 </div>
@@ -37,10 +37,10 @@
                 <input type="checkbox" [(ngModel)]="settingsService.showTimespans">
                 Show Timespans
             </div>
-            <div class="checkbox-with-label">
-                <input type="checkbox" [(ngModel)]="settingsService.showPositions">
-                Show Positions
-            </div>
+<!--            <div class="checkbox-with-label">-->
+<!--                <input type="checkbox" [(ngModel)]="settingsService.showPositions">-->
+<!--                Show Positions-->
+<!--            </div>-->
             <div class="checkbox-with-label">
                 <input type="checkbox" [(ngModel)]="settingsService.showTags">
                 Show Tags

@@ -19,7 +19,7 @@ export class HighIndicator extends DeltaIndicator {
     public isDelta = true;
 
     private constructor(private timespan: Timespan) {
-        super(timespan.displayText + ' High');
+        super(timespan.displayText + ' High', timespan.displayText + ' High');
     }
 
     public compute(chart: Chart): number {       

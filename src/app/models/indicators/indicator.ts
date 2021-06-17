@@ -5,7 +5,8 @@ import { PortfolioAssetInvestmentInfo } from '../portfolio-asset-investment-info
 export abstract class Indicator<T> {
 
     protected constructor(
-        public readonly displayText: string,
+        public readonly shortDescription: string,
+        public readonly longDescription: string,
         public readonly isDelta: boolean
     ) {
     }
@@ -23,8 +24,8 @@ export abstract class NumberIndicator extends Indicator<number> {
 
 export abstract class DeltaIndicator extends NumberIndicator {
 
-    protected constructor(public displayText: string) {
-        super(displayText, true);
+    protected constructor(shortDescription: string, longDescription: string) {
+        super(shortDescription, longDescription, true);
     }
 
 }

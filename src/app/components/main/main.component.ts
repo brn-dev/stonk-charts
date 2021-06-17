@@ -45,7 +45,7 @@ export class MainComponent implements OnInit {
             headers.push("1Y Est");
         }
 
-        headers.push(...this.indicatorService.activeIndicators.map(t => t.displayText));
+        headers.push(...this.indicatorService.activeIndicators.map(t => t.shortDescription));
         return headers;
     }
 

@@ -6,7 +6,10 @@ import { Timespan, TimespanUnit } from '../models/timespan';
 import { ToggleActiveSet } from '../models/toggle-active-set';
 import { RsiIndicator } from '../models/indicators/rsi-indicator';
 import { TimespanIndicator } from '../models/indicators/timespan-indicator';
-import { AllocationPercentIndicator } from '../models/indicators/allocation-percent-indicator';
+import { AllocationPercentIndicator } from '../models/indicators/portfolio/allocation-percent-indicator';
+import { AllocationAmountIndicator } from '../models/indicators/portfolio/allocation-amount-indicator';
+import { ProfitLossIndicator } from '../models/indicators/portfolio/profit-loss-indicator';
+import { AverageLeverageIndicator } from '../models/indicators/portfolio/average-leverage-indicator';
 
 export interface IndicatorGroup {
     title?: string;
@@ -22,7 +25,10 @@ export class IndicatorService {
         {
             title: 'Portfolio',
             indicators: [
-                AllocationPercentIndicator.singleton
+                AllocationAmountIndicator.singleton,
+                AllocationPercentIndicator.singleton,
+                // ProfitLossIndicator.singleton,
+                AverageLeverageIndicator.singleton,
             ]
         },
         {

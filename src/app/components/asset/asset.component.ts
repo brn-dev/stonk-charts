@@ -15,8 +15,8 @@ import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
 import { IndicatorMinMaxService } from '../../services/indicator-min-max.service';
 import { OneYearEstimationIndicator } from '../../models/indicators/one-year-estimation-indicator';
 import { PortfolioService } from '../../services/portfolio.service';
-import { ProfitLossIndicator } from '../../models/indicators/profit-loss-indicator';
-import { AllocationPercentIndicator } from '../../models/indicators/allocation-percent-indicator';
+import { ProfitLossIndicator } from '../../models/indicators/portfolio/profit-loss-indicator';
+import { AllocationPercentIndicator } from '../../models/indicators/portfolio/allocation-percent-indicator';
 import { PortfolioAssetInvestmentInfo } from '../../models/portfolio-asset-investment-info';
 
 @Component({
