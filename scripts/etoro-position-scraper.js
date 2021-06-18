@@ -2,7 +2,11 @@ delete positions;
 positions = [];
 
 function polish(str) {
-    return str.trim().replace('$', '').replace('X', '');
+    str = str.trim().replace('$', '');
+    if (str.startsWith('X')) {
+        str = str.replace('X', '');
+    }
+    return str;
 }
 
 document.querySelector('*[data-etoro-automation-id="portfolio-manual-trades-table-body-container"]')

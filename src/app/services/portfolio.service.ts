@@ -32,12 +32,18 @@ export class PortfolioService {
 
         this._portfolioMarkets.clear();
 
-        const totalAmountInvested = this.getTotalAmountInvested(this._portfolio.positions);
+        const totalAmountInvested = this.calculateTotalAmountInvested(this._portfolio.positions);
+        const totalExposure = this.calculateTotalExposure(this._portfolio.positions);
+
         const groupedPositions = this.groupPositions(this._portfolio.positions);
         for (const symbol of Array.from(groupedPositions.keys())) {
             this._portfolioMarkets.set(
                 symbol,
-                this.toPortfolioMarket(groupedPositions.get(symbol), totalAmountInvested)
+                new PortfolioAssetInvestmentInfo(
+                    groupedPositions.get(symbol),
+                    totalAmountInvested,
+                    totalExposure
+                )
             );
         }
     }
@@ -55,35 +61,18 @@ export class PortfolioService {
         return groupedPositions;
     }
 
-    private toPortfolioMarket(
-        marketPositions: PortfolioPosition[],
-        totalAmountInvested: number
-    ): PortfolioAssetInvestmentInfo {
-        let amountInvestedInMarket = 0;
-        for (const position of marketPositions) {
-            amountInvestedInMarket += position.invested;
-        }
-        let averageOpen = 0;
-        let averageLeverage = 0;
-        for (const position of marketPositions) {
-            averageOpen += position.open * position.invested / amountInvestedInMarket;
-            averageLeverage += position.leverage * position.invested / amountInvestedInMarket;
-        }
-
-        const allocationPercent = amountInvestedInMarket / totalAmountInvested;
-
-        return new PortfolioAssetInvestmentInfo(
-            amountInvestedInMarket,
-            allocationPercent,
-            averageOpen,
-            averageLeverage
-        );
-    }
-
-    private getTotalAmountInvested(positions: PortfolioPosition[]): number {
+    private calculateTotalAmountInvested(positions: PortfolioPosition[]): number {
         let sum = 0;
         for (const position of positions) {
             sum += position.invested;
+        }
+        return sum;
+    }
+
+    private calculateTotalExposure(positions: PortfolioPosition[]): number {
+        let sum = 0;
+        for (const position of positions) {
+            sum += position.invested * position.leverage;
         }
         return sum;
     }

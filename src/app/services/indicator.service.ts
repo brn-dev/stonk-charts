@@ -8,7 +8,7 @@ import { RsiIndicator } from '../models/indicators/rsi-indicator';
 import { TimespanIndicator } from '../models/indicators/timespan-indicator';
 import { AllocationPercentIndicator } from '../models/indicators/portfolio/allocation-percent-indicator';
 import { AllocationAmountIndicator } from '../models/indicators/portfolio/allocation-amount-indicator';
-import { ProfitLossIndicator } from '../models/indicators/portfolio/profit-loss-indicator';
+import { ProfitLossPercentIndicator } from '../models/indicators/portfolio/profit-loss-percent-indicator';
 import { AverageLeverageIndicator } from '../models/indicators/portfolio/average-leverage-indicator';
 import { OneYearEstimationIndicator } from '../models/indicators/one-year-estimation-indicator';
 
@@ -34,8 +34,8 @@ export class IndicatorService {
             indicators: [
                 AllocationAmountIndicator.singleton,
                 AllocationPercentIndicator.singleton,
-                // ProfitLossIndicator.singleton,
                 AverageLeverageIndicator.singleton,
+                ProfitLossPercentIndicator.singleton,
             ]
         },
         {
