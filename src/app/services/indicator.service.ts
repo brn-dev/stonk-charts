@@ -11,6 +11,8 @@ import { AllocationAmountIndicator } from '../models/indicators/portfolio/alloca
 import { ProfitLossPercentIndicator } from '../models/indicators/portfolio/profit-loss-percent-indicator';
 import { AverageLeverageIndicator } from '../models/indicators/portfolio/average-leverage-indicator';
 import { OneYearEstimationIndicator } from '../models/indicators/one-year-estimation-indicator';
+import { ExposureAmountIndicator } from '../models/indicators/portfolio/exposure-amount-indicator';
+import { ExposurePercentIndicator } from '../models/indicators/portfolio/exposure-percent-indicator';
 
 export interface IndicatorGroup {
     title?: string;
@@ -34,6 +36,8 @@ export class IndicatorService {
             indicators: [
                 AllocationAmountIndicator.singleton,
                 AllocationPercentIndicator.singleton,
+                ExposureAmountIndicator.singleton,
+                ExposurePercentIndicator.singleton,
                 AverageLeverageIndicator.singleton,
                 ProfitLossPercentIndicator.singleton,
             ]

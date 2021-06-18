@@ -4,21 +4,21 @@ import { Chart } from '../../chart';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { NumberFormatUtils } from '../../../utils/number-format-utils';
 
-export class AllocationAmountIndicator extends NumberIndicator {
+export class ExposureAmountIndicator extends NumberIndicator {
 
-    private static SINGLETON_INSTANCE = new AllocationAmountIndicator();
+    private static SINGLETON_INSTANCE = new ExposureAmountIndicator();
 
-    public static get singleton(): AllocationAmountIndicator {
+    public static get singleton(): ExposureAmountIndicator {
         return this.SINGLETON_INSTANCE;
     }
 
     private constructor() {
-        super('Alloc $', 'Allocation $', false);
+        super('Exp $', 'Exposure $', false);
 
     }
 
     public compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
-        return assetInvestmentInfo?.allocationAmount ?? null;
+        return assetInvestmentInfo?.exposureAmount ?? null;
     }
 
     public toDisplayFormat(computationResult: number): string {

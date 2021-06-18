@@ -4,28 +4,28 @@ import { Chart } from '../../chart';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { NumberFormatUtils } from '../../../utils/number-format-utils';
 
-export class AllocationAmountIndicator extends NumberIndicator {
+export class ExposurePercentIndicator extends NumberIndicator {
 
-    private static SINGLETON_INSTANCE = new AllocationAmountIndicator();
+    private static SINGLETON_INSTANCE = new ExposurePercentIndicator();
 
-    public static get singleton(): AllocationAmountIndicator {
+    public static get singleton(): ExposurePercentIndicator {
         return this.SINGLETON_INSTANCE;
     }
 
     private constructor() {
-        super('Alloc $', 'Allocation $', false);
+        super('Exp %', 'Exposure %', false);
 
     }
 
     public compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
-        return assetInvestmentInfo?.allocationAmount ?? null;
+        return assetInvestmentInfo?.exposurePercent ?? null;
     }
 
     public toDisplayFormat(computationResult: number): string {
         if (!computationResult) {
             return null;
         }
-        return `${NumberFormatUtils.roundTo2DecimalPlaces(computationResult)}$`;
+        return `${NumberFormatUtils.toPercent(computationResult)} %`;
     }
 
 }
