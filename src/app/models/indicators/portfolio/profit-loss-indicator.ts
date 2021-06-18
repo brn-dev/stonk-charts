@@ -16,7 +16,7 @@ export class ProfitLossIndicator extends DeltaIndicator {
         super('P/L', 'Profit/Loss');
     }
 
-    compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
+    public compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
         // TODO
         if (!chart?.entries || !assetInvestmentInfo?.averageOpen) {
             return null;

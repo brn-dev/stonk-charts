@@ -11,7 +11,7 @@ import { AssetService } from './asset.service';
 @Injectable({
     providedIn: 'root'
 })
-export class CacheService {
+export class ChartCacheService {
 
     private readonly BASE_PATH = 'assets/';
 

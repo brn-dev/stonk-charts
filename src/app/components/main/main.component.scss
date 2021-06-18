@@ -51,14 +51,6 @@
         }
     }
 
-    .header-container {
-        margin-top: 1rem;
-        position: sticky;
-        top: 0px;
-        background-color: white;
-        z-index: 1000;
-    }
-
     .tags-container {
         display: flex;
         flex-direction: row;
@@ -81,6 +73,27 @@
 
             &:hover {
                 cursor: pointer;
+            }
+        }
+    }
+
+    .header-container {
+        margin-top: 1rem;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 1000;
+
+        .indicator-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+
+            cursor: pointer;
+
+            .sort-symbol {
+                font-size: x-small;
             }
         }
     }

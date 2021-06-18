@@ -8,15 +8,9 @@ export class SettingsService {
 
     private _chartDays = 40;
 
-    // readonly
-    public readonly fetchOnAdd = true;
-
-    // editable on UI
     public showDates = false;
 
     public showTimespans = false;
-
-    public showPositions = false;
 
     public showCharts = true;
 

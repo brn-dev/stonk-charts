@@ -1,10 +1,10 @@
-import { Indicator } from '../indicator';
+import { NumberIndicator } from '../indicator';
 import { Asset } from '../../asset';
 import { Chart } from '../../chart';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { NumberFormatUtils } from '../../../utils/number-format-utils';
 
-export class AverageLeverageIndicator extends Indicator<string> {
+export class AverageLeverageIndicator extends NumberIndicator {
 
     private static SINGLETON_INSTANCE = new AverageLeverageIndicator();
 
@@ -17,11 +17,15 @@ export class AverageLeverageIndicator extends Indicator<string> {
 
     }
 
-    compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): string {
-        if (!assetInvestmentInfo?.averageLeverage) {
+    public compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
+        return assetInvestmentInfo?.averageLeverage ?? null;
+    }
+
+    public toDisplayFormat(computationResult: number): string {
+        if (!computationResult) {
             return null;
         }
-        return `X${NumberFormatUtils.roundTo2DecimalPlaces(assetInvestmentInfo.averageLeverage)}`;
+        return `X${NumberFormatUtils.roundTo2DecimalPlaces(computationResult)}`;
     }
 
 }

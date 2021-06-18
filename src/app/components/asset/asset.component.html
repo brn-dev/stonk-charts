@@ -1,9 +1,8 @@
-<div class="asset-container" [class.with-chart]="settingsService.showCharts" [class.with-position]="settingsService.showPositions">
+<div class="asset-container" [class.with-chart]="settingsService.showCharts" >
     <div>
         <div class="symbol-cell">
             <div>
-                <input *ngIf="settingsService.showPositions" [(ngModel)]="positionIndex" (keyup.enter)="changePosition()" class="position" type="number" min="0" >
-                <span class="symbol">{{ asset.symbol }}</span> 
+                <span class="symbol">{{ asset.symbol }}</span>
             </div>
             <div>
                 <span class="data-date">{{ dataDate }} <br> ({{ dataDays }}d) </span>
@@ -35,7 +34,7 @@
                    [timestamp]="getTimestamp(indicator)"
         ></app-delta>
         <ng-template #nonDelta>
-            {{ getIndicatorValueOrNA(indicator) }}
+            {{ getIndicatorDisplayValue(indicator) }}
         </ng-template>
     </div>
 </div>

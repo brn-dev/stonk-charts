@@ -56,6 +56,10 @@ export class RsiIndicator extends NumberIndicator {
         return Math.round(rsi * 100) / 100;
     }
 
+    public toDisplayFormat(computationResult: number): string {
+        return computationResult?.toString() ?? null;
+    }
+
     private avg(numbers: number[]) {
         return this.sum(numbers) / numbers.length;
     }

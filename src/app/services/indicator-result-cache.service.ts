@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Asset } from '../models/asset';
 import { Chart } from '../models/chart';
 import { Indicator } from '../models/indicators/indicator';
-import { PortfolioAssetInvestmentInfo } from '../models/portfolio-asset-investment-info';
+import { ChartCacheService } from './chart-cache.service';
+import { PortfolioService } from './portfolio.service';
 
 type IndicatorResults = Map<Indicator<any>, any>;
 
@@ -15,12 +16,20 @@ export class IndicatorResultCacheService {
     // TODO: maybe clean up old versions of charts
     private chartIndicatorResults = new Map<Chart, IndicatorResults>();
 
+    constructor(
+        private chartCacheService: ChartCacheService,
+        private portfolioService: PortfolioService,
+    ) {
+    }
+
+
     public calculateResult<T>(
-        chart: Chart,
         asset: Asset,
-        assetInvestmentInfo: PortfolioAssetInvestmentInfo,
         indicator: Indicator<T>
     ): T {
+        const chart = this.chartCacheService.getForAsset(asset);
+        const assetInvestmentInfo = this.portfolioService.getInvestmentInfoForAsset(asset);
+
         if (this.chartIndicatorResults.has(chart) &&
             this.chartIndicatorResults.get(chart).has(indicator)
         ) {

@@ -1,10 +1,10 @@
-import { Indicator } from '../indicator';
+import { Indicator, NumberIndicator } from '../indicator';
 import { Asset } from '../../asset';
 import { Chart } from '../../chart';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { NumberFormatUtils } from '../../../utils/number-format-utils';
 
-export class AllocationPercentIndicator extends Indicator<string> {
+export class AllocationPercentIndicator extends NumberIndicator {
 
     private static SINGLETON_INSTANCE = new AllocationPercentIndicator();
 
@@ -17,11 +17,15 @@ export class AllocationPercentIndicator extends Indicator<string> {
 
     }
 
-    compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): string {
-        if (!assetInvestmentInfo?.allocationPercent) {
+    public compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
+        return assetInvestmentInfo?.allocationPercent ?? null;
+    }
+
+    public toDisplayFormat(computationResult: number): string {
+        if (!computationResult) {
             return null;
         }
-        return `${NumberFormatUtils.toPercent(assetInvestmentInfo.allocationPercent)} %`;
+        return `${NumberFormatUtils.toPercent(computationResult)} %`;
     }
 
 }

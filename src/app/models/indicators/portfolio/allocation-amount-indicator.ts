@@ -1,9 +1,9 @@
-import { Indicator } from '../indicator';
+import { Indicator, NumberIndicator } from '../indicator';
 import { Asset } from '../../asset';
 import { Chart } from '../../chart';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 
-export class AllocationAmountIndicator extends Indicator<string> {
+export class AllocationAmountIndicator extends NumberIndicator {
 
     private static SINGLETON_INSTANCE = new AllocationAmountIndicator();
 
@@ -16,11 +16,15 @@ export class AllocationAmountIndicator extends Indicator<string> {
 
     }
 
-    compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): string {
-        if (!assetInvestmentInfo?.allocationAmount) {
+    public compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
+        return assetInvestmentInfo?.allocationAmount ?? null;
+    }
+
+    public toDisplayFormat(computationResult: number): string {
+        if (!computationResult) {
             return null;
         }
-        return `${assetInvestmentInfo.allocationAmount}$`;
+        return `${computationResult}$`;
     }
 
 }

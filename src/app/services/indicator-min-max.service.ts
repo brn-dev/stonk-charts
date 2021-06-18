@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NumberIndicator } from '../models/indicators/indicator';
-import { CacheService } from './cache.service';
+import { ChartCacheService } from './chart-cache.service';
 import { FilterService } from './filter.service';
 import { IndicatorResultCacheService } from './indicator-result-cache.service';
-import { PortfolioService } from './portfolio.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,12 +15,11 @@ export class IndicatorMinMaxService {
     constructor(
         private indiciatorResultCacheService: IndicatorResultCacheService,
         private filterService: FilterService,
-        private cacheService: CacheService,
-        private portfolioService: PortfolioService,
+        private chartCacheService: ChartCacheService,
     ) {
         this.reset();
         this.filterService.$filterUpdated.subscribe(() => this.reset());
-        this.cacheService.$assetUpdated.subscribe(() => this.reset());
+        this.chartCacheService.$assetUpdated.subscribe(() => this.reset());
     }
 
     public getMinForVisibleCharts(indicator: NumberIndicator): number {
@@ -46,10 +44,7 @@ export class IndicatorMinMaxService {
 
         if (this.filterService.filteredAssets && this.filterService.filteredAssets.length > 1) {
             for (const asset of this.filterService.filteredAssets) {
-                const chart = this.cacheService.getForAsset(asset);
-                const investmentInfo = this.portfolioService.getInvestmentInfoForAsset(asset);
-
-                const result = this.indiciatorResultCacheService.calculateResult(chart, asset, investmentInfo, indicator);
+                const result = this.indiciatorResultCacheService.calculateResult(asset, indicator);
 
                 if (result === null || !isFinite(result)) {
                     continue;

@@ -1,6 +1,6 @@
 import { Chart } from "../chart";
 import { Timespan } from "../timespan";
-import { DeltaIndicator, Indicator } from "./indicator";
+import { DeltaIndicator } from "./indicator";
 
 export class LowIndicator extends DeltaIndicator {
 

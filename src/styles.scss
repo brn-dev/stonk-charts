@@ -33,10 +33,6 @@ html, body {
   width: 25rem;
 }
 
-.with-position > *:first-child {
-  width: 16rem;
-}
-
 app-asset:nth-of-type(odd) > * {
   background-color: #F0F0F0;
 }

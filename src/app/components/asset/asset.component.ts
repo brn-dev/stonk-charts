@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Chart } from '../../models/chart';
 import { Timespan } from '../../models/timespan';
-import { CacheService } from '../../services/cache.service';
+import { ChartCacheService } from '../../services/chart-cache.service';
 import { DateUtils } from '../../utils/date-utils';
 import * as Highcharts from 'highcharts';
 import { SettingsService } from '../../services/settings.service';
@@ -12,8 +12,6 @@ import { IndicatorService } from '../../services/indicator.service';
 import { Indicator, NumberIndicator } from '../../models/indicators/indicator';
 import { IndicatorResultCacheService } from '../../services/indicator-result-cache.service';
 import { IndicatorMinMaxService } from '../../services/indicator-min-max.service';
-import { PortfolioService } from '../../services/portfolio.service';
-import { PortfolioAssetInvestmentInfo } from '../../models/portfolio-asset-investment-info';
 import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
 
 @Component({
@@ -34,21 +32,16 @@ export class AssetComponent implements OnInit {
 
     constructor(
         public settingsService: SettingsService,
-        private cacheService: CacheService,
+        private chartCacheService: ChartCacheService,
         private assetService: AssetService,
         private indicatorService: IndicatorService,
         private indicatorResultCacheService: IndicatorResultCacheService,
         private indicatorMinMaxService: IndicatorMinMaxService,
-        private portfolioService: PortfolioService,
     ) {
     }
 
     get chart(): Chart {
-        return this.cacheService.getForAsset(this.asset);
-    }
-
-    get investmentInfo(): PortfolioAssetInvestmentInfo {
-        return this.portfolioService.getInvestmentInfoForAsset(this.asset);
+        return this.chartCacheService.getForAsset(this.asset);
     }
 
     get indicators(): Indicator<any>[] {
@@ -70,21 +63,10 @@ export class AssetComponent implements OnInit {
         return this.chart.entries.length;
     }
 
-    get positionIndex(): number {
-        if (this._positionIndex) {
-            return this._positionIndex;
-        }
-        return this.assetService.getPositionIndex(this.asset);
-    }
-
-    set positionIndex(index: number) {
-        this._positionIndex = index;
-    }
-
     ngOnInit(): void {
         this.updateChartOptions();
         this.settingsService.$chartDaysUpdated.subscribe(() => this.updateChartOptions());
-        this.cacheService.$assetUpdated.subscribe(asset => {
+        this.chartCacheService.$assetUpdated.subscribe(asset => {
             if (this.asset === asset) {
                 this.updateChartOptions();
             }
@@ -96,11 +78,11 @@ export class AssetComponent implements OnInit {
             return null;
         }
 
-        return this.indicatorResultCacheService.calculateResult(this.chart, this.asset, this.investmentInfo, indicator);
+        return this.indicatorResultCacheService.calculateResult(this.asset, indicator);
     }
 
-    public getIndicatorValueOrNA(indicator: Indicator<any>): any {
-        const value = this.getIndicatorValue(indicator);
+    public getIndicatorDisplayValue(indicator: Indicator<any>): any {
+        const value = indicator.toDisplayFormat(this.getIndicatorValue(indicator));
         return value ? value.toString() : 'n/a';
     }
 
@@ -135,15 +117,7 @@ export class AssetComponent implements OnInit {
     }
 
     public fetch(): void {
-        this.cacheService.fetchAsset(this.asset);
-    }
-
-    public changePosition(): void {
-        if (this._positionIndex === null) {
-            return;
-        }
-        this.assetService.changePosition(this.asset, this._positionIndex);
-        this._positionIndex = null;
+        this.chartCacheService.fetchAsset(this.asset);
     }
 
     public updateChartOptions(): void {

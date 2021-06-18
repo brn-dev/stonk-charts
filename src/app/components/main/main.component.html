@@ -1,4 +1,5 @@
 <div class="main-container">
+
     <div class="options-container">
         <div class="indicators-container">
             <button (click)="clearIndicators()" class="clear-button">Clear</button>
@@ -37,10 +38,6 @@
                 <input type="checkbox" [(ngModel)]="settingsService.showTimespans" id="show-timespans-toggle">
                 <label for="show-timespans-toggle">Show Timespans</label>
             </div>
-<!--            <div class="checkbox-with-label">-->
-<!--                <input type="checkbox" [(ngModel)]="settingsService.showPositions">-->
-<!--                Show Positions-->
-<!--            </div>-->
             <div class="checkbox-with-label">
                 <input type="checkbox" [(ngModel)]="settingsService.showTags" id="show-tags-toggle">
                 <label for="show-tags-toggle">Show Tags</label>
@@ -51,6 +48,7 @@
             </div>
         </div>
     </div>
+
     <div class="actions-container">
         <div>
             <button (click)="fetch()">fetch</button>
@@ -65,18 +63,40 @@
             assets
         </div>
     </div>
+
     <div class="tags-container">
         <button (click)="filterService.enableAllTags()">All</button>
         <button (click)="filterService.disableAllTags()">None</button>
         <app-tag *ngFor="let tag of assetService.getAllUniqueTags()" [tag]="tag"></app-tag>
     </div>
+
     <div class="search-box">
         <input [(ngModel)]="filterService.searchTerm"> <span class="search-clear" (click)="clearSearchTerm()" >&#10005;</span>
     </div>
-    <div class="header-container" [class.with-chart]="settingsService.showCharts" [class.with-position]="settingsService.showPositions">
-        <div *ngFor="let header of headers">
-            <strong>{{ header }}</strong>
+
+    <div class="header-container" [class.with-chart]="settingsService.showCharts">
+        <div>
+            <strong>Symbol</strong>
+        </div>
+        <div *ngIf="settingsService.showCharts">
+            <strong>Chart</strong>
+        </div>
+        <div *ngFor="let indicator of indicatorService.activeIndicators"
+             (click)="onIndicatorHeaderClick(indicator)"
+             class="indicator-header"
+        >
+            <strong>{{ indicator.shortDescription }}</strong>
+            <span *ngIf="sortService.sortIndicator === indicator" class="sort-symbol">
+                <ng-container *ngIf="sortService.descending; else ascendingTriangle">
+                    &#9660;
+                </ng-container>
+                <ng-template #ascendingTriangle>
+                    &#9650;
+                </ng-template>
+            </span>
         </div>
     </div>
+
     <app-asset *ngFor="let asset of assets" [asset]="asset"></app-asset>
+
 </div>
