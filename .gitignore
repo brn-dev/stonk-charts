@@ -13,6 +13,7 @@ src/**/*.js
 
 # dependencies
 /node_modules
+/scripts/one-year-est-scraper/node_modules
 
 # IDEs and editors
 /.idea
