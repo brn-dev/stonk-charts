@@ -110,7 +110,10 @@ for (const symbol of symbols) {
             const dom = new jsdom.JSDOM(body);
             const doc = dom.window.document;
             try {
-                symbolResult.estimations[service.name] = service.query(doc);
+                const est = service.query(doc);
+                if (est) {
+                    symbolResult.estimations[service.name] = est;
+                }
             } catch (err) {
                 console.log(`Error while querying ${symbol} from ${service.name}`);
             }
