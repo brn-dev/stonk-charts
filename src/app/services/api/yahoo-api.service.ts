@@ -7,7 +7,7 @@ import { FileService } from '../file.service';
 import { ApiService } from './api.service';
 import { AssetData } from '../../models/asset-data/asset-data';
 import { URLSearchParams } from 'url';
-import { YahooApiGetChartsResult } from '../../models/api/yahoo-chart-api-result';
+import { YahooApiGetChartsResult } from '../../models/api/yahoo-api-get-charts-result';
 import { observable, Observable } from 'rxjs';
 
 interface YahooApiConfig {

@@ -3,7 +3,7 @@ import {
     YahooApiGetChartsResult,
     YahooApiGetChartsResultComparison,
     YahooApiGetChartsResultQuotes
-} from './yahoo-chart-api-result';
+} from './yahoo-api-get-charts-result';
 
 export class YahooApiChartConverter {
 
