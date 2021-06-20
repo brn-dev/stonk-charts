@@ -1,8 +1,9 @@
 import { Asset } from "../../models/asset";
-import { Chart } from "../../models/chart";
+import { AssetData } from '../../models/asset-data/asset-data';
+import { Observable } from 'rxjs';
 
 export abstract class ApiService {
 
-    abstract fetchChartFor(asset: Asset): Promise<Chart>;
+    abstract fetchAssetDataFor(assets: Asset[]): Observable<AssetData>;
 
 }

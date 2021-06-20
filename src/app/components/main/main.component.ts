@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Asset } from '../../models/asset';
 import { AssetService } from '../../services/asset.service';
-import { ChartCacheService } from '../../services/chart-cache.service';
+import { AssetDataCacheService } from '../../services/asset-data-cache.service';
 import { FileService } from '../../services/file.service';
 import { FilterService } from '../../services/filter.service';
 import { IndicatorService } from '../../services/indicator.service';
@@ -23,7 +23,7 @@ export class MainComponent implements OnInit {
     constructor(
         public assetService: AssetService,
         public settingsService: SettingsService,
-        public chartCacheService: ChartCacheService,
+        public assetDataCacheService: AssetDataCacheService,
         public filterService: FilterService,
         public fileService: FileService,
         public indicatorService: IndicatorService,
@@ -38,7 +38,7 @@ export class MainComponent implements OnInit {
     }
 
     public fetch(): void {
-        this.chartCacheService.fetchAssetsOlderThanDays(this.fetchDays);
+        this.assetDataCacheService.fetchAssetsOlderThanDays(this.fetchDays);
     }
 
     public editAssets(): void {

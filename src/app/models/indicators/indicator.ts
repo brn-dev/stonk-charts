@@ -1,6 +1,6 @@
 import { Asset } from '../asset';
-import { Chart } from '../chart';
 import { PortfolioAssetInvestmentInfo } from '../portfolio-asset-investment-info';
+import { AssetData } from '../asset-data/asset-data';
 
 export abstract class Indicator<T> {
 
@@ -11,7 +11,7 @@ export abstract class Indicator<T> {
     ) {
     }
 
-    public abstract compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): T;
+    public abstract compute(assetData: AssetData, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): T;
 
     public abstract toDisplayFormat(computationResult: T): string;
 }

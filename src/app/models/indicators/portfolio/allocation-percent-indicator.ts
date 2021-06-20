@@ -1,8 +1,8 @@
-import { Indicator, NumberIndicator } from '../indicator';
+import { NumberIndicator } from '../indicator';
 import { Asset } from '../../asset';
-import { Chart } from '../../chart';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { NumberFormatUtils } from '../../../utils/number-format-utils';
+import { AssetData } from '../../asset-data/asset-data';
 
 export class AllocationPercentIndicator extends NumberIndicator {
 
@@ -17,7 +17,7 @@ export class AllocationPercentIndicator extends NumberIndicator {
 
     }
 
-    public compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
+    public compute(assetData: AssetData, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
         return assetInvestmentInfo?.allocationPercent ?? null;
     }
 

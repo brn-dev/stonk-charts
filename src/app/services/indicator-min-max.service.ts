@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NumberIndicator } from '../models/indicators/indicator';
-import { ChartCacheService } from './chart-cache.service';
+import { AssetDataCacheService } from './asset-data-cache.service';
 import { FilterService } from './filter.service';
 import { IndicatorResultCacheService } from './indicator-result-cache.service';
 
@@ -15,11 +15,11 @@ export class IndicatorMinMaxService {
     constructor(
         private indiciatorResultCacheService: IndicatorResultCacheService,
         private filterService: FilterService,
-        private chartCacheService: ChartCacheService,
+        private assetDataCacheService: AssetDataCacheService,
     ) {
         this.reset();
         this.filterService.$filterUpdated.subscribe(() => this.reset());
-        this.chartCacheService.$assetUpdated.subscribe(() => this.reset());
+        this.assetDataCacheService.$assetUpdated.subscribe(() => this.reset());
     }
 
     public getMinForVisibleCharts(indicator: NumberIndicator): number {

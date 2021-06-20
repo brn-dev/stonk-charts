@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Chart } from '../../models/chart';
+import { Chart } from '../../models/asset-data/chart';
 import { Timespan } from '../../models/timespan';
-import { ChartCacheService } from '../../services/chart-cache.service';
+import { AssetDataCacheService } from '../../services/asset-data-cache.service';
 import { DateUtils } from '../../utils/date-utils';
 import * as Highcharts from 'highcharts';
 import { SettingsService } from '../../services/settings.service';
@@ -28,11 +28,9 @@ export class AssetComponent implements OnInit {
 
     public chartOptions: Highcharts.Options;
 
-    private _positionIndex: number = null;
-
     constructor(
         public settingsService: SettingsService,
-        private chartCacheService: ChartCacheService,
+        private assetDataCacheService: AssetDataCacheService,
         private assetService: AssetService,
         private indicatorService: IndicatorService,
         private indicatorResultCacheService: IndicatorResultCacheService,
@@ -41,7 +39,7 @@ export class AssetComponent implements OnInit {
     }
 
     get chart(): Chart {
-        return this.chartCacheService.getForAsset(this.asset);
+        return this.assetDataCacheService.getForAsset(this.asset)?.chart ?? null;
     }
 
     get indicators(): Indicator<any>[] {
@@ -66,7 +64,7 @@ export class AssetComponent implements OnInit {
     ngOnInit(): void {
         this.updateChartOptions();
         this.settingsService.$chartDaysUpdated.subscribe(() => this.updateChartOptions());
-        this.chartCacheService.$assetUpdated.subscribe(asset => {
+        this.assetDataCacheService.$assetUpdated.subscribe(asset => {
             if (this.asset === asset) {
                 this.updateChartOptions();
             }
@@ -117,7 +115,7 @@ export class AssetComponent implements OnInit {
     }
 
     public fetch(): void {
-        this.chartCacheService.fetchAsset(this.asset);
+        this.assetDataCacheService.fetchAsset(this.asset);
     }
 
     public updateChartOptions(): void {

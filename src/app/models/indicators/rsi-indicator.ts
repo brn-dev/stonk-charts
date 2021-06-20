@@ -1,6 +1,6 @@
-import { Chart } from "../chart";
 import { Timespan } from "../timespan";
 import { NumberIndicator } from "./indicator";
+import { AssetData } from '../asset-data/asset-data';
 
 export class RsiIndicator extends NumberIndicator {
 
@@ -22,7 +22,8 @@ export class RsiIndicator extends NumberIndicator {
         super('RSI ' + timespan.displayText, 'RSI ' + timespan.displayText, false);
     }
 
-    public compute(chart: Chart): number {
+    public compute(assetData: AssetData): number {
+        const chart = assetData?.chart ?? null;
         const entries = chart?.entries;
         const entriesLength = entries?.length ?? 0;
         const rsiPeriod = this.timespan.toDays().amount;

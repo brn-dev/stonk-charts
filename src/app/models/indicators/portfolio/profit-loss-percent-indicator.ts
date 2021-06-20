@@ -1,8 +1,8 @@
 import { DeltaIndicator } from '../indicator';
 import { Asset } from '../../asset';
-import { Chart } from '../../chart';
 import { ChartHelper } from '../../../utils/chart-helper';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
+import { AssetData } from '../../asset-data/asset-data';
 
 export class ProfitLossPercentIndicator extends DeltaIndicator {
 
@@ -16,7 +16,8 @@ export class ProfitLossPercentIndicator extends DeltaIndicator {
         super('P/L %', 'Profit/Loss %');
     }
 
-    public compute(chart: Chart, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
+    public compute(assetData: AssetData, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
+        const chart = assetData?.chart ?? null;
         if (!chart?.entries || !assetInvestmentInfo) {
             return null;
         }

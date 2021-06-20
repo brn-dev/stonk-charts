@@ -1,5 +1,5 @@
-import { Chart } from '../models/chart';
-import { ChartEntry } from '../models/chart-entry';
+import { Chart } from '../models/asset-data/chart';
+import { ChartEntry } from '../models/asset-data/chart-entry';
 import { Timespan, TimespanUnit } from '../models/timespan';
 
 export class ChartHelper {

@@ -1,9 +1,8 @@
 
 export interface ChartEntry {
-    timestamp: number; // **seconds** from 1970
+    timestamp: number;
     close: number;
     open: number;
     low: number;
     high: number;
-    volume: number;
 }

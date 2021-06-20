@@ -1,7 +1,7 @@
 import { ChartHelper } from "../../utils/chart-helper";
 import { Asset } from "../asset";
-import { Chart } from "../chart";
 import { DeltaIndicator } from "./indicator";
+import { AssetData } from '../asset-data/asset-data';
 
 export class OneYearEstimationIndicator extends DeltaIndicator {
 
@@ -15,7 +15,8 @@ export class OneYearEstimationIndicator extends DeltaIndicator {
         super('1Y Est', '1Y Estimation');
     }
 
-    public compute(chart: Chart, asset: Asset): number {
+    public compute(assetData: AssetData, asset: Asset): number {
+        const chart = assetData?.chart ?? null;
         if (!asset.oneYearEstimation || !chart?.entries) {
             return null;
         }

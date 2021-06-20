@@ -1,6 +1,6 @@
-import { Chart } from "../chart";
 import { Timespan } from "../timespan";
 import { DeltaIndicator } from "./indicator";
+import { AssetData } from '../asset-data/asset-data';
 
 export class LowIndicator extends DeltaIndicator {
 
@@ -22,7 +22,8 @@ export class LowIndicator extends DeltaIndicator {
         super(timespan.displayText + ' Low', timespan.displayText + ' Low');
     }
 
-    public compute(chart: Chart): number {       
+    public compute(assetData: AssetData): number {
+        const chart = assetData?.chart ?? null;
         const days = this.timespan.toDays().amount;
         const entriesLength = chart?.entries.length ?? 0;
 

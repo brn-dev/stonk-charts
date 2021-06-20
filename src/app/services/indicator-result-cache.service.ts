@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Asset } from '../models/asset';
-import { Chart } from '../models/chart';
 import { Indicator } from '../models/indicators/indicator';
-import { ChartCacheService } from './chart-cache.service';
+import { AssetDataCacheService } from './asset-data-cache.service';
 import { PortfolioService } from './portfolio.service';
+import { AssetData } from '../models/asset-data/asset-data';
 
 type IndicatorResults = Map<Indicator<any>, any>;
 
@@ -12,43 +12,42 @@ type IndicatorResults = Map<Indicator<any>, any>;
 })
 export class IndicatorResultCacheService {
 
-    // Using Chart as key since if a new version of a chart arrives, it gets recalculated
-    // TODO: maybe clean up old versions of charts
-    private chartIndicatorResults = new Map<Chart, IndicatorResults>();
+    // Using AssetData as key since if a new version of the AssetData arrives, it gets recalculated
+    // TODO: maybe clean up old versions
+    private assetDataIndicatorResults = new Map<AssetData, IndicatorResults>();
 
     constructor(
-        private chartCacheService: ChartCacheService,
+        private assetDataCacheService: AssetDataCacheService,
         private portfolioService: PortfolioService,
     ) {
     }
-
 
     public calculateResult<T>(
         asset: Asset,
         indicator: Indicator<T>
     ): T {
-        const chart = this.chartCacheService.getForAsset(asset);
+        const assetData = this.assetDataCacheService.getForAsset(asset);
         const assetInvestmentInfo = this.portfolioService.getInvestmentInfoForAsset(asset);
 
-        if (this.chartIndicatorResults.has(chart) &&
-            this.chartIndicatorResults.get(chart).has(indicator)
+        if (this.assetDataIndicatorResults.has(assetData) &&
+            this.assetDataIndicatorResults.get(assetData).has(indicator)
         ) {
-            return this.chartIndicatorResults.get(chart).get(indicator);
+            return this.assetDataIndicatorResults.get(assetData).get(indicator);
         }
-        const calculationResult = indicator.compute(chart, asset, assetInvestmentInfo);
+        const calculationResult = indicator.compute(assetData, asset, assetInvestmentInfo);
 
-        const indicatorResults = this.getOrCreateForChart(chart);
+        const indicatorResults = this.getOrCreateCacheFor(assetData);
         indicatorResults.set(indicator, calculationResult);
 
         return calculationResult;
     }
 
-    private getOrCreateForChart(chart: Chart): IndicatorResults {
-        if (this.chartIndicatorResults.has(chart)) {
-            return this.chartIndicatorResults.get(chart);
+    private getOrCreateCacheFor(assetData: AssetData): IndicatorResults {
+        if (this.assetDataIndicatorResults.has(assetData)) {
+            return this.assetDataIndicatorResults.get(assetData);
         }
         const newIndicatorResultsCache = new Map<Indicator<any>, any>();
-        this.chartIndicatorResults.set(chart, newIndicatorResultsCache);
+        this.assetDataIndicatorResults.set(assetData, newIndicatorResultsCache);
         return newIndicatorResultsCache;
     }
 }

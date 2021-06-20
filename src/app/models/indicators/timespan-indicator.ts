@@ -1,7 +1,7 @@
 import { ChartHelper } from "../../utils/chart-helper";
-import { Chart } from "../chart";
 import { Timespan } from "../timespan";
 import { DeltaIndicator } from "./indicator";
+import { AssetData } from '../asset-data/asset-data';
 
 export class TimespanIndicator extends DeltaIndicator {
 
@@ -23,7 +23,8 @@ export class TimespanIndicator extends DeltaIndicator {
         super(timespan.displayText, timespan.displayText);
     }
 
-    public compute(chart: Chart): number {
+    public compute(assetData: AssetData): number {
+        const chart = assetData?.chart ?? null;
         const now = ChartHelper.lastDay(chart);
         const past = ChartHelper.getDayInPastFromTimespan(chart, this.timespan);
 
