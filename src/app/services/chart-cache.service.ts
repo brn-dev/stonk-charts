@@ -85,7 +85,7 @@ export class ChartCacheService {
 
             const chart = this.assetChartCache.get(asset.symbol);
             const latestEntry = chart.entries[chart.entries.length - 1];
-            const mom = moment(latestEntry.timestamp * 1000);
+            const mom = moment(latestEntry.timestamp);
 
             if (mom.isSameOrBefore(past, 'd')) {
                 assetsToFetch.push(asset);

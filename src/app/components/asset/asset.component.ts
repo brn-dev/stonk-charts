@@ -135,7 +135,7 @@ export class AssetComponent implements OnInit {
         for (let i = start; i > 0; i--) {
             const entry = this.chart.entries[this.chart.entries.length - i];
             data.push([
-                entry.timestamp * 1000,
+                entry.timestamp,
                 entry?.close ? +entry.close.toFixed(2) : null
             ]);
         }
@@ -151,8 +151,8 @@ export class AssetComponent implements OnInit {
             },
             xAxis: {
                 type: 'datetime',
-                min: this.chart.entries[this.chart.entries.length - start].timestamp * 1000,
-                max: this.chart.entries[this.chart.entries.length - 1].timestamp * 1000
+                min: this.chart.entries[this.chart.entries.length - start].timestamp,
+                max: this.chart.entries[this.chart.entries.length - 1].timestamp
             },
             series: [{
                 name: this.asset.symbol,

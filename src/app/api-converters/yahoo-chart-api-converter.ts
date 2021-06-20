@@ -13,11 +13,11 @@ export class YahooChartApiConverter {
         const chart: Chart = {
             symbol: meta.symbol,
             entries: []
-        }
+        };
 
         for (let i = 0; i < length; i++) {
             chart.entries.push({
-                timestamp: timestamps[i],
+                timestamp: timestamps[i] * 1000,
                 close: quotes.close[i],
                 open: quotes.open[i],
                 low: quotes.low[i],

@@ -27,7 +27,7 @@ export class YahooApiService implements ApiService {
         private http: HttpClient,
         fileService: FileService
     ) {
-        this.config = fileService.readJsonFromFile<YahooApiConfig>(this.configFileName)
+        this.config = fileService.readJsonFromFile<YahooApiConfig>(this.configFileName);
     }
 
     public async fetchChartFor(asset: Asset): Promise<Chart> {
