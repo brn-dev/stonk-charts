@@ -9,6 +9,8 @@ import { AssetData } from '../../models/asset-data/asset-data';
 import { URLSearchParams } from 'url';
 import { YahooApiGetChartsResult } from '../../models/api/yahoo-api-get-charts-result';
 import { observable, Observable } from 'rxjs';
+import { Chart } from '../../models/asset-data/chart';
+import { AssetStatistics } from '../../models/asset-data/asset-statistics';
 
 interface YahooApiConfig {
     rapidapiKey: string;
@@ -23,7 +25,9 @@ interface YahooApiConfig {
 export class YahooApiService implements ApiService {
 
     private readonly CONFIG_FILE_NAME = 'yahoo-api-config.json';
-    private readonly API_URL = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-charts';
+
+    private readonly GET_CHARTS_URL = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-charts';
+    private readonly GET_STATISTICS_URL = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v3/get-statistics';
 
     private readonly CHUNK_SIZE = 3;
     private readonly STAGGER_MILLIS = 400;
@@ -49,22 +53,17 @@ export class YahooApiService implements ApiService {
                     const chunkSymbols = assetsChunk.map(a => a.symbol).join(', ');
                     console.log('fetching ' + chunkSymbols);
 
-                    const result = await this.http.get<YahooApiGetChartsResult>(
-                        this.getApiUrlWithParams(assetsChunk),
-                        {
-                            headers: {
-                                "x-rapidapi-key": this.config.rapidapiKey,
-                                "x-rapidapi-host": this.config.rapidapiHost
-                            }
-                        }
-                    ).toPromise();
+                    const chartsBySymbolPromise = this.fetchCharts(assetsChunk);
+                    const statisticsBySymbolPromise = this.fetchStatistics(assetsChunk);
 
-                    const chartsBySymbol = YahooApiChartConverter.convert(result);
+                    const [chartsBySymbol, statisticsBySymbol] =
+                        await Promise.all([chartsBySymbolPromise, statisticsBySymbolPromise]);
 
                     for (const symbol of Array.from(chartsBySymbol.keys())) {
                         o.next({
                             symbol,
-                            chart: chartsBySymbol.get(symbol)
+                            chart: chartsBySymbol.get(symbol),
+                            statistics: statisticsBySymbol.get(symbol),
                         });
                     }
 
@@ -80,7 +79,29 @@ export class YahooApiService implements ApiService {
         });
     }
 
-    private getApiUrlWithParams(assets: Asset[]) {
+    private async fetchCharts(assetsChunk: Asset[]): Promise<Map<string, Chart>> {
+        if (assetsChunk.length > 0) {
+            throw new Error('Can not fetch more than 3 charts at once!');
+        }
+
+        const result = await this.http.get<YahooApiGetChartsResult>(
+            this.getChartsUrlWithParams(assetsChunk),
+            {
+                headers: {
+                    "x-rapidapi-key": this.config.rapidapiKey,
+                    "x-rapidapi-host": this.config.rapidapiHost
+                }
+            }
+        ).toPromise();
+
+        return YahooApiChartConverter.convert(result);
+    }
+
+    private async fetchStatistics(assets: Asset[]): Promise<Map<string, AssetStatistics>> {
+        // TODO
+    }
+
+    private getChartsUrlWithParams(assets: Asset[]): string {
         const params = {
             interval: this.config.interval,
             symbol: assets[0].symbol,
@@ -95,6 +116,17 @@ export class YahooApiService implements ApiService {
         const searchParams = new URLSearchParams(params);
         const paramsString = searchParams.toString();
 
-        return `${this.API_URL}?${paramsString}`;
+        return `${this.GET_CHARTS_URL}?${paramsString}`;
+    }
+
+    private getStatisticsUrlForAsset(asset: Asset): string {
+        const params = {
+            symbol: asset.symbol
+        };
+
+        const searchParams = new URLSearchParams(params);
+        const paramsString = searchParams.toString();
+
+        return `${this.GET_STATISTICS_URL}?${paramsString}`;
     }
 }
