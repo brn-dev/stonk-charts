@@ -8,9 +8,11 @@ import { ApiService } from './api.service';
 import { AssetData } from '../../models/asset-data/asset-data';
 import { URLSearchParams } from 'url';
 import { YahooApiGetChartsResult } from '../../models/api/yahoo-api-get-charts-result';
-import { observable, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Chart } from '../../models/asset-data/chart';
 import { AssetStatistics } from '../../models/asset-data/asset-statistics';
+import { YahooApiGetStatisticsResult } from '../../models/api/yahoo-api-get-statistics-result';
+import { YahooApiStatisticsConverter } from '../../models/api/yahoo-api-statistics-converter';
 
 interface YahooApiConfig {
     rapidapiKey: string;
@@ -88,8 +90,8 @@ export class YahooApiService implements ApiService {
             this.getChartsUrlWithParams(assetsChunk),
             {
                 headers: {
-                    "x-rapidapi-key": this.config.rapidapiKey,
-                    "x-rapidapi-host": this.config.rapidapiHost
+                    'x-rapidapi-key': this.config.rapidapiKey,
+                    'x-rapidapi-host': this.config.rapidapiHost
                 }
             }
         ).toPromise();
@@ -98,7 +100,32 @@ export class YahooApiService implements ApiService {
     }
 
     private async fetchStatistics(assets: Asset[]): Promise<Map<string, AssetStatistics>> {
-        // TODO
+        const apiPromises: Promise<YahooApiGetStatisticsResult>[] = [];
+
+        for (const asset of assets) {
+            apiPromises.push(
+                this.http.get<YahooApiGetStatisticsResult>(
+                    this.getStatisticsUrlForAsset(asset),
+                    {
+                        headers: {
+                            'x-rapidapi-key': this.config.rapidapiKey,
+                            'x-rapidapi-host': this.config.rapidapiHost
+                        }
+                    }
+                ).toPromise()
+            );
+        }
+
+        const results = await Promise.all(apiPromises.values());
+
+        const statisticsBySymbols = new Map<string, AssetStatistics>();
+
+        for (const result of results) {
+            const [symbol, statistics] = YahooApiStatisticsConverter.convert(result);
+            statisticsBySymbols.set(symbol, statistics);
+        }
+
+        return statisticsBySymbols;
     }
 
     private getChartsUrlWithParams(assets: Asset[]): string {
