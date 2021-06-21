@@ -89,10 +89,7 @@ export class YahooApiService implements ApiService {
         const result = await this.http.get<YahooApiGetChartsResult>(
             this.getChartsUrlWithParams(assetsChunk),
             {
-                headers: {
-                    'x-rapidapi-key': this.config.rapidapiKey,
-                    'x-rapidapi-host': this.config.rapidapiHost
-                }
+                headers: this.getHeaders()
             }
         ).toPromise();
 
@@ -107,10 +104,7 @@ export class YahooApiService implements ApiService {
                 this.http.get<YahooApiGetStatisticsResult>(
                     this.getStatisticsUrlForAsset(asset),
                     {
-                        headers: {
-                            'x-rapidapi-key': this.config.rapidapiKey,
-                            'x-rapidapi-host': this.config.rapidapiHost
-                        }
+                        headers: this.getHeaders()
                     }
                 ).toPromise()
             );
@@ -155,5 +149,12 @@ export class YahooApiService implements ApiService {
         const paramsString = searchParams.toString();
 
         return `${this.GET_STATISTICS_URL}?${paramsString}`;
+    }
+
+    private getHeaders(): any {
+        return {
+            'x-rapidapi-key': this.config.rapidapiKey,
+            'x-rapidapi-host': this.config.rapidapiHost
+        };
     }
 }
