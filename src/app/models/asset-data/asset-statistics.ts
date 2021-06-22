@@ -10,7 +10,7 @@ export interface AssetStatistics {
     priceToSalesRatio: number;
     priceToBookRatio: number;
     evToRevenue: number;
-    evToEbita: number;
+    evToEbitda: number;
 
     // Profitability
     profitMargin: number;

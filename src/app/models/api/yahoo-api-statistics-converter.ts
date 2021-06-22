@@ -17,7 +17,7 @@ export class YahooApiStatisticsConverter {
                 priceToSalesRatio: statisticsResult.summaryDetail.priceToSalesTrailing12Months.raw,
                 priceToBookRatio: statisticsResult.defaultKeyStatistics.priceToBook.raw,
                 evToRevenue: statisticsResult.defaultKeyStatistics.enterpriseToRevenue.raw,
-                evToEbita: statisticsResult.defaultKeyStatistics.enterpriseToEbitda.raw,
+                evToEbitda: statisticsResult.defaultKeyStatistics.enterpriseToEbitda.raw,
 
                 // Profitability
                 profitMargin: statisticsResult.financialData.profitMargins.raw,

@@ -13,6 +13,7 @@ import { AverageLeverageIndicator } from '../models/indicators/portfolio/average
 import { OneYearEstimationIndicator } from '../models/indicators/one-year-estimation-indicator';
 import { ExposureAmountIndicator } from '../models/indicators/portfolio/exposure-amount-indicator';
 import { ExposurePercentIndicator } from '../models/indicators/portfolio/exposure-percent-indicator';
+import { StatisticsIndicator } from '../models/indicators/statistics-indicator';
 
 export interface IndicatorGroup {
     title?: string;
@@ -90,6 +91,30 @@ export class IndicatorService {
             title: 'RSI',
             indicators: [
                 RsiIndicator.get(Timespan.get(TimespanUnit.DAY, 14)),
+            ]
+        },
+        {
+            title: 'Statistics',
+            indicators: [
+                StatisticsIndicator.marketCapIndicator,
+                StatisticsIndicator.enterpriseValueIndicator,
+                StatisticsIndicator.trailingPEIndicator,
+                StatisticsIndicator.forwardPEIndicator,
+                StatisticsIndicator.pegRatioIndicator,
+                StatisticsIndicator.priceToSalesIndicator,
+                StatisticsIndicator.priceToBookIndicator,
+                StatisticsIndicator.evToRevenueIndicator,
+                StatisticsIndicator.evToEbitdaIndicator,
+                StatisticsIndicator.profitMarginIndicator,
+                StatisticsIndicator.operatingMarginIndicator,
+                StatisticsIndicator.returnOnAssetsIndicator,
+                StatisticsIndicator.returnOnEquityIndicator,
+                StatisticsIndicator.revenueGrowthIndicator,
+                StatisticsIndicator.earningsGrowthIndicator,
+                StatisticsIndicator.shortPercentIndicator,
+                StatisticsIndicator.trailingDividendYieldIndicator,
+                StatisticsIndicator.forwardDividendYieldIndicator,
+                StatisticsIndicator.dividendPayoutRatioIndicator,
             ]
         },
     ];
