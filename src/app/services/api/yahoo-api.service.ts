@@ -82,7 +82,7 @@ export class YahooApiService implements ApiService {
     }
 
     private async fetchCharts(assetsChunk: Asset[]): Promise<Map<string, Chart>> {
-        if (assetsChunk.length > 0) {
+        if (assetsChunk.length > 3) {
             throw new Error('Can not fetch more than 3 charts at once!');
         }
 
@@ -110,7 +110,7 @@ export class YahooApiService implements ApiService {
             );
         }
 
-        const results = await Promise.all(apiPromises.values());
+        const results = await Promise.all(Array.from(apiPromises.values()));
 
         const statisticsBySymbols = new Map<string, AssetStatistics>();
 

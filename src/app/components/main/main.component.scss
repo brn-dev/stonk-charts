@@ -24,8 +24,14 @@
                 margin-bottom: 1rem;
             }
 
+            &.indicator-group-list-statistics > .indicator-toggle {
+                min-width: 8rem;
+            }
+
             .indicator-toggle {
-                width: 6.5rem;
+                min-width: 5rem;
+                margin-right: 1rem;
+                white-space: nowrap;
             }
         }
 

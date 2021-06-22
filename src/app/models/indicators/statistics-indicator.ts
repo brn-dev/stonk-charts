@@ -1,6 +1,7 @@
 import { NumberIndicator } from './indicator';
 import { AssetData } from '../asset-data/asset-data';
 import { AssetStatistics } from '../asset-data/asset-statistics';
+import { NumberFormatUtils } from '../../utils/number-format-utils';
 
 export class StatisticsIndicator extends NumberIndicator {
 
@@ -71,70 +72,70 @@ export class StatisticsIndicator extends NumberIndicator {
         'profitMargin',
         'Profit M.',
         'Profit Margin',
-        false
+        true
     );
 
     public static readonly operatingMarginIndicator = new StatisticsIndicator(
         'operatingMargin',
         'Op. M.',
         'Operating Margin',
-        false
+        true
     );
 
     public static readonly returnOnAssetsIndicator = new StatisticsIndicator(
         'returnOnAssets',
         'RoA',
-        'R. o. Assets',
-        false
+        'Return on Assets',
+        true
     );
 
     public static readonly returnOnEquityIndicator = new StatisticsIndicator(
         'returnOnEquity',
         'RoE',
-        'R. o. Equity',
-        false
+        'Return on Equity',
+        true
     );
 
     public static readonly revenueGrowthIndicator = new StatisticsIndicator(
         'revenueGrowth',
         'Rev. Gr.',
         'Rev. Growth',
-        false
+        true
     );
 
     public static readonly earningsGrowthIndicator = new StatisticsIndicator(
         'earningsGrowth',
         'Earn. Gr.',
         'Earn. Growth',
-        false
+        true
     );
 
     public static readonly shortPercentIndicator = new StatisticsIndicator(
         'shortPercent',
         'Short %',
         'Short %',
-        false
+        true
     );
 
     public static readonly trailingDividendYieldIndicator = new StatisticsIndicator(
         'trailingDividendYield',
         'tDY',
-        'tr. Div. Yield',
-        false
+        'tr. Divi. Yield',
+        true
     );
 
     public static readonly forwardDividendYieldIndicator = new StatisticsIndicator(
         'forwardDividendYield',
         'fDY',
-        'fw. Div. Yield',
-        false
+        'fw. Divi. Yield',
+        true
     );
 
     public static readonly dividendPayoutRatioIndicator = new StatisticsIndicator(
         'dividendPayoutRatio',
-        'PR',
-        'Div. Payout Ratio',
-        false
+        'DPR',
+        'Divi. Payout Ratio',
+        true
     );
 
     private constructor(
@@ -147,11 +148,17 @@ export class StatisticsIndicator extends NumberIndicator {
     }
 
     public compute(assetData: AssetData): number {
-        return assetData[this.field];
+        if (!assetData?.statistics) {
+            return null;
+        }
+        return assetData.statistics[this.field];
     }
 
     public toDisplayFormat(computationResult: number): string {
-        return computationResult.toString();
+        if (computationResult !== 0 && !computationResult) {
+            return null;
+        }
+        return NumberFormatUtils.format(computationResult);
     }
 
 }
