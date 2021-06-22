@@ -33,7 +33,7 @@ export class FilterService {
     get filteredAssets(): Asset[] {
         if (this._enabledTags.size === this.assetService.allUniqueTags.length &&
             this._enabledTags.size === 0 &&
-            this.searchTerm.length < 2
+            this.searchTerm.length === 0
         ) {
             return this.assetService.assets;
         }
@@ -46,7 +46,7 @@ export class FilterService {
         for (const asset of this.assetService.assets) {
             if (asset.tags.some(tag => this._enabledTags.isActive(tag)) &&
                 !asset.tags.some(tag => this._excludedTags.isActive(tag)) &&
-                (this.searchTerm.length < 2 || asset.symbol.toLowerCase().includes(searchTerm))
+                (this.searchTerm.length === 0 || asset.symbol.toLowerCase().includes(searchTerm))
             ) {
                 assets.push(asset);
             }

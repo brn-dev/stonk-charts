@@ -33,7 +33,8 @@ export class YahooApiStatisticsConverter {
                 earningsGrowth: statisticsResult.financialData.earningsGrowth?.raw ?? null,
 
                 // Share Statistics
-                shortPercent: statisticsResult.defaultKeyStatistics.shortPercentOfFloat?.raw ?? null,
+                shortPercent: statisticsResult.defaultKeyStatistics.shortPercentOfFloat?.raw ??
+                    statisticsResult.defaultKeyStatistics.sharesPercentSharesOut.raw ?? null,
 
                 // Dividends
                 trailingDividendYield: statisticsResult.summaryDetail.trailingAnnualDividendYield?.raw ?? null,
