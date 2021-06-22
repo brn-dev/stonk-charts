@@ -73,7 +73,12 @@
     </div>
 
     <div class="search-box">
-        <input [(ngModel)]="filterService.searchTerm"> <span class="search-clear" (click)="clearSearchTerm()" >&#10005;</span>
+        <input [(ngModel)]="filterService.searchTerm"
+               autocomplete="off"
+               autocapitalize="off"
+               spellcheck="false"
+        >
+        <span class="search-clear" (click)="clearSearchTerm()" >&#10005;</span>
     </div>
 
     <div class="header-container" [class.with-chart]="settingsService.showCharts">
