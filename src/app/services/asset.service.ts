@@ -10,52 +10,27 @@ export class AssetService {
     public readonly ASSETS_FILE_NAME = 'assets.json';
 
     private _assets: Asset[] = [];
+    private _allUniqueTags: string[] = [];
 
     constructor(private fileService: FileService) {
         this.loadAssets();
     }
 
-    get assets() {
+    get assets(): Asset[] {
         return this._assets;
     }
 
-    public addAsset(asset: Asset | string): Asset {
-        let newAsset: Asset;
-
-        if (this.isAsset(asset)) {
-            newAsset = asset;
-        } else {
-            newAsset = {
-                symbol: asset,
-                tags: []
-            }
-        }
-
-        this._assets.push(newAsset);
-        this.saveAssets();
-        return newAsset;
+    get allUniqueTags(): string[] {
+        return this._allUniqueTags;
     }
 
-    public removeAsset(asset: Asset) {
-        const idx = this.getPositionIndex(asset);
-        if (idx >= 0) {
-            this._assets.splice(idx, 1);
-        }
-        this.saveAssets();
+    public loadAssets(): void {
+        const result = this.fileService.readJsonFromFile<Asset[]>(this.ASSETS_FILE_NAME);
+        this._assets = result !== null ? result : [];
+        this.calculateUniqueTags();
     }
 
-    public getPositionIndex(asset: Asset) {
-        return this._assets.indexOf(asset);
-    }
-
-    public changePosition(asset: Asset, index: number) {
-        const currentIndex = this.getPositionIndex(asset);
-        this._assets.splice(currentIndex, 1);
-        this._assets.splice(index, 0, asset);
-        this.saveAssets();
-    }
-
-    public getAllUniqueTags(): string[] {
+    private calculateUniqueTags(): void {
         const tagsWithCount = new Map<string, number>();
         for (const asset of this.assets) {
             for (const tag of asset.tags) {
@@ -80,20 +55,7 @@ export class AssetService {
         });
 
 
-        return arr.map(elem => elem[0]);
-    }
-
-    public loadAssets(): void {
-        const result = this.fileService.readJsonFromFile<Asset[]>(this.ASSETS_FILE_NAME);
-        this._assets = result !== null ? result : [];
-    }
-
-    private saveAssets(): void {
-        this.fileService.writeJsonToFile(this.ASSETS_FILE_NAME, this._assets);
-    }
-
-    private isAsset(obj: any): obj is Asset {
-        return 'symbol' in obj && 'tags' in obj;
+        this._allUniqueTags = arr.map(elem => elem[0]);
     }
 
 }

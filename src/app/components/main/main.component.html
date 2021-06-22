@@ -69,7 +69,7 @@
     <div class="tags-container">
         <button (click)="filterService.enableAllTags()">All</button>
         <button (click)="filterService.disableAllTags()">None</button>
-        <app-tag *ngFor="let tag of assetService.getAllUniqueTags()" [tag]="tag"></app-tag>
+        <app-tag *ngFor="let tag of assetService.allUniqueTags" [tag]="tag"></app-tag>
     </div>
 
     <div class="search-box">

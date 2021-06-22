@@ -32,7 +32,7 @@ export class YahooApiService implements ApiService {
     private readonly GET_STATISTICS_URL = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v3/get-statistics';
 
     private readonly CHUNK_SIZE = 3;
-    private readonly STAGGER_MILLIS = 400;
+    private readonly STAGGER_MILLIS = 1500;
 
     private readonly config: YahooApiConfig;
 
@@ -64,8 +64,8 @@ export class YahooApiService implements ApiService {
                     for (const symbol of Array.from(chartsBySymbol.keys())) {
                         o.next({
                             symbol,
-                            chart: chartsBySymbol.get(symbol),
-                            statistics: statisticsBySymbol.get(symbol),
+                            chart: chartsBySymbol.get(symbol) ?? null,
+                            statistics: statisticsBySymbol.get(symbol) ?? null,
                         });
                     }
 
@@ -97,8 +97,9 @@ export class YahooApiService implements ApiService {
     }
 
     private async fetchStatistics(assets: Asset[]): Promise<Map<string, AssetStatistics>> {
-        const apiPromises: Promise<YahooApiGetStatisticsResult>[] = [];
+        assets = assets.filter(a => a.tags.includes('Stock') && !a.tags.includes('ETF/Index'));
 
+        const apiPromises: Promise<YahooApiGetStatisticsResult>[] = [];
         for (const asset of assets) {
             apiPromises.push(
                 this.http.get<YahooApiGetStatisticsResult>(

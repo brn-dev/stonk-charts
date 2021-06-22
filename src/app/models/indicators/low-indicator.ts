@@ -16,7 +16,7 @@ export class LowIndicator extends DeltaIndicator {
         return indicator;
     }
 
-    public isDelta = true;
+    public isPercent = true;
 
     private constructor(private timespan: Timespan) {
         super(timespan.displayText + ' Low', timespan.displayText + ' Low');

@@ -142,16 +142,16 @@ export class StatisticsIndicator extends NumberIndicator {
         private readonly field: keyof AssetStatistics,
         shortDescription: string,
         longDescription: string,
-        isDelta: boolean
+        isPercent: boolean
     ) {
-        super(shortDescription, longDescription, isDelta);
+        super(shortDescription, longDescription, isPercent);
     }
 
     public compute(assetData: AssetData): number {
         if (!assetData?.statistics) {
             return null;
         }
-        return assetData.statistics[this.field];
+        return assetData.statistics[this.field] ?? null;
     }
 
     public toDisplayFormat(computationResult: number): string {

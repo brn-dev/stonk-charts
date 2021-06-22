@@ -16,7 +16,7 @@ export class RsiIndicator extends NumberIndicator {
         return indicator;
     }
     
-    public isDelta = false;
+    public isPercent = false;
 
     private constructor(private timespan: Timespan) {
         super('RSI ' + timespan.displayText, 'RSI ' + timespan.displayText, false);

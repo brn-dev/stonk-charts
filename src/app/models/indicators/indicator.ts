@@ -7,7 +7,7 @@ export abstract class Indicator<T> {
     protected constructor(
         public readonly shortDescription: string,
         public readonly longDescription: string,
-        public readonly isDelta: boolean
+        public readonly isPercent: boolean
     ) {
     }
 

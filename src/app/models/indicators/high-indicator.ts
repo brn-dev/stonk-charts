@@ -16,7 +16,7 @@ export class HighIndicator extends DeltaIndicator {
         return indicator;
     }
 
-    public isDelta = true;
+    public isPercent = true;
 
     private constructor(private timespan: Timespan) {
         super(timespan.displayText + ' High', timespan.displayText + ' High');

@@ -31,7 +31,7 @@ export class FilterService {
     }
 
     get filteredAssets(): Asset[] {
-        if (this._enabledTags.size === this.assetService.getAllUniqueTags().length &&
+        if (this._enabledTags.size === this.assetService.allUniqueTags.length &&
             this._enabledTags.size === 0 &&
             this.searchTerm.length < 2
         ) {
@@ -60,23 +60,23 @@ export class FilterService {
         this.$filterUpdated.next();
     }
 
-    public isTagEnabled(tag: string) {
+    public isTagEnabled(tag: string): boolean {
         return this._enabledTags.isActive(tag);
     }
 
-    public enableAllTags() {
-        for (const tag of this.assetService.getAllUniqueTags()) {
+    public enableAllTags(): void {
+        for (const tag of this.assetService.allUniqueTags) {
             this._enabledTags.setActive(tag, true);
         }
         this.$filterUpdated.next();
     }
 
-    public disableAllTags() {
+    public disableAllTags(): void {
         this._enabledTags.clear();
         this.$filterUpdated.next();
     }
 
-    public disableAllTagsExcept(tag: string) {
+    public disableAllTagsExcept(tag: string): void {
         if (this._enabledTags.size === 1 && this._enabledTags.isActive(tag)) {
             this.enableAllTags();
             return;
