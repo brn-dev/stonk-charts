@@ -13,7 +13,7 @@ export class ExposureAmountIndicator extends NumberIndicator {
     }
 
     private constructor() {
-        super('Exp $', 'Exposure $', false);
+        super('Exp $', 'Exposure $', false, null, null);
 
     }
 

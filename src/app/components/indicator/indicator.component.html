@@ -1,0 +1,15 @@
+<div class="indicator-container">
+    <span *ngIf="indicatorResult !== null; else na" [style.color]="color">
+        {{ indicatorDisplayValue }}
+    </span>
+    <ng-template #na>
+        <span>n/a</span>
+    </ng-template>
+
+    <div *ngIf="settingsService.showDates" class="smol">
+        {{ date }}
+    </div>
+    <div *ngIf="settingsService.showTimespans" class="smol">
+        {{ timespan?.displayText }}
+    </div>
+</div>

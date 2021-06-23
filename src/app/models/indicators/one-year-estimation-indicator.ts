@@ -1,6 +1,6 @@
 import { ChartHelper } from "../../utils/chart-helper";
 import { Asset } from "../asset";
-import { DeltaIndicator } from "./indicator";
+import { DeltaIndicator } from './indicator';
 import { AssetData } from '../asset-data/asset-data';
 
 export class OneYearEstimationIndicator extends DeltaIndicator {

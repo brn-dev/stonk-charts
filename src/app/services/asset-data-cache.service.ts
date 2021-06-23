@@ -13,7 +13,7 @@ import { AssetData } from '../models/asset-data/asset-data';
 })
 export class AssetDataCacheService {
 
-    private readonly BASE_PATH = 'assets/';
+    private readonly BASE_PATH = 'asset-data/';
 
     private assetDataCache = new Map<string, AssetData>();
 

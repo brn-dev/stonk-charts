@@ -18,6 +18,10 @@ export class SettingsService {
 
     public showDescriptions = true;
 
+    public turnOffPercentColors = false;
+
+    public turnOffNonPercentColors = false;
+
     public $chartDaysUpdated = new Subject<number>();
 
     get chartDays(): number {

@@ -1,6 +1,6 @@
 import { ChartHelper } from "../../utils/chart-helper";
 import { Timespan } from "../timespan";
-import { DeltaIndicator } from "./indicator";
+import { DeltaIndicator } from './indicator';
 import { AssetData } from '../asset-data/asset-data';
 
 export class TimespanIndicator extends DeltaIndicator {

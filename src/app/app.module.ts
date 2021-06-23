@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -10,17 +10,17 @@ import { MainComponent } from './components/main/main.component';
 import { YahooApiService } from './services/api/yahoo-api.service';
 import { ApiService } from './services/api/api.service';
 import { AssetComponent } from './components/asset/asset.component';
-import { DeltaComponent } from './components/delta/delta.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { TagComponent } from './components/tag/tag.component';
+import { IndicatorComponent } from './components/indicator/indicator.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         MainComponent,
         AssetComponent,
-        DeltaComponent,
-        TagComponent
+        TagComponent,
+        IndicatorComponent,
     ],
     imports: [
         BrowserModule,

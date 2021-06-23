@@ -1,5 +1,5 @@
 import { Timespan } from "../timespan";
-import { DeltaIndicator, Indicator } from "./indicator";
+import { DeltaIndicator } from './indicator';
 import { AssetData } from '../asset-data/asset-data';
 
 export class HighIndicator extends DeltaIndicator {

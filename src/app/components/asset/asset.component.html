@@ -26,15 +26,6 @@
     ></highcharts-chart>
 
     <div *ngFor="let indicator of indicators">
-        <app-delta *ngIf="indicator.isPercent; else nonDelta"
-                   [delta]="getIndicatorValue(indicator)"
-                   [min]="getMinForIndicator(indicator)"
-                   [max]="getMaxForIndicator(indicator)"
-                   [timespan]="getTimespan(indicator)"
-                   [timestamp]="getTimestamp(indicator)"
-        ></app-delta>
-        <ng-template #nonDelta>
-            {{ getIndicatorDisplayValue(indicator) }}
-        </ng-template>
+        <app-indicator [asset]="asset" [indicator]="indicator"></app-indicator>
     </div>
 </div>

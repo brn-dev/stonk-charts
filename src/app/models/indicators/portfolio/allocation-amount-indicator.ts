@@ -13,7 +13,7 @@ export class AllocationAmountIndicator extends NumberIndicator {
     }
 
     private constructor() {
-        super('Alloc $', 'Allocation $', false);
+        super('Alloc $', 'Allocation $', false, null, null);
 
     }
 

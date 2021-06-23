@@ -1,6 +1,7 @@
 import { Timespan } from "../timespan";
 import { NumberIndicator } from "./indicator";
 import { AssetData } from '../asset-data/asset-data';
+import { ColorMaps } from '../color-maps';
 
 export class RsiIndicator extends NumberIndicator {
 
@@ -19,7 +20,13 @@ export class RsiIndicator extends NumberIndicator {
     public isPercent = false;
 
     private constructor(private timespan: Timespan) {
-        super('RSI ' + timespan.displayText, 'RSI ' + timespan.displayText, false);
+        super(
+            'RSI ' + timespan.displayText,
+            'RSI ' + timespan.displayText,
+            false,
+            ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+            null
+        );
     }
 
     public compute(assetData: AssetData): number {

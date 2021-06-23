@@ -1,0 +1,9 @@
+.indicator-container {
+  display: flex;
+  flex-direction: column;
+
+  .smol {
+    font-size: x-small;
+    color: gray;
+  }
+}

@@ -48,6 +48,14 @@
                 <input type="checkbox" [(ngModel)]="settingsService.showDescriptions" id="show-descriptions-toggle">
                 <label for="show-descriptions-toggle">Show Descriptions</label>
             </div>
+            <div class="checkbox-with-label">
+                <input type="checkbox" [(ngModel)]="settingsService.turnOffPercentColors" id="turn-off-percent-colors-toggle">
+                <label for="turn-off-percent-colors-toggle">Turn off percent colors</label>
+            </div>
+            <div class="checkbox-with-label">
+                <input type="checkbox" [(ngModel)]="settingsService.turnOffNonPercentColors" id="turn-off-non-percent-colors-toggle">
+                <label for="turn-off-non-percent-colors-toggle">Turn off non-percent colors</label>
+            </div>
         </div>
     </div>
 
