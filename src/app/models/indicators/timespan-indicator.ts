@@ -31,8 +31,7 @@ export class TimespanIndicator extends DeltaIndicator {
         if (!now?.close || !past?.close) {
             return null;
         }
-        
-        
+
         return ChartHelper.calculateDelta(now.close, past.close);
     }
 
