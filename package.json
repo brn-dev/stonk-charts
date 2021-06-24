@@ -28,6 +28,7 @@
     "lint": "ng lint"
   },
   "dependencies": {
+    "@angular/cdk": "11.2.13",
     "@electron/remote": "1.0.4",
     "color-interpolate": "1.0.5",
     "fs": "*",

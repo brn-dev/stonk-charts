@@ -37,3 +37,16 @@ app-asset:nth-of-type(odd) > * {
   background-color: #F0F0F0;
 }
 
+// angular cdk - drag and drop
+
+// angular cdk - drag and drop - indicator headers
+
+.cdk-drop-list-dragging .indicator-header {
+  border-left: lightgray 1px solid;
+}
+
+.indicator-header.cdk-drag-preview,
+.indicator-header.cdk-drag-dragging {
+  display: none;
+}
+

@@ -8,6 +8,7 @@ import { IndicatorService } from '../../services/indicator.service';
 import { SettingsService } from '../../services/settings.service';
 import { SortService } from '../../services/sort.service';
 import { Indicator } from '../../models/indicators/indicator';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 const { exec } = window.require("child_process");
 
@@ -59,6 +60,10 @@ export class MainComponent implements OnInit {
 
     public onIndicatorHeaderClick(indicator: Indicator<any>): void {
         this.sortService.setOrToggleSortIndicator(indicator);
+    }
+
+    public headerDropped(evt: CdkDragDrop<Indicator<any>[]>): void {
+        moveItemInArray(evt.container.data, evt.previousIndex, evt.currentIndex);
     }
 
 }

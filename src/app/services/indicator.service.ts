@@ -119,7 +119,7 @@ export class IndicatorService {
         },
     ];
 
-    private readonly _activeIndicatorsSet = new ToggleActiveSet<Indicator<any>>();
+    private _activeIndicators: Indicator<any>[] = [];
 
     constructor() {
         this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.DAY, 1)));
@@ -132,29 +132,23 @@ export class IndicatorService {
     }
 
     get activeIndicators(): Indicator<any>[] {
-        const indicators: Indicator<any>[] = [];
-
-        for (const indicatorGroup of this.availableIndicators) {
-            for (const indicator of indicatorGroup.indicators) {
-                if (this._activeIndicatorsSet.isActive(indicator)) {
-                    indicators.push(indicator);
-                }
-            }
-        }
-
-        return indicators;
+        return this._activeIndicators;
     }
 
     public toggleActive(indicator: Indicator<any>): void {
-        this._activeIndicatorsSet.toggleActive(indicator);
+        if (this._activeIndicators.includes(indicator)) {
+            this._activeIndicators.splice(this._activeIndicators.indexOf(indicator), 1);
+        } else {
+            this._activeIndicators.push(indicator);
+        }
     }
 
     public isActive(indicator: Indicator<any>): boolean {
-        return this._activeIndicatorsSet.isActive(indicator);
+        return this._activeIndicators.includes(indicator);
     }
 
     public clearActiveIndicators(): void {
-        this._activeIndicatorsSet.clear();
+        this._activeIndicators = [];
     }
 
 }

@@ -89,7 +89,13 @@
         <span class="search-clear" (click)="clearSearchTerm()" >&#10005;</span>
     </div>
 
-    <div class="header-container" [class.with-chart]="settingsService.showCharts">
+    <div class="header-container"
+         [class.with-chart]="settingsService.showCharts"
+         cdkDropList
+         cdkDropListOrientation="horizontal"
+         [cdkDropListData]="indicatorService.activeIndicators"
+         (cdkDropListDropped)="headerDropped($event)"
+    >
         <div>
             <strong>Symbol</strong>
         </div>
@@ -99,6 +105,8 @@
         <div *ngFor="let indicator of indicatorService.activeIndicators"
              (click)="onIndicatorHeaderClick(indicator)"
              class="indicator-header"
+             cdkDrag
+             [cdkDragData]="indicator"
         >
             <strong>{{ indicator.shortDescription }}</strong>
             <span *ngIf="sortService.sortIndicator === indicator" class="sort-symbol">

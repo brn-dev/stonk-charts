@@ -13,6 +13,7 @@ import { AssetComponent } from './components/asset/asset.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { TagComponent } from './components/tag/tag.component';
 import { IndicatorComponent } from './components/indicator/indicator.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { IndicatorComponent } from './components/indicator/indicator.component';
         FormsModule,
         HttpClientModule,
         AppRoutingModule,
-        HighchartsChartModule
+        HighchartsChartModule,
+        DragDropModule,
     ],
     providers: [
         { provide: ApiService, useClass: YahooApiService }
