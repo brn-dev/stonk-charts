@@ -75,13 +75,13 @@
     </div>
 
     <div class="tags-container">
-        <button (click)="filterService.enableAllTags()">All</button>
-        <button (click)="filterService.disableAllTags()">None</button>
+        <button (click)="filterStateService.enabledTagsState.enableAllTags()">All</button>
+        <button (click)="filterStateService.enabledTagsState.disableAllTags()">None</button>
         <app-tag *ngFor="let tag of assetService.allUniqueTags" [tag]="tag"></app-tag>
     </div>
 
     <div class="search-box">
-        <input [(ngModel)]="filterService.searchTerm"
+        <input [(ngModel)]="filterStateService.searchTerm"
                autocomplete="off"
                autocapitalize="off"
                spellcheck="false"

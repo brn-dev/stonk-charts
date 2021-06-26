@@ -1,52 +1,38 @@
 // noinspection JSMethodCanBeStatic
 
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 import { Asset } from '../models/asset';
-import { ToggleActiveSet } from '../models/toggle-active-set';
 import { AssetService } from './asset.service';
+import { FilterStateService } from './filter-state.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FilterService {
 
-    private _enabledTags = new ToggleActiveSet<string>();
-
-    private _excludedTags = new ToggleActiveSet<string>();
-
-    private _searchTerm = '';
-
-    public $filterUpdated = new Subject<void>();
-
-    constructor(private assetService: AssetService) {
-        this.enableAllTags();
-    }
-
-    get searchTerm(): string {
-        return this._searchTerm;
-    }
-
-    set searchTerm(term: string) {
-        this._searchTerm = term;
-        this.$filterUpdated.next();
+    constructor(
+        private readonly assetService: AssetService,
+        private readonly tagStateService: FilterStateService,
+    ) {
+        this.tagStateService.enabledTagsState.enableAllTags();
     }
 
     get filteredAssets(): Asset[] {
-        if (this._enabledTags.size === this.assetService.allUniqueTags.length &&
-            this._enabledTags.size === 0 &&
-            this.searchTerm.length === 0
+        if (this.tagStateService.enabledTagsState.areAllTagsEnabled &&
+            this.tagStateService.excludedTagsState.areNoTagsExcluded &&
+            !this.tagStateService.searchTerm
         ) {
             return this.assetService.assets;
         }
-        if (this._enabledTags.size === 0) {
+
+        if (this.tagStateService.enabledTagsState.areNoTagsEnabled) {
             return [];
         }
 
         const assets: Asset[] = [];
         for (const asset of this.assetService.assets) {
-            if (asset.tags.some(tag => this._enabledTags.isActive(tag)) &&
-                !asset.tags.some(tag => this._excludedTags.isActive(tag)) &&
+            if (asset.tags.some(tag => this.tagStateService.enabledTagsState.isTagEnabled(tag)) &&
+                !asset.tags.some(tag => this.tagStateService.excludedTagsState.isTagExcluded(tag)) &&
                 this.doesSearchTermContain(asset.symbol)
             ) {
                 assets.push(asset);
@@ -56,48 +42,9 @@ export class FilterService {
         return assets;
     }
 
-    public toggleEnableTag(tag: string): void {
-        this._enabledTags.toggleActive(tag);
-        this.$filterUpdated.next();
-    }
-
-    public isTagEnabled(tag: string): boolean {
-        return this._enabledTags.isActive(tag);
-    }
-
-    public enableAllTags(): void {
-        for (const tag of this.assetService.allUniqueTags) {
-            this._enabledTags.setActive(tag, true);
-        }
-        this.$filterUpdated.next();
-    }
-
-    public disableAllTags(): void {
-        this._enabledTags.clear();
-        this.$filterUpdated.next();
-    }
-
-    public disableAllTagsExcept(tag: string): void {
-        if (this._enabledTags.size === 1 && this._enabledTags.isActive(tag)) {
-            this.enableAllTags();
-            return;
-        }
-        this.disableAllTags();
-        this.toggleEnableTag(tag);
-    }
-
-    public toggleExcludeTag(tag: string): void {
-        this._excludedTags.toggleActive(tag);
-        this.$filterUpdated.next();
-    }
-
-    public isTagExcluded(tag: string): boolean {
-        return this._excludedTags.isActive(tag);
-    }
-
     private doesSearchTermContain(symbol: string): boolean {
         symbol = symbol.toLowerCase();
-        const searchTerm = this.replaceAll(this.searchTerm.toLowerCase(), ';', ',');
+        const searchTerm = this.replaceAll(this.tagStateService.searchTerm.toLowerCase(), ';', ',');
 
         if (searchTerm.length === 0) {
             return true;

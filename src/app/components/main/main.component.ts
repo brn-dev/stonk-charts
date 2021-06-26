@@ -9,6 +9,7 @@ import { SettingsService } from '../../services/settings.service';
 import { SortService } from '../../services/sort.service';
 import { Indicator } from '../../models/indicators/indicator';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { FilterStateService } from '../../services/filter-state.service';
 
 const { exec } = window.require("child_process");
 
@@ -25,7 +26,7 @@ export class MainComponent implements OnInit {
         public assetService: AssetService,
         public settingsService: SettingsService,
         public assetDataCacheService: AssetDataCacheService,
-        public filterService: FilterService,
+        public filterStateService: FilterStateService,
         public fileService: FileService,
         public indicatorService: IndicatorService,
         public sortService: SortService,
@@ -51,7 +52,7 @@ export class MainComponent implements OnInit {
     }
 
     public clearSearchTerm(): void {
-        this.filterService.searchTerm = '';
+        this.filterStateService.searchTerm = '';
     }
 
     public clearIndicators(): void {
