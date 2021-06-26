@@ -3,6 +3,7 @@ import { Asset } from '../../asset';
 import { ChartHelper } from '../../../utils/chart-helper';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { AssetData } from '../../asset-data/asset-data';
+import { Calculator } from '../../../utils/calculator';
 
 export class ProfitLossPercentIndicator extends DeltaIndicator {
 
@@ -23,7 +24,7 @@ export class ProfitLossPercentIndicator extends DeltaIndicator {
         }
         const profitLoss = assetInvestmentInfo.calculateProfitLoss(ChartHelper.lastDay(chart).close);
         const netAmount = assetInvestmentInfo.allocationAmount + profitLoss;
-        return netAmount / assetInvestmentInfo.allocationAmount - 1;
+        return Calculator.calculateDelta(netAmount, assetInvestmentInfo.allocationAmount);
     }
 
 }

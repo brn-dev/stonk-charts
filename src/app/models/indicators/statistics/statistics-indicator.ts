@@ -1,8 +1,8 @@
-import { NumberIndicator } from './indicator';
-import { AssetData } from '../asset-data/asset-data';
-import { AssetStatistics } from '../asset-data/asset-statistics';
-import { NumberFormatUtils } from '../../utils/number-format-utils';
-import { ColorPalettes } from '../color-palettes';
+import { NumberIndicator } from '../indicator';
+import { AssetData } from '../../asset-data/asset-data';
+import { AssetStatistics } from '../../asset-data/asset-statistics';
+import { NumberFormatUtils } from '../../../utils/number-format-utils';
+import { ColorPalettes } from '../../color-palettes';
 
 export class StatisticsIndicator extends NumberIndicator {
 

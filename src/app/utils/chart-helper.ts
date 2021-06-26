@@ -35,8 +35,4 @@ export class ChartHelper {
     public static firstDay(chart: Chart): ChartEntry {
         return chart.entries[0];
     }
-
-    public static calculateDelta(now: number, past: number): number | null {
-        return now / past - 1;
-    }
 }

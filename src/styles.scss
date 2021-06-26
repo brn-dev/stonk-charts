@@ -43,10 +43,10 @@ app-asset:nth-of-type(odd) > * {
 
 .cdk-drop-list-dragging .indicator-header {
   border-left: lightgray 1px solid;
+  transition: transform 100ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .indicator-header.cdk-drag-preview,
 .indicator-header.cdk-drag-dragging {
   display: none;
 }
-

@@ -13,7 +13,8 @@ import { AverageLeverageIndicator } from '../models/indicators/portfolio/average
 import { OneYearEstimationIndicator } from '../models/indicators/one-year-estimation-indicator';
 import { ExposureAmountIndicator } from '../models/indicators/portfolio/exposure-amount-indicator';
 import { ExposurePercentIndicator } from '../models/indicators/portfolio/exposure-percent-indicator';
-import { StatisticsIndicator } from '../models/indicators/statistics-indicator';
+import { StatisticsIndicator } from '../models/indicators/statistics/statistics-indicator';
+import { TrailingForwardPeRatioIndicator } from '../models/indicators/statistics/trailing-forward-pe-ratio-indicator';
 
 export interface IndicatorGroup {
     title?: string;
@@ -100,6 +101,7 @@ export class IndicatorService {
                 StatisticsIndicator.enterpriseValueIndicator,
                 StatisticsIndicator.trailingPEIndicator,
                 StatisticsIndicator.forwardPEIndicator,
+                TrailingForwardPeRatioIndicator.singleton,
                 StatisticsIndicator.pegRatioIndicator,
                 StatisticsIndicator.priceToSalesIndicator,
                 StatisticsIndicator.priceToBookIndicator,

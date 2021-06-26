@@ -2,6 +2,7 @@ import { ChartHelper } from "../../utils/chart-helper";
 import { Asset } from "../asset";
 import { DeltaIndicator } from './indicator';
 import { AssetData } from '../asset-data/asset-data';
+import { Calculator } from '../../utils/calculator';
 
 export class OneYearEstimationIndicator extends DeltaIndicator {
 
@@ -20,7 +21,7 @@ export class OneYearEstimationIndicator extends DeltaIndicator {
         if (!asset.oneYearEstimation || !chart?.entries) {
             return null;
         }
-        return ChartHelper.calculateDelta(asset.oneYearEstimation, ChartHelper.lastDay(chart).close);
+        return Calculator.calculateDelta(asset.oneYearEstimation, ChartHelper.lastDay(chart).close);
     }
 
 }
