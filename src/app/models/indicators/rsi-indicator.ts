@@ -1,7 +1,7 @@
 import { Timespan } from "../timespan";
 import { NumberIndicator } from "./indicator";
 import { AssetData } from '../asset-data/asset-data';
-import { ColorMaps } from '../color-maps';
+import { ColorPalettes } from '../color-palettes';
 
 export class RsiIndicator extends NumberIndicator {
 
@@ -24,7 +24,7 @@ export class RsiIndicator extends NumberIndicator {
             'RSI ' + timespan.displayText,
             'RSI ' + timespan.displayText,
             false,
-            ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+            ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
             null
         );
     }

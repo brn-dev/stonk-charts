@@ -10,7 +10,7 @@ import { Chart } from '../../models/asset-data/chart';
 import { ChartHelper } from '../../utils/chart-helper';
 import { DateUtils } from '../../utils/date-utils';
 import { Timespan } from '../../models/timespan';
-import { ColorMaps } from '../../models/color-maps';
+import { ColorPalettes } from '../../models/color-palettes';
 
 @Component({
     selector: 'app-indicator',
@@ -52,14 +52,14 @@ export class IndicatorComponent<T> {
 
     get color(): string {
         if (this.indicator.isPercent && this.settingsService.turnOffPercentColors) {
-            return ColorMaps.DEFAULT_COLOR;
+            return ColorPalettes.DEFAULT_COLOR;
         }
         if (!this.indicator.isPercent && this.settingsService.turnOffNonPercentColors) {
-            return ColorMaps.DEFAULT_COLOR;
+            return ColorPalettes.DEFAULT_COLOR;
         }
 
         if (!(this.indicator instanceof NumberIndicator) || !this.indicatorResult) {
-            return ColorMaps.DEFAULT_COLOR;
+            return ColorPalettes.DEFAULT_COLOR;
         }
 
         const indicatorResult = <number><unknown>this.indicatorResult;
@@ -71,7 +71,7 @@ export class IndicatorComponent<T> {
         } else if (indicatorResult < 0) {
             return this.indicator.negativeColorInterpolation(this.root(indicatorResult / min));
         }
-        return ColorMaps.DEFAULT_COLOR;
+        return ColorPalettes.DEFAULT_COLOR;
     }
 
     get timespan(): Timespan {

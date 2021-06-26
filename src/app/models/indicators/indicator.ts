@@ -3,7 +3,7 @@ import { PortfolioAssetInvestmentInfo } from '../portfolio-asset-investment-info
 import { AssetData } from '../asset-data/asset-data';
 import { NumberFormatUtils } from '../../utils/number-format-utils';
 import { ColorInterpolation, interpolate } from '../../utils/color-interpolate';
-import { ColorMaps } from '../color-maps';
+import { ColorPalettes } from '../color-palettes';
 
 export abstract class Indicator<T> {
 
@@ -14,19 +14,19 @@ export abstract class Indicator<T> {
         public readonly shortDescription: string,
         public readonly longDescription: string,
         public readonly isPercent: boolean,
-        positiveColorMap: string[] | null,
-        negativeColorMap: string[] | null,
+        positiveColorPalette: string[] | null,
+        negativeColorPalette: string[] | null,
     ) {
-        if (positiveColorMap && positiveColorMap.length > 0) {
-            this.positiveColorInterpolation = interpolate(positiveColorMap);
+        if (positiveColorPalette && positiveColorPalette.length > 0) {
+            this.positiveColorInterpolation = interpolate(positiveColorPalette);
         } else {
-            this.positiveColorInterpolation = () => ColorMaps.DEFAULT_COLOR;
+            this.positiveColorInterpolation = () => ColorPalettes.DEFAULT_COLOR;
         }
 
-        if (negativeColorMap && negativeColorMap.length > 0) {
-            this.negativeColorInterpolation = interpolate(negativeColorMap);
+        if (negativeColorPalette && negativeColorPalette.length > 0) {
+            this.negativeColorInterpolation = interpolate(negativeColorPalette);
         } else {
-            this.negativeColorInterpolation = () => ColorMaps.DEFAULT_COLOR;
+            this.negativeColorInterpolation = () => ColorPalettes.DEFAULT_COLOR;
         }
     }
 
@@ -48,10 +48,10 @@ export abstract class PercentIndicator extends NumberIndicator {
     protected constructor(
         shortDescription: string,
         longDescription: string,
-        positiveColorMap: string[] | null,
-        negativeColorMap: string[] | null,
+        positiveColorPalette: string[] | null,
+        negativeColorPalette: string[] | null,
     ) {
-        super(shortDescription, longDescription, true, positiveColorMap, negativeColorMap);
+        super(shortDescription, longDescription, true, positiveColorPalette, negativeColorPalette);
     }
 
     public toDisplayFormat(num: number): string {
@@ -72,8 +72,8 @@ export abstract class DeltaIndicator extends PercentIndicator {
         super(
             shortDescription,
             longDescription,
-            ColorMaps.DELTA_POSITIVE_COLOR_MAP,
-            ColorMaps.DELTA_NEGATIVE_COLOR_MAP,
+            ColorPalettes.DELTA_POSITIVE_COLOR_MAP,
+            ColorPalettes.DELTA_NEGATIVE_COLOR_MAP,
         );
     }
 

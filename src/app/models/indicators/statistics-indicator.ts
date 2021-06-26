@@ -2,7 +2,7 @@ import { NumberIndicator } from './indicator';
 import { AssetData } from '../asset-data/asset-data';
 import { AssetStatistics } from '../asset-data/asset-statistics';
 import { NumberFormatUtils } from '../../utils/number-format-utils';
-import { ColorMaps } from '../color-maps';
+import { ColorPalettes } from '../color-palettes';
 
 export class StatisticsIndicator extends NumberIndicator {
 
@@ -29,7 +29,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'tP/E',
         'tr. Price/Earning',
         false,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -38,7 +38,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'fP/E',
         'fw. Price/Earning',
         false,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -47,7 +47,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'PEG',
         'PEG Ratio',
         false,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -56,7 +56,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'P/S',
         'Price/Sales',
         false,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -65,7 +65,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'P/B',
         'Price/Book',
         false,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -74,7 +74,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'EV/Rev',
         'EV/Revenue',
         false,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -83,7 +83,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'EV/EBITDA',
         'EV/EBITDA',
         false,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -92,8 +92,8 @@ export class StatisticsIndicator extends NumberIndicator {
         'Profit M.',
         'Profit Margin',
         true,
-        ColorMaps.DELTA_POSITIVE_COLOR_MAP,
-        ColorMaps.DELTA_NEGATIVE_COLOR_MAP,
+        ColorPalettes.DELTA_POSITIVE_COLOR_MAP,
+        ColorPalettes.DELTA_NEGATIVE_COLOR_MAP,
     );
 
     public static readonly operatingMarginIndicator = new StatisticsIndicator(
@@ -101,8 +101,8 @@ export class StatisticsIndicator extends NumberIndicator {
         'Op. M.',
         'Operating Margin',
         true,
-        ColorMaps.DELTA_POSITIVE_COLOR_MAP,
-        ColorMaps.DELTA_NEGATIVE_COLOR_MAP,
+        ColorPalettes.DELTA_POSITIVE_COLOR_MAP,
+        ColorPalettes.DELTA_NEGATIVE_COLOR_MAP,
     );
 
     public static readonly returnOnAssetsIndicator = new StatisticsIndicator(
@@ -110,8 +110,8 @@ export class StatisticsIndicator extends NumberIndicator {
         'RoA',
         'Return on Assets',
         true,
-        ColorMaps.DELTA_POSITIVE_COLOR_MAP,
-        ColorMaps.DELTA_NEGATIVE_COLOR_MAP,
+        ColorPalettes.DELTA_POSITIVE_COLOR_MAP,
+        ColorPalettes.DELTA_NEGATIVE_COLOR_MAP,
     );
 
     public static readonly returnOnEquityIndicator = new StatisticsIndicator(
@@ -119,8 +119,8 @@ export class StatisticsIndicator extends NumberIndicator {
         'RoE',
         'Return on Equity',
         true,
-        ColorMaps.DELTA_POSITIVE_COLOR_MAP,
-        ColorMaps.DELTA_NEGATIVE_COLOR_MAP,
+        ColorPalettes.DELTA_POSITIVE_COLOR_MAP,
+        ColorPalettes.DELTA_NEGATIVE_COLOR_MAP,
     );
 
     public static readonly revenueGrowthIndicator = new StatisticsIndicator(
@@ -128,8 +128,8 @@ export class StatisticsIndicator extends NumberIndicator {
         'Rev. Gr.',
         'Rev. Growth',
         true,
-        ColorMaps.DELTA_POSITIVE_COLOR_MAP,
-        ColorMaps.DELTA_NEGATIVE_COLOR_MAP,
+        ColorPalettes.DELTA_POSITIVE_COLOR_MAP,
+        ColorPalettes.DELTA_NEGATIVE_COLOR_MAP,
     );
 
     public static readonly earningsGrowthIndicator = new StatisticsIndicator(
@@ -137,8 +137,8 @@ export class StatisticsIndicator extends NumberIndicator {
         'Earn. Gr.',
         'Earn. Growth',
         true,
-        ColorMaps.DELTA_POSITIVE_COLOR_MAP,
-        ColorMaps.DELTA_NEGATIVE_COLOR_MAP,
+        ColorPalettes.DELTA_POSITIVE_COLOR_MAP,
+        ColorPalettes.DELTA_NEGATIVE_COLOR_MAP,
     );
 
     public static readonly shortPercentIndicator = new StatisticsIndicator(
@@ -146,7 +146,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'Short %',
         'Short %',
         true,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -155,7 +155,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'tDY',
         'tr. Divi. Yield',
         true,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -164,7 +164,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'fDY',
         'fw. Divi. Yield',
         true,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -173,7 +173,7 @@ export class StatisticsIndicator extends NumberIndicator {
         'DPR',
         'Divi. Payout Ratio',
         true,
-        ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+        ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
         null,
     );
 
@@ -182,11 +182,11 @@ export class StatisticsIndicator extends NumberIndicator {
         shortDescription: string,
         longDescription: string,
         isPercent: boolean,
-        positiveColorMap: string[] | null,
-        negativeColorMap: string[] | null,
+        positiveColorPalette: string[] | null,
+        negativeColorPalette: string[] | null,
 
     ) {
-        super(shortDescription, longDescription, isPercent, positiveColorMap, negativeColorMap);
+        super(shortDescription, longDescription, isPercent, positiveColorPalette, negativeColorPalette);
     }
 
     public compute(assetData: AssetData): number {

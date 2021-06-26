@@ -3,7 +3,7 @@ import { Asset } from '../../asset';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { NumberFormatUtils } from '../../../utils/number-format-utils';
 import { AssetData } from '../../asset-data/asset-data';
-import { ColorMaps } from '../../color-maps';
+import { ColorPalettes } from '../../color-palettes';
 
 export class AverageLeverageIndicator extends NumberIndicator {
 
@@ -18,7 +18,7 @@ export class AverageLeverageIndicator extends NumberIndicator {
             'Lev',
             'Leverage',
             false,
-            ColorMaps.POSITIVE_ONLY_COLOR_MAP,
+            ColorPalettes.POSITIVE_ONLY_COLOR_MAP,
             null
         );
     }

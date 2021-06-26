@@ -2,7 +2,7 @@ import { NumberIndicator, PercentIndicator } from '../indicator';
 import { Asset } from '../../asset';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { AssetData } from '../../asset-data/asset-data';
-import { ColorMaps } from '../../color-maps';
+import { ColorPalettes } from '../../color-palettes';
 
 export class ExposurePercentIndicator extends PercentIndicator {
 
@@ -13,7 +13,7 @@ export class ExposurePercentIndicator extends PercentIndicator {
     }
 
     private constructor() {
-        super('Exp %', 'Exposure %', ColorMaps.POSITIVE_ONLY_COLOR_MAP, null);
+        super('Exp %', 'Exposure %', ColorPalettes.POSITIVE_ONLY_COLOR_MAP, null);
 
     }
 

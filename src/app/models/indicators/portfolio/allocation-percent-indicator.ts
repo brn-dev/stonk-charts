@@ -2,7 +2,7 @@ import { PercentIndicator } from '../indicator';
 import { Asset } from '../../asset';
 import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { AssetData } from '../../asset-data/asset-data';
-import { ColorMaps } from '../../color-maps';
+import { ColorPalettes } from '../../color-palettes';
 
 export class AllocationPercentIndicator extends PercentIndicator {
 
@@ -13,7 +13,7 @@ export class AllocationPercentIndicator extends PercentIndicator {
     }
 
     private constructor() {
-        super('Alloc %', 'Allocation %', ColorMaps.POSITIVE_ONLY_COLOR_MAP, null);
+        super('Alloc %', 'Allocation %', ColorPalettes.POSITIVE_ONLY_COLOR_MAP, null);
 
     }
 
