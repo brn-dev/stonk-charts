@@ -7,7 +7,9 @@
     color: white;
     white-space: nowrap;
 
-    .exclude-toggle {
+    .exclude-toggle,
+    .required-toggle {
+        display: inline-block;
         padding: 0 0.05rem;
         margin: 0 0.05rem;
     }
@@ -18,6 +20,11 @@
 
     &.excluded .exclude-toggle {
         background-color: red;
+        color: white;
+    }
+
+    &.required .required-toggle {
+        background-color: deepskyblue;
         color: white;
     }
 

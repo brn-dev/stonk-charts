@@ -12,28 +12,30 @@ export class FilterService {
 
     constructor(
         private readonly assetService: AssetService,
-        private readonly tagStateService: FilterStateService,
+        private readonly filterStateService: FilterStateService,
     ) {
-        this.tagStateService.enabledTagsState.enableAllTags();
+        this.filterStateService.enabledTagsState.enableAllTags();
     }
 
     get filteredAssets(): Asset[] {
-        if (this.tagStateService.enabledTagsState.areAllTagsEnabled &&
-            this.tagStateService.excludedTagsState.areNoTagsExcluded &&
-            !this.tagStateService.searchTerm
+        if (this.filterStateService.enabledTagsState.areAllTagsEnabled &&
+            this.filterStateService.excludedTagsState.areNoTagsExcluded &&
+            this.filterStateService.requiredTagsState.areNoTagsRequired &&
+            !this.filterStateService.searchTerm
         ) {
             return this.assetService.assets;
         }
 
-        if (this.tagStateService.enabledTagsState.areNoTagsEnabled) {
+        if (this.filterStateService.enabledTagsState.areNoTagsEnabled) {
             return [];
         }
 
         const assets: Asset[] = [];
         for (const asset of this.assetService.assets) {
-            if (asset.tags.some(tag => this.tagStateService.enabledTagsState.isTagEnabled(tag)) &&
-                !asset.tags.some(tag => this.tagStateService.excludedTagsState.isTagExcluded(tag)) &&
-                this.doesSearchTermContain(asset.symbol)
+            if (asset.tags.some(tag => this.filterStateService.enabledTagsState.isTagEnabled(tag)) &&
+                !asset.tags.some(tag => this.filterStateService.excludedTagsState.isTagExcluded(tag)) &&
+                this.doesSearchTermContain(asset.symbol) &&
+                this.matchesRequiredTags(asset)
             ) {
                 assets.push(asset);
             }
@@ -44,7 +46,7 @@ export class FilterService {
 
     private doesSearchTermContain(symbol: string): boolean {
         symbol = symbol.toLowerCase();
-        const searchTerm = this.replaceAll(this.tagStateService.searchTerm.toLowerCase(), ';', ',');
+        const searchTerm = this.replaceAll(this.filterStateService.searchTerm.toLowerCase(), ';', ',');
 
         if (searchTerm.length === 0) {
             return true;
@@ -64,6 +66,11 @@ export class FilterService {
 
     private replaceAll(str: string, searchTerm: string, replaceValue: string): string {
         return str.split(searchTerm).join(replaceValue);
+    }
+
+    private matchesRequiredTags(asset: Asset): boolean {
+        return this.filterStateService.requiredTagsState.areNoTagsRequired ||
+            asset.tags.some(tag => this.filterStateService.requiredTagsState.isTagRequired(tag));
     }
 
 }

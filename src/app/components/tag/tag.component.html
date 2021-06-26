@@ -1,11 +1,15 @@
 <span [class.disabled]="isDisabled()"
       [class.excluded]="isExcluded()"
+      [class.required]="isRequired()"
       (click)="toggleEnabled()"
       (contextmenu)="disableOthers()"
       class="asset-tag"
 >
     <span>
         {{ tag }}
+    </span>
+    <span class="required-toggle" (click)="toggleRequired($event)">
+        R
     </span>
     <span class="exclude-toggle" (click)="toggleExcluded($event)">
         &#10005;

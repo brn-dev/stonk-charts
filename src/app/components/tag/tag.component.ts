@@ -22,6 +22,10 @@ export class TagComponent {
         return this.filterStateService.excludedTagsState.isTagExcluded(this.tag);
     }
 
+    public isRequired(): boolean {
+        return this.filterStateService.requiredTagsState.isTagRequired(this.tag);
+    }
+
     public toggleEnabled(): void {
         this.filterStateService.enabledTagsState.toggleEnableTag(this.tag);
     }
@@ -33,6 +37,11 @@ export class TagComponent {
     public toggleExcluded(event: Event): void {
         event.stopPropagation();
         this.filterStateService.excludedTagsState.toggleExcludeTag(this.tag);
+    }
+
+    public toggleRequired(event: Event): void {
+        event.stopPropagation();
+        this.filterStateService.requiredTagsState.toggleRequireTag(this.tag);
     }
 
 }

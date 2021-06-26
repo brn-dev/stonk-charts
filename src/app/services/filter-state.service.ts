@@ -3,6 +3,7 @@ import { AssetService } from './asset.service';
 import { EnabledTagsState } from './models/enabled-tags-state';
 import { ExcludedTagsState } from './models/excluded-tags-state';
 import { Subject } from 'rxjs';
+import { RequiredTagsState } from './models/required-tags-state';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,7 @@ export class FilterStateService {
 
     public readonly enabledTagsState: EnabledTagsState;
     public readonly excludedTagsState: ExcludedTagsState;
+    public readonly requiredTagsState: RequiredTagsState;
 
     public constructor(
         assetService: AssetService
@@ -22,6 +24,7 @@ export class FilterStateService {
         this.$filterUpdated = new Subject<void>();
         this.enabledTagsState = new EnabledTagsState(this.$filterUpdated, () => assetService.allUniqueTags);
         this.excludedTagsState = new ExcludedTagsState(this.$filterUpdated);
+        this.requiredTagsState = new RequiredTagsState(this.$filterUpdated);
     }
 
     get searchTerm(): string {
