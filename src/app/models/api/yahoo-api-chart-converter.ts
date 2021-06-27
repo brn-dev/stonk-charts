@@ -8,9 +8,12 @@ import {
 export class YahooApiChartConverter {
 
     public static convert(apiResult: YahooApiGetChartsResult): Map<string, Chart> {
+        if (!apiResult.chart.result || !apiResult.chart.result[0]) {
+            return new Map<string, Chart>();
+        }
         const timestamps = apiResult.chart.result[0].timestamp;
         const quotes = apiResult.chart.result[0].indicators.quote[0];
-        const comparisions = apiResult.chart.result[0].comparisons ?? [];
+        const comparisons = apiResult.chart.result[0].comparisons ?? [];
 
         const chartsBySymbol = new Map<string, Chart>();
 
@@ -19,10 +22,10 @@ export class YahooApiChartConverter {
             this.convertChart(timestamps, quotes)
         );
 
-        for (const comparision of comparisions) {
+        for (const comparison of comparisons) {
             chartsBySymbol.set(
-                comparision.symbol,
-                this.convertChart(timestamps, comparision)
+                comparison.symbol,
+                this.convertChart(timestamps, comparison)
             );
         }
 
