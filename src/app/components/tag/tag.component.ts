@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FilterStateService } from '../../services/filter-state.service';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
     selector: 'app-tag',
@@ -11,7 +12,10 @@ export class TagComponent {
     @Input()
     public tag: string;
 
-    constructor(public filterStateService: FilterStateService) {
+    constructor(
+        public filterStateService: FilterStateService,
+        public settingsService: SettingsService,
+    ) {
     }
 
     public isDisabled(): boolean {

@@ -22,6 +22,8 @@ export class SettingsService {
 
     public turnOffNonPercentColors = false;
 
+    public enableRequiredTags = false;
+
     public $chartDaysUpdated = new Subject<number>();
 
     get chartDays(): number {

@@ -8,7 +8,10 @@
     <span>
         {{ tag }}
     </span>
-    <span class="required-toggle" (click)="toggleRequired($event)">
+    <span *ngIf="settingsService.enableRequiredTags"
+          class="required-toggle"
+          (click)="toggleRequired($event)"
+    >
         R
     </span>
     <span class="exclude-toggle" (click)="toggleExcluded($event)">
