@@ -18,13 +18,12 @@
         background-color: gray;
     }
 
-    &.excluded .exclude-toggle {
-        background-color: red;
-        color: white;
+    &.required {
+        background-color: deepskyblue;
     }
 
-    &.required .required-toggle {
-        background-color: deepskyblue;
+    &.excluded .exclude-toggle {
+        background-color: red;
         color: white;
     }
 

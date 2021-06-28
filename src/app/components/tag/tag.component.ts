@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { FilterStateService } from '../../services/filter-state.service';
-import { SettingsService } from '../../services/settings.service';
 
 @Component({
     selector: 'app-tag',
@@ -9,12 +8,13 @@ import { SettingsService } from '../../services/settings.service';
 })
 export class TagComponent {
 
+    private _longPress = false;
+
     @Input()
     public tag: string;
 
     constructor(
         public filterStateService: FilterStateService,
-        public settingsService: SettingsService,
     ) {
     }
 
@@ -27,15 +27,11 @@ export class TagComponent {
     }
 
     public isRequired(): boolean {
-        return this.filterStateService.requiredTagsState.isTagRequired(this.tag);
-    }
-
-    public toggleEnabled(): void {
-        this.filterStateService.enabledTagsState.toggleEnableTag(this.tag);
+        return this.filterStateService.requiredTagState.isTagRequired(this.tag);
     }
 
     public disableOthers(): void {
-        this.filterStateService.enabledTagsState.disableAllTagsExcept(this.tag);
+        this.filterStateService.selectSingleTag(this.tag);
     }
 
     public toggleExcluded(event: Event): void {
@@ -43,9 +39,18 @@ export class TagComponent {
         this.filterStateService.excludedTagsState.toggleExcludeTag(this.tag);
     }
 
-    public toggleRequired(event: Event): void {
-        event.stopPropagation();
-        this.filterStateService.requiredTagsState.toggleRequireTag(this.tag);
+    public onLongPress(): void {
+        this._longPress = true;
+        this.filterStateService.toggleRequired(this.tag);
+    }
+
+    public toggleEnabledIfNotLongPress(): void {
+        if (this._longPress) {
+            this._longPress = false;
+            return;
+        }
+
+        this.filterStateService.toggleEnabled(this.tag);
     }
 
 }

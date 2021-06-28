@@ -17,12 +17,28 @@ export class EnabledTagsState {
     ) {
     }
 
-    get areNoTagsEnabled(): boolean {
+    get noTagsEnabled(): boolean {
         return this._enabledTags.size === 0;
     }
 
-    get areAllTagsEnabled(): boolean {
+    get allTagsEnabled(): boolean {
         return this._enabledTags.size === this.allTagsProvider().length;
+    }
+
+    get enabledTagsCount(): number {
+        return this._enabledTags.size;
+    }
+
+    public enableTag(tag: string): void {
+        if (!this.isTagEnabled(tag)) {
+            this.toggleEnableTag(tag);
+        }
+    }
+
+    public disableTag(tag: string): void {
+        if (this.isTagEnabled(tag)) {
+            this.toggleEnableTag(tag);
+        }
     }
 
     public toggleEnableTag(tag: string): void {
@@ -44,14 +60,5 @@ export class EnabledTagsState {
     public disableAllTags(): void {
         this._enabledTags.clear();
         this.$tagsUpdated.next();
-    }
-
-    public disableAllTagsExcept(tag: string): void {
-        if (this._enabledTags.size === 1 && this._enabledTags.isActive(tag)) {
-            this.enableAllTags();
-            return;
-        }
-        this.disableAllTags();
-        this.toggleEnableTag(tag);
     }
 }

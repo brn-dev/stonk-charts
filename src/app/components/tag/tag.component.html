@@ -1,18 +1,14 @@
 <span [class.disabled]="isDisabled()"
       [class.excluded]="isExcluded()"
       [class.required]="isRequired()"
-      (click)="toggleEnabled()"
+      (click)="toggleEnabledIfNotLongPress()"
       (contextmenu)="disableOthers()"
+      long-press
+      (onLongPress)="onLongPress()"
       class="asset-tag"
 >
     <span>
         {{ tag }}
-    </span>
-    <span *ngIf="settingsService.enableRequiredTags"
-          class="required-toggle"
-          (click)="toggleRequired($event)"
-    >
-        R
     </span>
     <span class="exclude-toggle" (click)="toggleExcluded($event)">
         &#10005;

@@ -12,31 +12,43 @@ export class FilterService {
 
     constructor(
         private readonly assetService: AssetService,
-        private readonly filterStateService: FilterStateService,
+        private readonly stateService: FilterStateService,
     ) {
-        this.filterStateService.enabledTagsState.enableAllTags();
+        this.stateService.enabledTagsState.enableAllTags();
     }
 
     get filteredAssets(): Asset[] {
-        if (this.filterStateService.enabledTagsState.areAllTagsEnabled &&
-            this.filterStateService.excludedTagsState.areNoTagsExcluded &&
-            this.filterStateService.requiredTagsState.areNoTagsRequired &&
-            !this.filterStateService.searchTerm
+        if (this.stateService.enabledTagsState.allTagsEnabled &&
+            this.stateService.excludedTagsState.noTagsExcluded &&
+            this.stateService.requiredTagState.noTagRequired &&
+            this.stateService.searchTermEmpty
         ) {
             return this.assetService.assets;
         }
 
-        if (this.filterStateService.enabledTagsState.areNoTagsEnabled) {
+        if (this.stateService.enabledTagsState.noTagsEnabled && this.stateService.requiredTagState.noTagRequired) {
             return [];
         }
 
+        const searchTermEmpty = this.stateService.searchTermEmpty;
+        const noTagRequired = this.stateService.requiredTagState.noTagRequired;
+        const oneTagEnabled = this.stateService.enabledTagsState.enabledTagsCount === 1;
+
         const assets: Asset[] = [];
         for (const asset of this.assetService.assets) {
-            if (asset.tags.some(tag => this.filterStateService.enabledTagsState.isTagEnabled(tag)) &&
-                !asset.tags.some(tag => this.filterStateService.excludedTagsState.isTagExcluded(tag)) &&
-                this.doesSearchTermContain(asset.symbol) &&
-                this.matchesRequiredTags(asset)
-            ) {
+            const matchesSearchTerm = this.doesSearchTermContain(asset.symbol);
+            const notExcluded = !asset.tags.some(tag => this.stateService.excludedTagsState.isTagExcluded(tag));
+            const matchesEnabled = asset.tags.some(tag => this.stateService.enabledTagsState.isTagEnabled(tag));
+            const matchesRequired = asset.tags.some(tag => this.stateService.requiredTagState.isTagRequired(tag));
+            const matchesEnabledWithoutRequired = asset.tags.some(
+                tag => !this.stateService.requiredTagState.isTagRequired(tag) &&
+                    this.stateService.enabledTagsState.isTagEnabled(tag)
+            );
+
+            if (matchesSearchTerm || (searchTermEmpty && notExcluded && (
+                ((oneTagEnabled || noTagRequired) && matchesEnabled) ||
+                (!noTagRequired && matchesRequired && matchesEnabledWithoutRequired)
+            ))) {
                 assets.push(asset);
             }
         }
@@ -45,12 +57,12 @@ export class FilterService {
     }
 
     private doesSearchTermContain(symbol: string): boolean {
-        symbol = symbol.toLowerCase();
-        const searchTerm = this.replaceAll(this.filterStateService.searchTerm.toLowerCase(), ';', ',');
-
-        if (searchTerm.length === 0) {
-            return true;
+        if (this.stateService.searchTermEmpty) {
+            return false;
         }
+
+        symbol = symbol.toLowerCase();
+        const searchTerm = this.stateService.normalizedSearchTerm;
 
         if (searchTerm.includes(',')) {
             const searchTerms = searchTerm.split(',');
@@ -62,15 +74,6 @@ export class FilterService {
         } else {
             return symbol.includes(searchTerm);
         }
-    }
-
-    private replaceAll(str: string, searchTerm: string, replaceValue: string): string {
-        return str.split(searchTerm).join(replaceValue);
-    }
-
-    private matchesRequiredTags(asset: Asset): boolean {
-        return this.filterStateService.requiredTagsState.areNoTagsRequired ||
-            asset.tags.some(tag => this.filterStateService.requiredTagsState.isTagRequired(tag));
     }
 
 }

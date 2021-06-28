@@ -10,7 +10,7 @@ export class ExcludedTagsState {
     ) {
     }
 
-    get areNoTagsExcluded(): boolean {
+    get noTagsExcluded(): boolean {
         return this._excludedTags.size === 0;
     }
 

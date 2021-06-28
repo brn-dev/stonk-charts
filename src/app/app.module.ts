@@ -14,6 +14,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { TagComponent } from './components/tag/tag.component';
 import { IndicatorComponent } from './components/indicator/indicator.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { LongPress } from './long-press';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         AssetComponent,
         TagComponent,
         IndicatorComponent,
+        LongPress,
     ],
     imports: [
         BrowserModule,
