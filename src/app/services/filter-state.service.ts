@@ -61,7 +61,7 @@ export class FilterStateService {
         }
     }
 
-    public selectSingleTag(tag: string): void {
+    public selectSingleTagOrAll(tag: string): void {
         if (this.enabledTagsState.enabledTagsCount === 1 && this.enabledTagsState.isTagEnabled(tag)) {
             this.enabledTagsState.enableAllTags();
             return;

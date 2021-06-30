@@ -30,8 +30,8 @@ export class TagComponent {
         return this.filterStateService.requiredTagState.isTagRequired(this.tag);
     }
 
-    public disableOthers(): void {
-        this.filterStateService.selectSingleTag(this.tag);
+    public toggleRequired(): void {
+        this.filterStateService.toggleRequired(this.tag);
     }
 
     public toggleExcluded(event: Event): void {
@@ -41,7 +41,7 @@ export class TagComponent {
 
     public onLongPress(): void {
         this._longPress = true;
-        this.filterStateService.toggleRequired(this.tag);
+        this.filterStateService.selectSingleTagOrAll(this.tag);
     }
 
     public toggleEnabledIfNotLongPress(): void {

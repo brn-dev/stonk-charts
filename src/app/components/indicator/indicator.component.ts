@@ -19,7 +19,9 @@ import { ColorPalettes } from '../../models/color-palettes';
 })
 export class IndicatorComponent<T> {
 
-    private static readonly ROOT_EXPONENT = 0.3;
+    private static readonly ROOT = 2;
+
+    private static readonly ONE_OVER_ROOT = 1 / IndicatorComponent.ROOT;
 
     @Input()
     public asset: Asset;
@@ -96,7 +98,7 @@ export class IndicatorComponent<T> {
     }
 
     private root(fraction: number) {
-        return Math.pow(fraction, IndicatorComponent.ROOT_EXPONENT);
+        return Math.pow(fraction, IndicatorComponent.ONE_OVER_ROOT);
     }
 
 }

@@ -2,7 +2,7 @@
       [class.excluded]="isExcluded()"
       [class.required]="isRequired()"
       (click)="toggleEnabledIfNotLongPress()"
-      (contextmenu)="disableOthers()"
+      (contextmenu)="toggleRequired()"
       long-press
       (onLongPress)="onLongPress()"
       class="asset-tag"
