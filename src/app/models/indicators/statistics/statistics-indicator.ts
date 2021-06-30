@@ -193,7 +193,13 @@ export class StatisticsIndicator extends NumberIndicator {
         if (!assetData?.statistics) {
             return null;
         }
-        return assetData.statistics[this.field] ?? null;
+        const value = assetData.statistics[this.field] ?? null;
+
+        if (!this.isValidNumber(value)) {
+            return null;
+        }
+
+        return value;
     }
 
     public toDisplayFormat(computationResult: number): string {

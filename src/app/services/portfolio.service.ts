@@ -23,6 +23,10 @@ export class PortfolioService {
         return this._portfolio;
     }
 
+    public isInPortfolio(asset: Asset) {
+        return this._portfolioMarkets.has(asset.symbol);
+    }
+
     public getInvestmentInfoForAsset(asset: Asset): PortfolioAssetInvestmentInfo {
         return this._portfolioMarkets.get(asset.symbol);
     }

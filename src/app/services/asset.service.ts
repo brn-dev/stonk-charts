@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Asset } from '../models/asset';
 import { FileService } from './file.service';
+import { PortfolioService } from './portfolio.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AssetService {
 
-    public readonly ASSETS_FILE_NAME = 'assets.json';
+    public static readonly ASSETS_FILE_NAME = 'assets.json';
+
+    public static readonly PORTFOLIO_TAG = 'Portfolio';
 
     private _assets: Asset[] = [];
     private _allUniqueTags: string[] = [];
 
-    constructor(private fileService: FileService) {
+    constructor(
+        private fileService: FileService,
+        private portfolioService: PortfolioService,
+    ) {
         this.loadAssets();
     }
 
@@ -25,7 +31,14 @@ export class AssetService {
     }
 
     public loadAssets(): void {
-        const result = this.fileService.readJsonFromFile<Asset[]>(this.ASSETS_FILE_NAME);
+        const result = this.fileService.readJsonFromFile<Asset[]>(AssetService.ASSETS_FILE_NAME);
+
+        for (const asset of result) {
+            if (this.portfolioService.isInPortfolio(asset) && !asset.tags.includes(AssetService.PORTFOLIO_TAG)) {
+                asset.tags.splice(0, 0, AssetService.PORTFOLIO_TAG);
+            }
+        }
+
         this._assets = result !== null ? result : [];
         this.calculateUniqueTags();
     }

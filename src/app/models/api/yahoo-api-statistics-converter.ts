@@ -7,41 +7,48 @@ export class YahooApiStatisticsConverter {
         return [
             statisticsResult.symbol,
             {
-                marketCap: statisticsResult.summaryDetail.marketCap?.raw ?? null,
-                enterpriseValue: statisticsResult.defaultKeyStatistics.enterpriseValue?.raw ?? null,
+                marketCap: this.convertNumber(statisticsResult.summaryDetail.marketCap?.raw),
+                enterpriseValue: this.convertNumber(statisticsResult.defaultKeyStatistics.enterpriseValue?.raw),
 
                 // Valuation Measures
-                trailingPE: statisticsResult.summaryDetail.trailingPE?.raw ?? null,
-                forwardPE: statisticsResult.summaryDetail.forwardPE?.raw ??
-                    statisticsResult.defaultKeyStatistics.forwardPE?.raw ?? null,
-                pegRatio: statisticsResult.defaultKeyStatistics.pegRatio?.raw ?? null,
-                priceToSalesRatio: statisticsResult.summaryDetail.priceToSalesTrailing12Months?.raw ?? null,
-                priceToBookRatio: statisticsResult.defaultKeyStatistics.priceToBook?.raw ?? null,
-                evToRevenue: statisticsResult.defaultKeyStatistics.enterpriseToRevenue?.raw ?? null,
-                evToEbitda: statisticsResult.defaultKeyStatistics.enterpriseToEbitda?.raw ?? null,
+                trailingPE: this.convertNumber(statisticsResult.summaryDetail.trailingPE?.raw),
+                forwardPE: this.convertNumber(statisticsResult.summaryDetail.forwardPE?.raw ??
+                    statisticsResult.defaultKeyStatistics.forwardPE?.raw),
+                pegRatio: this.convertNumber(statisticsResult.defaultKeyStatistics.pegRatio?.raw),
+                priceToSalesRatio: this.convertNumber(statisticsResult.summaryDetail.priceToSalesTrailing12Months?.raw),
+                priceToBookRatio: this.convertNumber(statisticsResult.defaultKeyStatistics.priceToBook?.raw),
+                evToRevenue: this.convertNumber(statisticsResult.defaultKeyStatistics.enterpriseToRevenue?.raw),
+                evToEbitda: this.convertNumber(statisticsResult.defaultKeyStatistics.enterpriseToEbitda?.raw),
 
                 // Profitability
-                profitMargin: statisticsResult.financialData.profitMargins?.raw ?? null,
-                operatingMargin: statisticsResult.financialData.operatingMargins?.raw ?? null,
+                profitMargin: this.convertNumber(statisticsResult.financialData.profitMargins?.raw),
+                operatingMargin: this.convertNumber(statisticsResult.financialData.operatingMargins?.raw),
 
                 // Management Effectiveness
-                returnOnAssets: statisticsResult.financialData.returnOnAssets?.raw ?? null,
-                returnOnEquity: statisticsResult.financialData.returnOnEquity?.raw ?? null,
+                returnOnAssets: this.convertNumber(statisticsResult.financialData.returnOnAssets?.raw),
+                returnOnEquity: this.convertNumber(statisticsResult.financialData.returnOnEquity?.raw),
 
                 // Income Statement
-                revenueGrowth: statisticsResult.financialData.revenueGrowth?.raw ?? null,
-                earningsGrowth: statisticsResult.financialData.earningsGrowth?.raw ?? null,
+                revenueGrowth: this.convertNumber(statisticsResult.financialData.revenueGrowth?.raw),
+                earningsGrowth: this.convertNumber(statisticsResult.financialData.earningsGrowth?.raw),
 
                 // Share Statistics
-                shortPercent: statisticsResult.defaultKeyStatistics.shortPercentOfFloat?.raw ??
-                    statisticsResult.defaultKeyStatistics.sharesPercentSharesOut.raw ?? null,
+                shortPercent: this.convertNumber(statisticsResult.defaultKeyStatistics.shortPercentOfFloat?.raw
+                    ?? statisticsResult.defaultKeyStatistics.sharesPercentSharesOut?.raw),
 
                 // Dividends
-                trailingDividendYield: statisticsResult.summaryDetail.trailingAnnualDividendYield?.raw ?? null,
-                forwardDividendYield: statisticsResult.summaryDetail.dividendYield?.raw ?? null,
-                dividendPayoutRatio: statisticsResult.summaryDetail.payoutRatio?.raw ?? null,
+                trailingDividendYield: this.convertNumber(statisticsResult.summaryDetail.trailingAnnualDividendYield?.raw),
+                forwardDividendYield: this.convertNumber(statisticsResult.summaryDetail.dividendYield?.raw),
+                dividendPayoutRatio: this.convertNumber(statisticsResult.summaryDetail.payoutRatio?.raw),
             }
         ];
+    }
+
+    private static convertNumber(num: number): number {
+        if (!num && num !== 0) {
+            return null;
+        }
+        return +num;
     }
 
 }

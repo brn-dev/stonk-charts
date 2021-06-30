@@ -44,7 +44,7 @@ export class MainComponent implements OnInit {
     }
 
     public editAssets(): void {
-        exec(this.fileService.BASE_PATH + this.assetService.ASSETS_FILE_NAME);
+        exec(this.fileService.BASE_PATH + AssetService.ASSETS_FILE_NAME);
     }
 
     public refreshAssets(): void {
