@@ -2,10 +2,13 @@
 
     <div class="options-container">
         <div class="indicators-container">
-            <button (click)="clearIndicators()" class="clear-button">Clear</button>
+            <button (click)="clearIndicators()" class="clear-button">Clear All</button>
             <div>
                 <div *ngFor="let indicatorGroup of this.indicatorService.availableIndicators; let indicatorSectionIndex = index">
-                    <strong>{{ indicatorGroup.title }}</strong>
+                    <span class="indicator-group-header">
+                        <strong>{{ indicatorGroup.title }}</strong>
+                        <span (click)="clearIndicatorGroup(indicatorGroup)" class="hover-pointer">&#10005;</span>
+                    </span>
                     <div [class]="'indicator-group-list indicator-group-list-' + indicatorGroup.title.toLocaleLowerCase()">
                         <div *ngFor="let indicator of indicatorGroup.indicators; let indicatorIndex = index"
                              class="checkbox-with-label indicator-toggle"

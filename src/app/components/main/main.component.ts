@@ -3,8 +3,7 @@ import { Asset } from '../../models/asset';
 import { AssetService } from '../../services/asset/asset.service';
 import { BasicAssetDataCacheService } from '../../services/asset-data/basic-asset-data-cache.service';
 import { FileService } from '../../services/file.service';
-import { FilterService } from '../../services/asset/filter.service';
-import { IndicatorService } from '../../services/indicator/indicator.service';
+import { IndicatorGroup, IndicatorService } from '../../services/indicator/indicator.service';
 import { SettingsService } from '../../services/settings.service';
 import { SortService } from '../../services/asset/sort.service';
 import { Indicator } from '../../models/indicators/indicator';
@@ -71,6 +70,10 @@ export class MainComponent implements OnInit {
 
     public headerDropped(evt: CdkDragDrop<Indicator<any>[]>): void {
         moveItemInArray(evt.container.data, evt.previousIndex, evt.currentIndex);
+    }
+
+    public clearIndicatorGroup(indicatorGroup: IndicatorGroup): void {
+        this.indicatorService.clearGroup(indicatorGroup);
     }
 
 }

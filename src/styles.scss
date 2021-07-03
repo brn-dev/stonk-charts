@@ -37,6 +37,10 @@ app-asset:nth-of-type(odd) > * {
   background-color: #F0F0F0;
 }
 
+.hover-pointer:hover {
+  cursor: pointer;
+}
+
 // angular cdk - drag and drop
 
 // angular cdk - drag and drop - indicator headers

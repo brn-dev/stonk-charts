@@ -12,28 +12,37 @@
             margin-bottom: 0.5rem;
         }
 
-        .indicator-group-list {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-
-            width: 40vw;
-            margin-top: 0.5rem;
-
-            &:last-child {
-                margin-bottom: 1rem;
+        .indicators-container {
+            .indicator-group-header {
+                display: flex;
+                align-items: center;
+                column-gap: 0.25rem;
             }
 
-            &.indicator-group-list-statistics > .indicator-toggle,
-            &.indicator-group-list-financials > .indicator-toggle {
-                min-width: 8rem;
+            .indicator-group-list {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+
+                width: 40vw;
+                margin-top: 0.5rem;
+
+                &:last-child {
+                    margin-bottom: 1rem;
+                }
+
+                &.indicator-group-list-statistics > .indicator-toggle,
+                &.indicator-group-list-financials > .indicator-toggle {
+                    min-width: 8rem;
+                }
+
+                .indicator-toggle {
+                    min-width: 5rem;
+                    margin-right: 1rem;
+                    white-space: nowrap;
+                }
             }
 
-            .indicator-toggle {
-                min-width: 5rem;
-                margin-right: 1rem;
-                white-space: nowrap;
-            }
         }
 
         .chart-settings input[type="number"] {

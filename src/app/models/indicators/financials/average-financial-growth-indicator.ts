@@ -36,21 +36,23 @@ export class AverageFinancialGrowthIndicator extends DeltaIndicator {
 
         const yearlyValues = assetData.financials[this.field];
 
-        const count = yearlyValues.length;
+        let count = yearlyValues.length;
 
         let latestValue = yearlyValues[0];
         if (latestValue <= 0) {
-            if (count > 1) {
+            if (yearlyValues.length > 1) {
                 latestValue = yearlyValues[1];
+                count--;
             } else {
                 return null;
             }
         }
 
-        let oldestValue = yearlyValues[count - 1];
+        let oldestValue = yearlyValues[yearlyValues.length - 1];
         if (oldestValue <= 0) {
-            if (count > 1) {
-                oldestValue = yearlyValues[count - 2];
+            if (yearlyValues.length > 1) {
+                oldestValue = yearlyValues[yearlyValues.length - 2];
+                count--;
             } else {
                 return null;
             }

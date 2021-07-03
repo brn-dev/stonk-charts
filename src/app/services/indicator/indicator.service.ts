@@ -161,4 +161,13 @@ export class IndicatorService {
         this._activeIndicators = [];
     }
 
+    public clearGroup(group: IndicatorGroup): void {
+        for (const indicator of group.indicators) {
+            const idx = this._activeIndicators.indexOf(indicator);
+            if (idx >= 0) {
+                this._activeIndicators.splice(idx, 1);
+            }
+        }
+    }
+
 }
