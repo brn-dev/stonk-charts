@@ -1,5 +1,5 @@
-import { AssetStatistics } from '../asset-data/asset-statistics';
-import { YahooApiGetStatisticsResult } from './yahoo-api-get-statistics-result';
+import { AssetStatistics } from '../../../../models/asset-data/asset-statistics';
+import { YahooApiGetStatisticsResult } from '../../models/yahoo/yahoo-api-get-statistics-result';
 
 export class YahooApiStatisticsConverter {
 

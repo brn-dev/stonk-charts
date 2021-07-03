@@ -2,44 +2,30 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { FileService } from '../file.service';
 import * as moment from 'moment';
-import { Subject } from 'rxjs';
 import { FilterService } from '../asset/filter.service';
 import { Asset } from '../../models/asset';
 import { AssetService } from '../asset/asset.service';
 import { BasicAssetData } from '../../models/asset-data/basic-asset-data';
+import { AbstractCacheService } from './abstract-cache.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class BasicAssetDataCacheService {
+export class BasicAssetDataCacheService extends AbstractCacheService<BasicAssetData> {
 
-    private readonly BASE_PATH = 'basic-asset-data/';
-
-    private basicAssetDataCache = new Map<string, BasicAssetData>();
-
-    public $assetUpdated = new Subject<Asset>();
+    private static readonly BASE_PATH = 'basic-asset-data/';
 
     constructor(
-        private fileService: FileService,
-        private assetService: AssetService,
         private apiService: ApiService,
-        private filterService: FilterService
+        private filterService: FilterService,
+        fileService: FileService,
+        assetService: AssetService,
     ) {
-        this.loadForAllAssets();
-    }
-
-    public setForSymbol(asset: Asset, data: BasicAssetData): void {
-        this.basicAssetDataCache.set(asset.symbol, data);
-        this.saveForAsset(asset, data);
-        this.$assetUpdated.next(asset);
-    }
-
-    public getForAsset(asset: Asset): BasicAssetData {
-        return this.basicAssetDataCache.get(asset.symbol);
-    }
-
-    public fetchAsset(asset: Asset): void {
-        this.fetchAssets([asset]);
+        super(
+            fileService,
+            assetService,
+            BasicAssetDataCacheService.BASE_PATH,
+        );
     }
 
     public fetchAssets(assets: Asset[]): void {
@@ -51,7 +37,7 @@ export class BasicAssetDataCacheService {
         }
 
         this.apiService.fetchAssetDataFor(assets).subscribe(assetData => {
-            this.setForSymbol(
+            this.setForAsset(
                 assetMap.get(assetData.symbol),
                 assetData
             );
@@ -63,12 +49,12 @@ export class BasicAssetDataCacheService {
         const past = moment().subtract(days, 'd');
 
         for (const asset of this.filterService.filteredAssets) {
-            if (!this.basicAssetDataCache.has(asset.symbol) || !this.basicAssetDataCache.get(asset.symbol)?.chart) {
+            if (!this.cache.has(asset.symbol) || !this.cache.get(asset.symbol)?.chart) {
                 assetsToFetch.push(asset);
                 continue;
             }
 
-            const chart = this.basicAssetDataCache.get(asset.symbol).chart;
+            const chart = this.cache.get(asset.symbol).chart;
             const latestEntry = chart.entries[chart.entries.length - 1];
             const mom = moment(latestEntry.timestamp);
 
@@ -78,32 +64,5 @@ export class BasicAssetDataCacheService {
         }
 
         this.fetchAssets(assetsToFetch);
-    }
-
-    private saveForAsset(asset: Asset, data: BasicAssetData) {
-        const fileName = this.getFileNameForAsset(asset);
-        this.fileService.writeJsonToFile(fileName, data);
-    }
-
-    private loadForAsset(asset: Asset) {
-        const fileName = this.getFileNameForAsset(asset);
-        if (this.fileService.doesExist(fileName)) {
-            this.basicAssetDataCache.set(
-                asset.symbol,
-                this.fileService.readJsonFromFile<BasicAssetData>(fileName)
-            );
-        } else {
-            this.basicAssetDataCache.set(asset.symbol, null);
-        }
-    }
-
-    private loadForAllAssets() {
-        for (const asset of this.assetService.assets) {
-            this.loadForAsset(asset);
-        }
-    }
-
-    private getFileNameForAsset(asset: Asset) {
-        return `${this.BASE_PATH}${asset.symbol}.json`;
     }
 }

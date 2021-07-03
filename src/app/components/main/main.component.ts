@@ -10,6 +10,7 @@ import { SortService } from '../../services/asset/sort.service';
 import { Indicator } from '../../models/indicators/indicator';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FilterStateService } from '../../services/asset/filter-state.service';
+import { AssetFinancialsCacheService } from '../../services/asset-data/asset-financials-cache.service';
 
 const { exec } = window.require("child_process");
 
@@ -26,6 +27,7 @@ export class MainComponent implements OnInit {
         public assetService: AssetService,
         public settingsService: SettingsService,
         public assetDataCacheService: BasicAssetDataCacheService,
+        public assetFinancialsCacheService: AssetFinancialsCacheService,
         public filterStateService: FilterStateService,
         public fileService: FileService,
         public indicatorService: IndicatorService,
@@ -41,6 +43,10 @@ export class MainComponent implements OnInit {
 
     public fetch(): void {
         this.assetDataCacheService.fetchAssetsOlderThanDays(this.fetchDays);
+    }
+
+    public fetchFinancials(): void {
+        this.assetFinancialsCacheService.fetchVisible();
     }
 
     public editAssets(): void {

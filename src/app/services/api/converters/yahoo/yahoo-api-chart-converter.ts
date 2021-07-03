@@ -1,9 +1,9 @@
-import { Chart } from "../asset-data/chart";
+import { Chart } from "../../../../models/asset-data/chart";
 import {
     YahooApiGetChartsResult,
     YahooApiGetChartsResultComparison,
     YahooApiGetChartsResultQuotes
-} from './yahoo-api-get-charts-result';
+} from '../../models/yahoo/yahoo-api-get-charts-result';
 
 export class YahooApiChartConverter {
 

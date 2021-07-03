@@ -62,9 +62,13 @@
     <div class="actions-container">
         <div>
             <button (click)="fetch()">fetch</button>
-            older than
+            charts & statistics older than
             <input type="number" [(ngModel)]="fetchDays">
             days
+        </div>
+        <div>
+            <button (click)="fetchFinancials()">fetch</button>
+            financials
         </div>
         <div>
             <button (click)="editAssets()">edit</button>
