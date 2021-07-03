@@ -73,6 +73,11 @@
         flex-wrap: wrap;
         row-gap: 0.25rem;
         margin-top: 1rem;
+
+        input {
+            width: 4rem;
+            margin-right: 0.25rem;
+        }
         
         > button:nth-child(2) {
             margin: 0 0.5rem;

@@ -16,6 +16,8 @@ export class FilterStateService {
 
     public readonly $filterUpdated: Subject<void>;
 
+    public readonly $tagsUpdated: Subject<void>;
+
     public readonly enabledTagsState: EnabledTagsState;
     public readonly excludedTagsState: ExcludedTagsState;
     public readonly requiredTagState: RequiredTagState;
@@ -23,10 +25,13 @@ export class FilterStateService {
     public constructor(
         private assetService: AssetService
     ) {
+        this.$tagsUpdated = new Subject<void>();
         this.$filterUpdated = new Subject<void>();
-        this.enabledTagsState = new EnabledTagsState(this.$filterUpdated, () => assetService.allUniqueTags);
-        this.excludedTagsState = new ExcludedTagsState(this.$filterUpdated);
-        this.requiredTagState = new RequiredTagState(this.$filterUpdated);
+        this.enabledTagsState = new EnabledTagsState(this.$tagsUpdated, () => assetService.allUniqueTags);
+        this.excludedTagsState = new ExcludedTagsState(this.$tagsUpdated);
+        this.requiredTagState = new RequiredTagState(this.$tagsUpdated);
+
+        this.$tagsUpdated.subscribe(() => this.$filterUpdated.next());
     }
 
     set searchTerm(term: string) {

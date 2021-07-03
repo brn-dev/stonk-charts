@@ -22,6 +22,8 @@ export class MainComponent implements OnInit {
 
     public fetchDays = 3;
 
+    public tagSearchTerm: string = null;
+
     constructor(
         public assetService: AssetService,
         public settingsService: SettingsService,
@@ -31,13 +33,27 @@ export class MainComponent implements OnInit {
         public fileService: FileService,
         public indicatorService: IndicatorService,
         public sortService: SortService,
-    ) { }
+    ) {
+        this.filterStateService.$tagsUpdated.subscribe(() => this.clearTagSearchTerm());
+    }
 
     ngOnInit(): void {
     }
 
     get assets(): Asset[] {
         return this.sortService.sortedAssets;
+    }
+
+    get tags(): string[] {
+        const searchTerm = this.tagSearchTerm?.toLowerCase();
+        let tags = this.assetService.allUniqueTags;
+
+
+        if (searchTerm) {
+            tags = tags.filter(t => t.toLowerCase().includes(this.tagSearchTerm));
+        }
+
+        return tags;
     }
 
     public fetch(): void {
@@ -74,6 +90,10 @@ export class MainComponent implements OnInit {
 
     public clearIndicatorGroup(indicatorGroup: IndicatorGroup): void {
         this.indicatorService.clearGroup(indicatorGroup);
+    }
+
+    public clearTagSearchTerm(): void {
+        this.tagSearchTerm = null;
     }
 
 }
