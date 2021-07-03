@@ -21,8 +21,8 @@ export interface AssetStatistics {
     returnOnEquity: number;
 
     // Income Statement
-    revenueGrowth: number;
-    earningsGrowth: number;
+    revenueGrowthYoy: number;
+    earningsGrowthYoy: number;
 
     // Share Statistics
     shortPercent: number;

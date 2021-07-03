@@ -1,7 +1,7 @@
 import { ChartHelper } from "../../utils/chart-helper";
 import { Timespan } from "../timespan";
 import { DeltaIndicator } from './indicator';
-import { Calculator } from '../../utils/calculator';
+import { MathUtils } from '../../utils/math-utils';
 import { FullAssetData } from '../asset-data/full-asset-data';
 
 export class TimespanIndicator extends DeltaIndicator {
@@ -33,7 +33,7 @@ export class TimespanIndicator extends DeltaIndicator {
             return null;
         }
 
-        return Calculator.calculateDelta(now.close, past.close);
+        return MathUtils.calculateDelta(now.close, past.close);
     }
 
 }

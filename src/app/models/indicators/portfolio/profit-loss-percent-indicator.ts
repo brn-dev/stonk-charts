@@ -1,6 +1,6 @@
 import { DeltaIndicator } from '../indicator';
 import { ChartHelper } from '../../../utils/chart-helper';
-import { Calculator } from '../../../utils/calculator';
+import { MathUtils } from '../../../utils/math-utils';
 import { FullAssetData } from '../../asset-data/full-asset-data';
 
 export class ProfitLossPercentIndicator extends DeltaIndicator {
@@ -23,7 +23,7 @@ export class ProfitLossPercentIndicator extends DeltaIndicator {
         }
         const profitLoss = portfolioInfo.calculateProfitLoss(ChartHelper.lastDay(chart).close);
         const netAmount = portfolioInfo.allocationAmount + profitLoss;
-        return Calculator.calculateDelta(netAmount, portfolioInfo.allocationAmount);
+        return MathUtils.calculateDelta(netAmount, portfolioInfo.allocationAmount);
     }
 
 }

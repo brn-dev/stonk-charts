@@ -11,6 +11,7 @@ import { ChartHelper } from '../../utils/chart-helper';
 import { DateUtils } from '../../utils/date-utils';
 import { Timespan } from '../../models/timespan';
 import { ColorPalettes } from '../../models/color-palettes';
+import { MathUtils } from '../../utils/math-utils';
 
 @Component({
     selector: 'app-indicator',
@@ -20,8 +21,6 @@ import { ColorPalettes } from '../../models/color-palettes';
 export class IndicatorComponent<T> {
 
     private static readonly ROOT = 2;
-
-    private static readonly ONE_OVER_ROOT = 1 / IndicatorComponent.ROOT;
 
     @Input()
     public asset: Asset;
@@ -97,8 +96,8 @@ export class IndicatorComponent<T> {
         return DateUtils.toIsoString(timestamp);
     }
 
-    private root(fraction: number) {
-        return Math.pow(fraction, IndicatorComponent.ONE_OVER_ROOT);
+    private root(fraction: number): number {
+        return MathUtils.nthRoot(fraction, IndicatorComponent.ROOT);
     }
 
 }

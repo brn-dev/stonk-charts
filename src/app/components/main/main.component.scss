@@ -24,7 +24,8 @@
                 margin-bottom: 1rem;
             }
 
-            &.indicator-group-list-statistics > .indicator-toggle {
+            &.indicator-group-list-statistics > .indicator-toggle,
+            &.indicator-group-list-financials > .indicator-toggle {
                 min-width: 8rem;
             }
 

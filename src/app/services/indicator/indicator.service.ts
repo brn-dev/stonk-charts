@@ -15,6 +15,7 @@ import { ExposureAmountIndicator } from '../../models/indicators/portfolio/expos
 import { ExposurePercentIndicator } from '../../models/indicators/portfolio/exposure-percent-indicator';
 import { StatisticsIndicator } from '../../models/indicators/statistics/statistics-indicator';
 import { TrailingForwardPeRatioIndicator } from '../../models/indicators/statistics/trailing-forward-pe-ratio-indicator';
+import { AverageFinancialGrowthIndicator } from '../../models/indicators/financials/average-financial-growth-indicator';
 
 export interface IndicatorGroup {
     title?: string;
@@ -117,6 +118,13 @@ export class IndicatorService {
                 StatisticsIndicator.trailingDividendYieldIndicator,
                 StatisticsIndicator.forwardDividendYieldIndicator,
                 StatisticsIndicator.dividendPayoutRatioIndicator,
+            ]
+        },
+        {
+            title: 'Financials',
+            indicators: [
+                AverageFinancialGrowthIndicator.averageRevenueGrowthIndicator,
+                AverageFinancialGrowthIndicator.averageAssetsGrowthIndicator,
             ]
         },
     ];

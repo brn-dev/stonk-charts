@@ -29,8 +29,8 @@ export class YahooApiStatisticsConverter {
                 returnOnEquity: this.convertNumber(statisticsResult.financialData.returnOnEquity?.raw),
 
                 // Income Statement
-                revenueGrowth: this.convertNumber(statisticsResult.financialData.revenueGrowth?.raw),
-                earningsGrowth: this.convertNumber(statisticsResult.financialData.earningsGrowth?.raw),
+                revenueGrowthYoy: this.convertNumber(statisticsResult.financialData.revenueGrowth?.raw),
+                earningsGrowthYoy: this.convertNumber(statisticsResult.financialData.earningsGrowth?.raw),
 
                 // Share Statistics
                 shortPercent: this.convertNumber(statisticsResult.defaultKeyStatistics.shortPercentOfFloat?.raw
