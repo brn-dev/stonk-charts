@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Indicator, NumberIndicator } from '../models/indicators/indicator';
+import { Indicator, NumberIndicator } from '../../models/indicators/indicator';
 import { FilterService } from './filter.service';
-import { Asset } from '../models/asset';
-import { IndicatorResultCacheService } from './indicator-result-cache.service';
+import { Asset } from '../../models/asset';
+import { IndicatorResultCacheService } from '../indicator/indicator-result-cache.service';
 
 @Injectable({
     providedIn: 'root'

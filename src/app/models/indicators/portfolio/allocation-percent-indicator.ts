@@ -1,8 +1,6 @@
 import { PercentIndicator } from '../indicator';
-import { Asset } from '../../asset';
-import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
-import { AssetData } from '../../asset-data/asset-data';
 import { ColorPalettes } from '../../color-palettes';
+import { FullAssetData } from '../../asset-data/full-asset-data';
 
 export class AllocationPercentIndicator extends PercentIndicator {
 
@@ -17,8 +15,8 @@ export class AllocationPercentIndicator extends PercentIndicator {
 
     }
 
-    public compute(assetData: AssetData, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
-        return assetInvestmentInfo?.allocationPercent ?? null;
+    public compute(assetData: FullAssetData): number {
+        return assetData.portfolioInfo?.allocationPercent ?? null;
     }
 
 }

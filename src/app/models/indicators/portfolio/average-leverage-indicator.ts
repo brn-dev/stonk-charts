@@ -1,9 +1,7 @@
 import { NumberIndicator } from '../indicator';
-import { Asset } from '../../asset';
-import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { NumberFormatUtils } from '../../../utils/number-format-utils';
-import { AssetData } from '../../asset-data/asset-data';
 import { ColorPalettes } from '../../color-palettes';
+import { FullAssetData } from '../../asset-data/full-asset-data';
 
 export class AverageLeverageIndicator extends NumberIndicator {
 
@@ -23,8 +21,8 @@ export class AverageLeverageIndicator extends NumberIndicator {
         );
     }
 
-    public compute(assetData: AssetData, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
-        return assetInvestmentInfo?.averageLeverage ?? null;
+    public compute(assetData: FullAssetData): number {
+        return assetData.portfolioInfo?.averageLeverage ?? null;
     }
 
     public toDisplayFormat(computationResult: number): string {

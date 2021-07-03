@@ -1,9 +1,7 @@
-import { Asset } from '../asset';
-import { PortfolioAssetInvestmentInfo } from '../portfolio-asset-investment-info';
-import { AssetData } from '../asset-data/asset-data';
 import { NumberFormatUtils } from '../../utils/number-format-utils';
 import { ColorInterpolation, interpolate } from '../../utils/color-interpolate';
 import { ColorPalettes } from '../color-palettes';
+import { FullAssetData } from '../asset-data/full-asset-data';
 
 export abstract class Indicator<T> {
 
@@ -30,7 +28,7 @@ export abstract class Indicator<T> {
         }
     }
 
-    public abstract compute(assetData: AssetData, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): T;
+    public abstract compute(assetData: FullAssetData): T;
 
     public abstract toDisplayFormat(computationResult: T): string;
 }

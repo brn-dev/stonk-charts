@@ -1,17 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Chart } from '../../models/asset-data/chart';
 import { Timespan } from '../../models/timespan';
-import { AssetDataCacheService } from '../../services/asset-data-cache.service';
+import { BasicAssetDataCacheService } from '../../services/asset-data/basic-asset-data-cache.service';
 import { DateUtils } from '../../utils/date-utils';
 import * as Highcharts from 'highcharts';
 import { SettingsService } from '../../services/settings.service';
 import { ChartHelper } from '../../utils/chart-helper';
 import { Asset } from '../../models/asset';
-import { AssetService } from '../../services/asset.service';
-import { IndicatorService } from '../../services/indicator.service';
+import { AssetService } from '../../services/asset/asset.service';
+import { IndicatorService } from '../../services/indicator/indicator.service';
 import { Indicator, NumberIndicator } from '../../models/indicators/indicator';
-import { IndicatorResultCacheService } from '../../services/indicator-result-cache.service';
-import { IndicatorMinMaxService } from '../../services/indicator-min-max.service';
+import { IndicatorResultCacheService } from '../../services/indicator/indicator-result-cache.service';
+import { IndicatorMinMaxService } from '../../services/indicator/indicator-min-max.service';
 import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
 
 @Component({
@@ -30,7 +30,7 @@ export class AssetComponent implements OnInit {
 
     constructor(
         public settingsService: SettingsService,
-        private assetDataCacheService: AssetDataCacheService,
+        private assetDataCacheService: BasicAssetDataCacheService,
         private assetService: AssetService,
         private indicatorService: IndicatorService,
         private indicatorResultCacheService: IndicatorResultCacheService,

@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs';
-import { ToggleActiveSet } from '../../models/toggle-active-set';
+import { ToggleActiveSet } from '../../../models/toggle-active-set';
 
 export type TagsProvider = () => string[];
 

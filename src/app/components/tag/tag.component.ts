@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FilterStateService } from '../../services/filter-state.service';
+import { FilterStateService } from '../../services/asset/filter-state.service';
 
 @Component({
     selector: 'app-tag',

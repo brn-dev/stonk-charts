@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 import { Asset } from '../../models/asset';
 import { Indicator, NumberIndicator } from '../../models/indicators/indicator';
-import { IndicatorResultCacheService } from '../../services/indicator-result-cache.service';
-import { IndicatorMinMaxService } from '../../services/indicator-min-max.service';
+import { IndicatorResultCacheService } from '../../services/indicator/indicator-result-cache.service';
+import { IndicatorMinMaxService } from '../../services/indicator/indicator-min-max.service';
 import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
-import { AssetDataCacheService } from '../../services/asset-data-cache.service';
+import { BasicAssetDataCacheService } from '../../services/asset-data/basic-asset-data-cache.service';
 import { Chart } from '../../models/asset-data/chart';
 import { ChartHelper } from '../../utils/chart-helper';
 import { DateUtils } from '../../utils/date-utils';
@@ -32,7 +32,7 @@ export class IndicatorComponent<T> {
     constructor(
         private indicatorResultCacheService: IndicatorResultCacheService,
         private indicatorMinMaxService: IndicatorMinMaxService,
-        private assetDataCacheService: AssetDataCacheService,
+        private assetDataCacheService: BasicAssetDataCacheService,
         public settingsService: SettingsService
     ) {
     }

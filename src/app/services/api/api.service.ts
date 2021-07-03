@@ -1,9 +1,9 @@
 import { Asset } from "../../models/asset";
-import { AssetData } from '../../models/asset-data/asset-data';
+import { BasicAssetData } from '../../models/asset-data/basic-asset-data';
 import { Observable } from 'rxjs';
 
 export abstract class ApiService {
 
-    abstract fetchAssetDataFor(assets: Asset[]): Observable<AssetData>;
+    abstract fetchAssetDataFor(assets: Asset[]): Observable<BasicAssetData>;
 
 }

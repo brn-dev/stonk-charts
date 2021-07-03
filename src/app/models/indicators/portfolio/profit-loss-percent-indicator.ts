@@ -1,9 +1,7 @@
 import { DeltaIndicator } from '../indicator';
-import { Asset } from '../../asset';
 import { ChartHelper } from '../../../utils/chart-helper';
-import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
-import { AssetData } from '../../asset-data/asset-data';
 import { Calculator } from '../../../utils/calculator';
+import { FullAssetData } from '../../asset-data/full-asset-data';
 
 export class ProfitLossPercentIndicator extends DeltaIndicator {
 
@@ -17,14 +15,15 @@ export class ProfitLossPercentIndicator extends DeltaIndicator {
         super('P/L %', 'Profit/Loss %');
     }
 
-    public compute(assetData: AssetData, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
-        const chart = assetData?.chart ?? null;
-        if (!chart?.entries || !assetInvestmentInfo) {
+    public compute(assetData: FullAssetData): number {
+        const chart = assetData.chart;
+        const portfolioInfo = assetData.portfolioInfo;
+        if (!chart?.entries || !portfolioInfo) {
             return null;
         }
-        const profitLoss = assetInvestmentInfo.calculateProfitLoss(ChartHelper.lastDay(chart).close);
-        const netAmount = assetInvestmentInfo.allocationAmount + profitLoss;
-        return Calculator.calculateDelta(netAmount, assetInvestmentInfo.allocationAmount);
+        const profitLoss = portfolioInfo.calculateProfitLoss(ChartHelper.lastDay(chart).close);
+        const netAmount = portfolioInfo.allocationAmount + profitLoss;
+        return Calculator.calculateDelta(netAmount, portfolioInfo.allocationAmount);
     }
 
 }

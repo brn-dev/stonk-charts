@@ -1,8 +1,6 @@
 import { NumberIndicator } from '../indicator';
-import { Asset } from '../../asset';
-import { PortfolioAssetInvestmentInfo } from '../../portfolio-asset-investment-info';
 import { NumberFormatUtils } from '../../../utils/number-format-utils';
-import { AssetData } from '../../asset-data/asset-data';
+import { FullAssetData } from '../../asset-data/full-asset-data';
 
 export class AllocationAmountIndicator extends NumberIndicator {
 
@@ -17,8 +15,8 @@ export class AllocationAmountIndicator extends NumberIndicator {
 
     }
 
-    public compute(assetData: AssetData, asset: Asset, assetInvestmentInfo: PortfolioAssetInvestmentInfo): number {
-        return assetInvestmentInfo?.allocationAmount ?? null;
+    public compute(assetData: FullAssetData): number {
+        return assetData.portfolioInfo?.allocationAmount ?? null;
     }
 
     public toDisplayFormat(computationResult: number): string {

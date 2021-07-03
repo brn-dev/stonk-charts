@@ -1,4 +1,4 @@
-import { ToggleActiveSet } from '../../models/toggle-active-set';
+import { ToggleActiveSet } from '../../../models/toggle-active-set';
 import { Subject } from 'rxjs';
 
 export class ExcludedTagsState {

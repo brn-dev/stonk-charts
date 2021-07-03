@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Indicator } from '../models/indicators/indicator';
-import { HighIndicator } from '../models/indicators/high-indicator';
-import { LowIndicator } from '../models/indicators/low-indicator';
-import { Timespan, TimespanUnit } from '../models/timespan';
-import { ToggleActiveSet } from '../models/toggle-active-set';
-import { RsiIndicator } from '../models/indicators/rsi-indicator';
-import { TimespanIndicator } from '../models/indicators/timespan-indicator';
-import { AllocationPercentIndicator } from '../models/indicators/portfolio/allocation-percent-indicator';
-import { AllocationAmountIndicator } from '../models/indicators/portfolio/allocation-amount-indicator';
-import { ProfitLossPercentIndicator } from '../models/indicators/portfolio/profit-loss-percent-indicator';
-import { AverageLeverageIndicator } from '../models/indicators/portfolio/average-leverage-indicator';
-import { OneYearEstimationIndicator } from '../models/indicators/one-year-estimation-indicator';
-import { ExposureAmountIndicator } from '../models/indicators/portfolio/exposure-amount-indicator';
-import { ExposurePercentIndicator } from '../models/indicators/portfolio/exposure-percent-indicator';
-import { StatisticsIndicator } from '../models/indicators/statistics/statistics-indicator';
-import { TrailingForwardPeRatioIndicator } from '../models/indicators/statistics/trailing-forward-pe-ratio-indicator';
+import { Indicator } from '../../models/indicators/indicator';
+import { HighIndicator } from '../../models/indicators/high-indicator';
+import { LowIndicator } from '../../models/indicators/low-indicator';
+import { Timespan, TimespanUnit } from '../../models/timespan';
+import { ToggleActiveSet } from '../../models/toggle-active-set';
+import { RsiIndicator } from '../../models/indicators/rsi-indicator';
+import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
+import { AllocationPercentIndicator } from '../../models/indicators/portfolio/allocation-percent-indicator';
+import { AllocationAmountIndicator } from '../../models/indicators/portfolio/allocation-amount-indicator';
+import { ProfitLossPercentIndicator } from '../../models/indicators/portfolio/profit-loss-percent-indicator';
+import { AverageLeverageIndicator } from '../../models/indicators/portfolio/average-leverage-indicator';
+import { OneYearEstimationIndicator } from '../../models/indicators/one-year-estimation-indicator';
+import { ExposureAmountIndicator } from '../../models/indicators/portfolio/exposure-amount-indicator';
+import { ExposurePercentIndicator } from '../../models/indicators/portfolio/exposure-percent-indicator';
+import { StatisticsIndicator } from '../../models/indicators/statistics/statistics-indicator';
+import { TrailingForwardPeRatioIndicator } from '../../models/indicators/statistics/trailing-forward-pe-ratio-indicator';
 
 export interface IndicatorGroup {
     title?: string;

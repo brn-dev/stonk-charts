@@ -1,5 +1,5 @@
 import { DeltaIndicator } from '../indicator';
-import { AssetData } from '../../asset-data/asset-data';
+import { FullAssetData } from '../../asset-data/full-asset-data';
 
 export class TrailingForwardPeRatioIndicator extends DeltaIndicator {
 
@@ -16,7 +16,7 @@ export class TrailingForwardPeRatioIndicator extends DeltaIndicator {
         );
     }
 
-    public compute(assetData: AssetData): number {
+    public compute(assetData: FullAssetData): number {
         if (!assetData?.statistics ||
             !assetData.statistics.trailingPE ||
             !assetData.statistics.forwardPE

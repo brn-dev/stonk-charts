@@ -5,7 +5,7 @@ import { YahooApiChartConverter } from '../../models/api/yahoo-api-chart-convert
 import { Asset } from '../../models/asset';
 import { FileService } from '../file.service';
 import { ApiService } from './api.service';
-import { AssetData } from '../../models/asset-data/asset-data';
+import { BasicAssetData } from '../../models/asset-data/basic-asset-data';
 import { URLSearchParams } from 'url';
 import { YahooApiGetChartsResult } from '../../models/api/yahoo-api-get-charts-result';
 import { Observable } from 'rxjs';
@@ -43,8 +43,8 @@ export class YahooApiService implements ApiService {
         this.config = fileService.readJsonFromFile<YahooApiConfig>(this.CONFIG_FILE_NAME);
     }
 
-    public fetchAssetDataFor(assets: Asset[]): Observable<AssetData> {
-        return new Observable<AssetData>((o) => {
+    public fetchAssetDataFor(assets: Asset[]): Observable<BasicAssetData> {
+        return new Observable<BasicAssetData>((o) => {
             assets = assets.filter(a => !a.unavailable);
             let fetchFinishedCount = 0;
 

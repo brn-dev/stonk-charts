@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Asset } from '../models/asset';
-import { FileService } from './file.service';
-import { PortfolioService } from './portfolio.service';
+import { Asset } from '../../models/asset';
+import { FileService } from '../file.service';
+import { PortfolioService } from '../asset-data/portfolio.service';
 
 @Injectable({
     providedIn: 'root'

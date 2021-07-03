@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Portfolio, PortfolioPosition } from '../models/portfolio';
-import { FileService } from './file.service';
-import { PortfolioAssetInvestmentInfo } from '../models/portfolio-asset-investment-info';
-import { Asset } from '../models/asset';
+import { Portfolio, PortfolioPosition } from '../../models/portfolio';
+import { FileService } from '../file.service';
+import { PortfolioAssetInvestmentInfo } from '../../models/portfolio-asset-investment-info';
+import { Asset } from '../../models/asset';
 
 // noinspection JSMethodCanBeStatic
 @Injectable({

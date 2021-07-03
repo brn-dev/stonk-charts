@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { NumberIndicator } from '../models/indicators/indicator';
-import { AssetDataCacheService } from './asset-data-cache.service';
+import { NumberIndicator } from '../../models/indicators/indicator';
+import { BasicAssetDataCacheService } from '../asset-data/basic-asset-data-cache.service';
 import { IndicatorResultCacheService } from './indicator-result-cache.service';
-import { FilterStateService } from './filter-state.service';
-import { FilterService } from './filter.service';
+import { FilterStateService } from '../asset/filter-state.service';
+import { FilterService } from '../asset/filter.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +17,7 @@ export class IndicatorMinMaxService {
         private indiciatorResultCacheService: IndicatorResultCacheService,
         private filterStateService: FilterStateService,
         private filterService: FilterService,
-        private assetDataCacheService: AssetDataCacheService,
+        private assetDataCacheService: BasicAssetDataCacheService,
     ) {
         this.reset();
         this.filterStateService.$filterUpdated.subscribe(() => this.reset());

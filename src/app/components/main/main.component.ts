@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Asset } from '../../models/asset';
-import { AssetService } from '../../services/asset.service';
-import { AssetDataCacheService } from '../../services/asset-data-cache.service';
+import { AssetService } from '../../services/asset/asset.service';
+import { BasicAssetDataCacheService } from '../../services/asset-data/basic-asset-data-cache.service';
 import { FileService } from '../../services/file.service';
-import { FilterService } from '../../services/filter.service';
-import { IndicatorService } from '../../services/indicator.service';
+import { FilterService } from '../../services/asset/filter.service';
+import { IndicatorService } from '../../services/indicator/indicator.service';
 import { SettingsService } from '../../services/settings.service';
-import { SortService } from '../../services/sort.service';
+import { SortService } from '../../services/asset/sort.service';
 import { Indicator } from '../../models/indicators/indicator';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { FilterStateService } from '../../services/filter-state.service';
+import { FilterStateService } from '../../services/asset/filter-state.service';
 
 const { exec } = window.require("child_process");
 
@@ -25,7 +25,7 @@ export class MainComponent implements OnInit {
     constructor(
         public assetService: AssetService,
         public settingsService: SettingsService,
-        public assetDataCacheService: AssetDataCacheService,
+        public assetDataCacheService: BasicAssetDataCacheService,
         public filterStateService: FilterStateService,
         public fileService: FileService,
         public indicatorService: IndicatorService,

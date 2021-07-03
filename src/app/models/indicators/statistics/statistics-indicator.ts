@@ -1,8 +1,8 @@
 import { NumberIndicator } from '../indicator';
-import { AssetData } from '../../asset-data/asset-data';
 import { AssetStatistics } from '../../asset-data/asset-statistics';
 import { NumberFormatUtils } from '../../../utils/number-format-utils';
 import { ColorPalettes } from '../../color-palettes';
+import { FullAssetData } from '../../asset-data/full-asset-data';
 
 export class StatisticsIndicator extends NumberIndicator {
 
@@ -189,7 +189,7 @@ export class StatisticsIndicator extends NumberIndicator {
         super(shortDescription, longDescription, isPercent, positiveColorPalette, negativeColorPalette);
     }
 
-    public compute(assetData: AssetData): number {
+    public compute(assetData: FullAssetData): number {
         if (!assetData?.statistics) {
             return null;
         }

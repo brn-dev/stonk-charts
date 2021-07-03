@@ -1,7 +1,7 @@
 // noinspection JSMethodCanBeStatic
 
 import { Injectable } from '@angular/core';
-import { Asset } from '../models/asset';
+import { Asset } from '../../models/asset';
 import { AssetService } from './asset.service';
 import { FilterStateService } from './filter-state.service';
 

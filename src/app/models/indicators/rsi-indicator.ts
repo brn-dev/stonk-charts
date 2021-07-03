@@ -1,7 +1,7 @@
 import { Timespan } from "../timespan";
 import { NumberIndicator } from "./indicator";
-import { AssetData } from '../asset-data/asset-data';
 import { ColorPalettes } from '../color-palettes';
+import { FullAssetData } from '../asset-data/full-asset-data';
 
 export class RsiIndicator extends NumberIndicator {
 
@@ -29,7 +29,7 @@ export class RsiIndicator extends NumberIndicator {
         );
     }
 
-    public compute(assetData: AssetData): number {
+    public compute(assetData: FullAssetData): number {
         const chart = assetData?.chart ?? null;
         const entries = chart?.entries;
         const entriesLength = entries?.length ?? 0;
