@@ -8,13 +8,13 @@ export class AverageFinancialGrowthIndicator extends DeltaIndicator {
 
     public static averageRevenueGrowthIndicator = new AverageFinancialGrowthIndicator(
         'yearlyRevenues',
-        'RG (avg)',
+        'Avg. RG',
         'Avg. Rev. Growth',
     );
 
     public static averageAssetsGrowthIndicator = new AverageFinancialGrowthIndicator(
         'yearlyTotalAssets',
-        'AG (avg)',
+        'Avg. AG',
         'Avg. Ass. Growth',
     );
 
@@ -38,24 +38,29 @@ export class AverageFinancialGrowthIndicator extends DeltaIndicator {
 
         let count = yearlyValues.length;
 
-        let latestValue = yearlyValues[0];
-        if (latestValue <= 0) {
-            if (yearlyValues.length > 1) {
-                latestValue = yearlyValues[1];
-                count--;
+        let latestValue: number;
+        for (const value of yearlyValues) {
+            if (value > 0) {
+                latestValue = value;
+                break;
             } else {
-                return null;
+                count--;
             }
         }
 
-        let oldestValue = yearlyValues[yearlyValues.length - 1];
-        if (oldestValue <= 0) {
-            if (yearlyValues.length > 1) {
-                oldestValue = yearlyValues[yearlyValues.length - 2];
-                count--;
+        let oldestValue: number;
+        for (let i = yearlyValues.length - 1; i >= 0; i--) {
+            const value = yearlyValues[i];
+            if (value > 0) {
+                oldestValue = value;
+                break;
             } else {
-                return null;
+                count--;
             }
+        }
+
+        if (!latestValue || !oldestValue) {
+            return null;
         }
 
         return MathUtils.nthRoot(latestValue / oldestValue, count) - 1;

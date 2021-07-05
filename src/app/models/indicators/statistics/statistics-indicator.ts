@@ -125,7 +125,7 @@ export class StatisticsIndicator extends NumberIndicator {
 
     public static readonly revenueGrowthIndicator = new StatisticsIndicator(
         'revenueGrowthYoy',
-        'RG (yoy)',
+        'Yoy RG',
         'Rev. Growth (yoy)',
         true,
         ColorPalettes.DELTA_POSITIVE_COLOR_MAP,
@@ -134,7 +134,7 @@ export class StatisticsIndicator extends NumberIndicator {
 
     public static readonly earningsGrowthIndicator = new StatisticsIndicator(
         'earningsGrowthYoy',
-        'EG (yoy)',
+        'Yoy EG',
         'Earn. Growth (yoy)',
         true,
         ColorPalettes.DELTA_POSITIVE_COLOR_MAP,
