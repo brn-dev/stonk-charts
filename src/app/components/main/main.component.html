@@ -40,8 +40,12 @@
                 <label for="show-dates-toggle">Show Dates</label>
             </div>
             <div class="checkbox-with-label">
-                <input type="checkbox" [(ngModel)]="settingsService.showTimespans" id="show-timespans-toggle">
-                <label for="show-timespans-toggle">Show Timespans</label>
+                <input type="checkbox" [(ngModel)]="settingsService.showIndicatorNames" id="show-timespans-toggle">
+                <label for="show-timespans-toggle">Show Indicator Names</label>
+            </div>
+            <div class="checkbox-with-label">
+                <input type="checkbox" [(ngModel)]="settingsService.showSymbolsInAllColumns" id="show-symbols-in-columns-toggle">
+                <label for="show-symbols-in-columns-toggle">Show symbols in all columns</label>
             </div>
             <div class="checkbox-with-label">
                 <input type="checkbox" [(ngModel)]="settingsService.showTags" id="show-tags-toggle">

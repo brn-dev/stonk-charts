@@ -10,7 +10,7 @@ export class SettingsService {
 
     public showDates = false;
 
-    public showTimespans = false;
+    public showIndicatorNames = false;
 
     public showCharts = true;
 
@@ -21,6 +21,8 @@ export class SettingsService {
     public turnOffPercentColors = false;
 
     public turnOffNonPercentColors = false;
+
+    public showSymbolsInAllColumns = false;
 
     public $chartDaysUpdated = new Subject<number>();
 

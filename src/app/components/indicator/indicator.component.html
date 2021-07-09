@@ -9,7 +9,10 @@
     <div *ngIf="settingsService.showDates" class="smol">
         {{ date }}
     </div>
-    <div *ngIf="settingsService.showTimespans" class="smol">
-        {{ timespan?.displayText }}
+    <div *ngIf="settingsService.showIndicatorNames" class="smol">
+        {{ indicator?.shortDescription }}
+    </div>
+    <div class="smol">
+        {{ asset.symbol }}
     </div>
 </div>
