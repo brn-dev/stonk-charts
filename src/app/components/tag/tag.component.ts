@@ -39,9 +39,13 @@ export class TagComponent {
         this.filterStateService.excludedTagsState.toggleExcludeTag(this.tag);
     }
 
+    public selectSingleTagOrAll(): void {
+        this.filterStateService.selectSingleTagOrAll(this.tag)
+    }
+
     public onLongPress(): void {
         this._longPress = true;
-        this.filterStateService.selectSingleTagOrAll(this.tag);
+        this.toggleRequired();
     }
 
     public toggleEnabledIfNotLongPress(): void {

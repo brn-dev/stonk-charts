@@ -56,6 +56,10 @@ export class MainComponent implements OnInit {
         return tags;
     }
 
+    get assetCount(): number {
+        return this.assets.length;
+    }
+
     public fetch(): void {
         this.assetDataCacheService.fetchAssetsOlderThanDays(this.fetchDays);
     }
