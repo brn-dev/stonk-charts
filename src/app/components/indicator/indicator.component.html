@@ -12,7 +12,7 @@
     <div *ngIf="settingsService.showIndicatorNames" class="smol">
         {{ indicator?.shortDescription }}
     </div>
-    <div class="smol">
+    <div *ngIf="settingsService.showSymbolsInAllColumns" class="smol">
         {{ asset.symbol }}
     </div>
 </div>
