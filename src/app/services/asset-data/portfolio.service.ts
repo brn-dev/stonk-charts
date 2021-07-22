@@ -23,7 +23,7 @@ export class PortfolioService {
         return this._portfolio;
     }
 
-    public isInPortfolio(asset: Asset) {
+    public isInPortfolio(asset: Asset): boolean {
         return this._portfolioMarkets.has(asset.symbol);
     }
 

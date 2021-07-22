@@ -5,6 +5,7 @@ import { BasicAssetDataCacheService } from './basic-asset-data-cache.service';
 import { PortfolioService } from './portfolio.service';
 import { Subject } from 'rxjs';
 import { AssetFinancialsCacheService } from './asset-financials-cache.service';
+import { EstimationService } from './estimation.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,7 @@ export class FullAssetDataService {
         private basicAssetDataCacheService: BasicAssetDataCacheService,
         private portfolioService: PortfolioService,
         private assetFinancialsCacheService: AssetFinancialsCacheService,
+        private estimationService: EstimationService,
     ) {
         basicAssetDataCacheService.$assetUpdated.subscribe(a => this.$assetUpdated.next(a));
         assetFinancialsCacheService.$assetUpdated.subscribe(a => this.$assetUpdated.next(a));
@@ -26,12 +28,14 @@ export class FullAssetDataService {
         const basicAssetData = this.basicAssetDataCacheService.getForAsset(asset);
         const portfolioInfo = this.portfolioService.getInvestmentInfoForAsset(asset);
         const financials = this.assetFinancialsCacheService.getForAsset(asset);
+        const estimation = this.estimationService.getEstimation(asset);
 
         return {
             ...basicAssetData,
             asset,
             portfolioInfo,
             financials,
+            estimation
         };
     }
 

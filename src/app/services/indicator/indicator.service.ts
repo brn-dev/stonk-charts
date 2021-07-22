@@ -10,12 +10,16 @@ import { AllocationPercentIndicator } from '../../models/indicators/portfolio/al
 import { AllocationAmountIndicator } from '../../models/indicators/portfolio/allocation-amount-indicator';
 import { ProfitLossPercentIndicator } from '../../models/indicators/portfolio/profit-loss-percent-indicator';
 import { AverageLeverageIndicator } from '../../models/indicators/portfolio/average-leverage-indicator';
-import { OneYearEstimationIndicator } from '../../models/indicators/one-year-estimation-indicator';
+import { OneYearTargetEstimationIndicator } from '../../models/indicators/estimation/one-year-target-estimation-indicator';
 import { ExposureAmountIndicator } from '../../models/indicators/portfolio/exposure-amount-indicator';
 import { ExposurePercentIndicator } from '../../models/indicators/portfolio/exposure-percent-indicator';
 import { StatisticsIndicator } from '../../models/indicators/statistics/statistics-indicator';
 import { TrailingForwardPeRatioIndicator } from '../../models/indicators/statistics/trailing-forward-pe-ratio-indicator';
 import { AverageFinancialGrowthIndicator } from '../../models/indicators/financials/average-financial-growth-indicator';
+import { OneYearEstimationAverageDeviationIndicator } from '../../models/indicators/estimation/one-year-estimation-average-deviation-indicator';
+import { OneYearLowEstimationIndicator } from '../../models/indicators/estimation/one-year-low-estimation-indicator';
+import { OneYearHighEstimationIndicator } from '../../models/indicators/estimation/one-year-high-estimation-indicator';
+import { OneYearEstimationsCount } from '../../models/indicators/estimation/one-year-estimations-count';
 
 export interface IndicatorGroup {
     title?: string;
@@ -31,7 +35,11 @@ export class IndicatorService {
         {
             title: 'Misc',
             indicators: [
-                OneYearEstimationIndicator.singleton
+                OneYearTargetEstimationIndicator.singleton,
+                OneYearEstimationAverageDeviationIndicator.singleton,
+                OneYearLowEstimationIndicator.singleton,
+                OneYearHighEstimationIndicator.singleton,
+                OneYearEstimationsCount.singleton
             ]
         },
         {
