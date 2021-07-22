@@ -20,6 +20,7 @@ import { OneYearEstimationAverageDeviationIndicator } from '../../models/indicat
 import { OneYearLowEstimationIndicator } from '../../models/indicators/estimation/one-year-low-estimation-indicator';
 import { OneYearHighEstimationIndicator } from '../../models/indicators/estimation/one-year-high-estimation-indicator';
 import { OneYearEstimationsCount } from '../../models/indicators/estimation/one-year-estimations-count';
+import { FileService } from '../file.service';
 
 export interface IndicatorGroup {
     title?: string;
@@ -30,6 +31,8 @@ export interface IndicatorGroup {
     providedIn: 'root'
 })
 export class IndicatorService {
+
+    public readonly ACTIVE_INDICATORS_FILE_NAME = 'active-indicators.json';
 
     public availableIndicators: IndicatorGroup[] = [
         {
@@ -139,14 +142,18 @@ export class IndicatorService {
 
     private _activeIndicators: Indicator<any>[] = [];
 
-    constructor() {
-        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.DAY, 1)));
-        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Week, 1)));
-        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Week, 2)));
-        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 1)));
-        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 3)));
-        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 6)));
-        this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Year, 1)));
+    constructor(private fileService: FileService) {
+        const loadSuccessful = this.loadActiveIndicators();
+
+        if (!loadSuccessful) {
+            this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.DAY, 1)));
+            this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Week, 1)));
+            this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Week, 2)));
+            this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 1)));
+            this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 3)));
+            this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Month, 6)));
+            this.toggleActive(TimespanIndicator.get(Timespan.get(TimespanUnit.Year, 1)));
+        }
     }
 
     get activeIndicators(): Indicator<any>[] {
@@ -159,6 +166,7 @@ export class IndicatorService {
         } else {
             this._activeIndicators.push(indicator);
         }
+        this.saveActiveIndicators();
     }
 
     public isActive(indicator: Indicator<any>): boolean {
@@ -166,7 +174,8 @@ export class IndicatorService {
     }
 
     public clearActiveIndicators(): void {
-        this._activeIndicators = [];
+        this._clearActiveIndicators();
+        this.saveActiveIndicators();
     }
 
     public clearGroup(group: IndicatorGroup): void {
@@ -176,6 +185,43 @@ export class IndicatorService {
                 this._activeIndicators.splice(idx, 1);
             }
         }
+        this.saveActiveIndicators();
+    }
+
+    private _clearActiveIndicators(): void {
+        this._activeIndicators = [];
+    }
+
+    private saveActiveIndicators(): void {
+        const activeIndicatorDescriptions = this._activeIndicators.map(i => i.shortDescription);
+        this.fileService.writeJsonToFile(this.ACTIVE_INDICATORS_FILE_NAME, activeIndicatorDescriptions);
+    }
+
+    private loadActiveIndicators(): boolean {
+        const activeIndicatorDescriptions = this.fileService.readJsonFromFile<string[]>(this.ACTIVE_INDICATORS_FILE_NAME);
+
+        if (!activeIndicatorDescriptions) {
+            return false;
+        }
+
+        this._clearActiveIndicators();
+        for (const indicatorDescription of activeIndicatorDescriptions) {
+            let found = false;
+            for (const indicatorGroup of this.availableIndicators) {
+                for (const indicator of indicatorGroup.indicators) {
+                    if (indicator.shortDescription === indicatorDescription) {
+                        this.toggleActive(indicator);
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
+                    break;
+                }
+            }
+        }
+        console.log('Successfully activated the following indicators: ' + activeIndicatorDescriptions.join(', '));
+        return true;
     }
 
 }
