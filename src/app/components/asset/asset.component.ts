@@ -13,6 +13,7 @@ import { Indicator, NumberIndicator } from '../../models/indicators/indicator';
 import { IndicatorResultCacheService } from '../../services/indicator/indicator-result-cache.service';
 import { IndicatorMinMaxService } from '../../services/indicator/indicator-min-max.service';
 import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
+import { AssetFinancialsCacheService } from '../../services/asset-data/asset-financials-cache.service';
 
 @Component({
     selector: 'app-asset',
@@ -30,7 +31,8 @@ export class AssetComponent implements OnInit {
 
     constructor(
         public settingsService: SettingsService,
-        private assetDataCacheService: BasicAssetDataCacheService,
+        private basicAssetDataCacheService: BasicAssetDataCacheService,
+        private assetFinancialsCacheService: AssetFinancialsCacheService,
         private assetService: AssetService,
         private indicatorService: IndicatorService,
         private indicatorResultCacheService: IndicatorResultCacheService,
@@ -39,7 +41,7 @@ export class AssetComponent implements OnInit {
     }
 
     get chart(): Chart {
-        return this.assetDataCacheService.getForAsset(this.asset)?.chart ?? null;
+        return this.basicAssetDataCacheService.getForAsset(this.asset)?.chart ?? null;
     }
 
     get indicators(): Indicator<any>[] {
@@ -64,7 +66,7 @@ export class AssetComponent implements OnInit {
     ngOnInit(): void {
         this.updateChartOptions();
         this.settingsService.$chartDaysUpdated.subscribe(() => this.updateChartOptions());
-        this.assetDataCacheService.$assetUpdated.subscribe(asset => {
+        this.basicAssetDataCacheService.$assetUpdated.subscribe(asset => {
             if (this.asset === asset) {
                 this.updateChartOptions();
             }
@@ -79,43 +81,12 @@ export class AssetComponent implements OnInit {
         return this.indicatorResultCacheService.calculateResult(this.asset, indicator);
     }
 
-    public getIndicatorDisplayValue(indicator: Indicator<any>): any {
-        const value = indicator.toDisplayFormat(this.getIndicatorValue(indicator));
-        return value ? value.toString() : 'n/a';
+    public fetchBasicAssetData(): void {
+        this.basicAssetDataCacheService.fetchAsset(this.asset);
     }
 
-    public getMinForIndicator(indicator: NumberIndicator): number {
-        return this.indicatorMinMaxService.getMinForVisibleCharts(indicator);
-    }
-
-    public getMaxForIndicator(indicator: NumberIndicator): number {
-        return this.indicatorMinMaxService.getMaxForVisibleCharts(indicator);
-    }
-
-    public getTimespan(indicator: Indicator<any>): Timespan {
-        if (!(indicator instanceof TimespanIndicator)) {
-            return null;
-        }
-
-        return indicator.timespan;
-    }
-
-    public getTimestamp(indicator: Indicator<any>): number {
-        if (!this.chart || !(indicator instanceof TimespanIndicator)) {
-            return null;
-        }
-
-        const entry = ChartHelper.getDayInPastFromTimespan(this.chart, indicator.timespan);
-
-        if (entry === null) {
-            return null;
-        }
-
-        return entry.timestamp;
-    }
-
-    public fetch(): void {
-        this.assetDataCacheService.fetchAsset(this.asset);
+    public fetchFinancials(): void {
+        this.assetFinancialsCacheService.fetchAsset(this.asset);
     }
 
     public updateChartOptions(): void {

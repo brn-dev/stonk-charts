@@ -39,6 +39,15 @@
             * {
                 font-size: xx-small;
             }
+
+            > button {
+                all: unset;
+                margin-right: 0.5rem;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
         }
 
         button {
