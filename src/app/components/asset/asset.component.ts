@@ -14,6 +14,7 @@ import { IndicatorResultCacheService } from '../../services/indicator/indicator-
 import { IndicatorMinMaxService } from '../../services/indicator/indicator-min-max.service';
 import { TimespanIndicator } from '../../models/indicators/timespan-indicator';
 import { AssetFinancialsCacheService } from '../../services/asset-data/asset-financials-cache.service';
+import { FilterStateService } from '../../services/asset/filter-state.service';
 
 @Component({
     selector: 'app-asset',
@@ -35,8 +36,7 @@ export class AssetComponent implements OnInit {
         private assetFinancialsCacheService: AssetFinancialsCacheService,
         private assetService: AssetService,
         private indicatorService: IndicatorService,
-        private indicatorResultCacheService: IndicatorResultCacheService,
-        private indicatorMinMaxService: IndicatorMinMaxService,
+        private filterStateService: FilterStateService,
     ) {
     }
 
@@ -73,20 +73,16 @@ export class AssetComponent implements OnInit {
         });
     }
 
-    public getIndicatorValue<T>(indicator: Indicator<T>): T {
-        if (!this.chart) {
-            return null;
-        }
-
-        return this.indicatorResultCacheService.calculateResult(this.asset, indicator);
-    }
-
     public fetchBasicAssetData(): void {
         this.basicAssetDataCacheService.fetchAsset(this.asset);
     }
 
     public fetchFinancials(): void {
         this.assetFinancialsCacheService.fetchAsset(this.asset);
+    }
+
+    public hideAsset(): void {
+        this.filterStateService.hideAsset(this.asset);
     }
 
     public updateChartOptions(): void {

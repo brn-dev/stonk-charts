@@ -4,6 +4,7 @@ import { EnabledTagsState } from './models/enabled-tags-state';
 import { ExcludedTagsState } from './models/excluded-tags-state';
 import { Subject } from 'rxjs';
 import { RequiredTagState } from './models/required-tag-state';
+import { Asset } from '../../models/asset';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +22,8 @@ export class FilterStateService {
     public readonly enabledTagsState: EnabledTagsState;
     public readonly excludedTagsState: ExcludedTagsState;
     public readonly requiredTagState: RequiredTagState;
+
+    public readonly hiddenAssets = new Set<Asset>();
 
     public constructor(
         private assetService: AssetService
@@ -52,6 +55,10 @@ export class FilterStateService {
         return this._normalizedSearchTerm.length === 0;
     }
 
+    get noAssetsHidden(): boolean {
+        return this.hiddenAssets.size === 0;
+    }
+
     public toggleEnabled(tag: string): void {
         if (!this.requiredTagState.isTagRequired(tag)) {
             this.enabledTagsState.toggleEnableTag(tag);
@@ -76,6 +83,20 @@ export class FilterStateService {
         if (!this.requiredTagState.noTagRequired) {
             this.enabledTagsState.enableTag(this.requiredTagState.requiredTag);
         }
+    }
+
+    public hideAsset(asset: Asset): void {
+        this.hiddenAssets.add(asset);
+        this.$filterUpdated.next();
+    }
+
+    public unhideAsset(asset: Asset): void {
+        this.hiddenAssets.delete(asset);
+        this.$filterUpdated.next();
+    }
+
+    public isAssetHidden(asset: Asset): boolean {
+        return this.hiddenAssets.has(asset);
     }
 
     private replaceAll(str: string, searchTerm: string, replaceValue: string): string {

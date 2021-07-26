@@ -21,7 +21,8 @@ export class FilterService {
         if (this.stateService.enabledTagsState.allTagsEnabled &&
             this.stateService.excludedTagsState.noTagsExcluded &&
             this.stateService.requiredTagState.noTagRequired &&
-            this.stateService.searchTermEmpty
+            this.stateService.searchTermEmpty &&
+            this.stateService.noAssetsHidden
         ) {
             return this.assetService.assets;
         }
@@ -36,6 +37,11 @@ export class FilterService {
 
         const assets: Asset[] = [];
         for (const asset of this.assetService.assets) {
+            const isHidden = this.stateService.isAssetHidden(asset);
+            if (isHidden) {
+                continue;
+            }
+
             const matchesSearchTerm = this.doesSearchTermContain(asset.symbol);
             const notExcluded = !asset.tags.some(tag => this.stateService.excludedTagsState.isTagExcluded(tag));
             const matchesEnabled = asset.tags.some(tag => this.stateService.enabledTagsState.isTagEnabled(tag));

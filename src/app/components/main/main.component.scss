@@ -98,6 +98,26 @@
         }
     }
 
+    .hidden-assets-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        margin: 1rem 0;
+
+        > .hidden-asset {
+            font-size: x-small;
+            background-color: darkred;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            margin-left: 0.25rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
     .header-container {
         margin-top: 1rem;
         position: sticky;

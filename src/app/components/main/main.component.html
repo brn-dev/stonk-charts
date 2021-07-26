@@ -101,6 +101,16 @@
         <span class="search-clear" (click)="clearSearchTerm()" >&#10005;</span>
     </div>
 
+    <div *ngIf="!filterStateService.noAssetsHidden" class="hidden-assets-container">
+        🚫
+        <div *ngFor="let hiddenAsset of filterStateService.hiddenAssets"
+             (click)="filterStateService.unhideAsset(hiddenAsset)"
+             class="hidden-asset"
+        >
+            {{ hiddenAsset.symbol }}
+        </div>
+    </div>
+
     <div class="header-container"
          [class.with-chart]="settingsService.showCharts"
          cdkDropList
