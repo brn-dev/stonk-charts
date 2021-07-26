@@ -61,22 +61,28 @@ export class YahooApiService implements ApiService {
                     const chunkSymbols = assetsChunk.map(a => a.symbol).join(', ');
                     console.log('fetching ' + chunkSymbols);
 
-                    const chartsBySymbolPromise = this.fetchCharts(assetsChunk);
-                    const statisticsBySymbolPromise = this.fetchStatistics(assetsChunk);
+                    try {
+                        const chartsBySymbolPromise = this.fetchCharts(assetsChunk);
+                        const statisticsBySymbolPromise = this.fetchStatistics(assetsChunk);
 
-                    const [chartsBySymbol, statisticsBySymbol] =
-                        await Promise.all([chartsBySymbolPromise, statisticsBySymbolPromise]);
+                        const [chartsBySymbol, statisticsBySymbol] =
+                            await Promise.all([chartsBySymbolPromise, statisticsBySymbolPromise]);
 
-                    for (const symbol of Array.from(chartsBySymbol.keys())) {
-                        o.next({
-                            symbol,
-                            chart: chartsBySymbol.get(symbol) ?? null,
-                            statistics: statisticsBySymbol.get(symbol) ?? null,
-                        });
+                        for (const symbol of Array.from(chartsBySymbol.keys())) {
+                            o.next({
+                                symbol,
+                                chart: chartsBySymbol.get(symbol) ?? null,
+                                statistics: statisticsBySymbol.get(symbol) ?? null,
+                            });
+                        }
+
+                        console.log('finished fetching ' + chunkSymbols);
+
+                        fetchFinishedCount += chartsBySymbol.size;
+                    } catch (e) {
+                        console.warn('fetch for ' + chunkSymbols + ' failed', e);
                     }
 
-                    console.log('finished fetching ' + chunkSymbols);
-                    fetchFinishedCount += chartsBySymbol.size;
 
                     if (fetchFinishedCount === assets.length) {
                         console.log('fetch finished');
@@ -96,19 +102,23 @@ export class YahooApiService implements ApiService {
                 setTimeout(async () => {
                     console.log('fetching financials for: ' + asset.symbol);
 
-                    const yahooApiGetFinancialsResult = await this.http.get<YahooApiGetFinancialsResult>(
-                        this.getFinancialsUrlForAsset(asset),
-                        {
-                            headers: this.getHeaders()
-                        }
-                    ).toPromise();
+                    try {
+                        const yahooApiGetFinancialsResult = await this.http.get<YahooApiGetFinancialsResult>(
+                            this.getFinancialsUrlForAsset(asset),
+                            {
+                                headers: this.getHeaders()
+                            }
+                        ).toPromise();
 
-                    o.next([
-                        asset,
-                        YahooApiFinancialsConverter.convert(yahooApiGetFinancialsResult)
-                    ]);
+                        o.next([
+                            asset,
+                            YahooApiFinancialsConverter.convert(yahooApiGetFinancialsResult)
+                        ]);
 
-                    console.log('finished fetching financials for: ' + asset.symbol);
+                        console.log('finished fetching financials for: ' + asset.symbol);
+                    } catch (e) {
+                        console.warn('financials fetch for ' + asset.symbol + ' failed', e);
+                    }
                 }, this.FINANCIALS_STAGGER_MILLIS * i);
             }
             
