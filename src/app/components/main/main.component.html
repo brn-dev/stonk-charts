@@ -102,7 +102,7 @@
     </div>
 
     <div *ngIf="!filterStateService.noAssetsHidden" class="hidden-assets-container">
-        🚫
+        <div (click)="filterStateService.clearHiddenAssets()" >🚫</div>
         <div *ngFor="let hiddenAsset of filterStateService.hiddenAssets"
              (click)="filterStateService.unhideAsset(hiddenAsset)"
              class="hidden-asset"

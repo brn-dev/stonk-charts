@@ -99,6 +99,11 @@ export class FilterStateService {
         return this.hiddenAssets.has(asset);
     }
 
+    public clearHiddenAssets(): void {
+        this.hiddenAssets.clear();
+        this.$filterUpdated.next();
+    }
+
     private replaceAll(str: string, searchTerm: string, replaceValue: string): string {
         return str.split(searchTerm).join(replaceValue);
     }
