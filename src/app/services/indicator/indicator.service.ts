@@ -36,7 +36,7 @@ export class IndicatorService {
 
     public availableIndicators: IndicatorGroup[] = [
         {
-            title: 'Misc',
+            title: 'Estimations',
             indicators: [
                 OneYearTargetEstimationIndicator.singleton,
                 OneYearEstimationAverageDeviationIndicator.singleton,
